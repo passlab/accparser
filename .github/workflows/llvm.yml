@@ -37,7 +37,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y \
           antlr4 \
-          antlr4-runtime \
+          libantlr4-runtime-dev \
           build-essential \
           clang-${{ matrix.llvm }} \
           cmake

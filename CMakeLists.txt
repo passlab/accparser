@@ -64,8 +64,11 @@ target_link_libraries(accparser
     antlr4-runtime
     )
 
-add_executable(main.out main.cpp)
+add_executable(main.out main.cpp ${ACCPARSER_GRAMMAR_TARGET_FILES})
 add_dependencies(main.out accparser)
+target_link_libraries(main.out
+    antlr4-runtime
+    )
 
 set(accparser_targets accparser)
 set(executable_targets

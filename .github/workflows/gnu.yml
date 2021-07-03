@@ -45,4 +45,4 @@ jobs:
     - name: Test
       run: |
         cd $GITHUB_WORKSPACE/build
-        ./main.out
+        ./main.out ../tests/parallel.txt

@@ -1,0 +1,2 @@
+
+#pragma acc parallel private(a, b, c) 

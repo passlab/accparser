@@ -38,49 +38,30 @@ void myBarLexerAction() { /* do something*/ };
 channels { CommentsChannel, DirectiveChannel }
 
 tokens {
-	DUMMY	
+    EXPR
 }
 
-Return: 'return';
-Continue: 'continue';
+PRAGMA: '#'[ ]*'pragma' -> skip;
+ACC: 'acc' | [!c]'$acc';
+PARALLEL: 'parallel';
+D_LEFT_PAREN: '(';
+D_RIGHT_PAREN: ')';
+D_BLANK: [ ]+ -> skip;
+PRIVATE: 'private' -> pushMode(expr_clause);
+FIRSTPRIVATE: 'firstprivate' -> pushMode(expr_clause);
+PRESENT: 'present' -> pushMode(expr_clause);
+ATTACH: 'attach' -> pushMode(expr_clause);
+NO_CREATE: 'no_create' -> pushMode(expr_clause);
+DEVICEPTR: 'deviceptr' -> pushMode(expr_clause);
+COPY: 'copy' -> pushMode(expr_clause);
 
-INT: Digit+;
-Digit: [0-9];
+D_LINE_END: [\n\r] -> skip;
 
-ID: LETTER (LETTER | '0'..'9')*;
-fragment LETTER : [a-zA-Z\u0080-\uFFFF];
+mode expr_clause;
+LEFT_PAREN: '(';
+RIGHT_PAREN: ')' -> popMode;
+COMMA: ',' -> skip;
+BLANK: [ ]+ -> skip;
+EXPR: [a-zA-Z_][a-zA-Z0-9_]*;
+LINE_END: [\n\r] -> skip;
 
-LessThan: '<';
-GreaterThan:  '>';
-Equal: '=';
-And: 'and';
-
-Colon: ':';
-Semicolon: ';';
-Plus: '+';
-Minus: '-';
-Star: '*';
-OpenPar: '(';
-ClosePar: ')';
-OpenCurly: '{' -> pushMode(Mode1);
-CloseCurly: '}' -> popMode;
-QuestionMark: '?';
-Comma: ',' -> skip;
-Dollar: '$' -> more, mode(Mode1);
-Ampersand: '&' -> type(DUMMY);
- 
-String: '"' .*? '"';
-Foo: {canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); };
-Bar: 'bar' {isItBar()}? { myBarLexerAction(); };
-Any: Foo Dot Bar? DotDot Baz;
-
-Comment : '#' ~[\r\n]* '\r'? '\n' -> channel(CommentsChannel);
-WS: [ \t\r\n]+ -> channel(99);
-
-fragment Baz: 'Baz';
-
-mode Mode1;
-Dot: '.';
-
-mode Mode2;
-DotDot: '..';

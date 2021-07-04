@@ -4,14 +4,14 @@ It supports both C and Fortran. The generated OpenACC AST can be converted to Op
 The OpenMP AST is represented by OpenMPIR from [ompparser](https://github.com/passlab/ompparser).
 
 
-# Prerequisite
+## Prerequisite
 
 accparser requires ANTLR 4 and its C++ runtime, which are available on Ubuntu 20.04 or later.
 For other systems, they may need to be manually built.
 
 ```bash
 sudo apt update
-sudo ap install -y \
+sudo apt install -y \
     antlr4 \
     libantlr4-runtime-dev \
     build-essential \

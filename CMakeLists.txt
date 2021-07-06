@@ -30,6 +30,8 @@ set(ACCPARSER_GRAMMAR_FILES
 set(ACCIR_SOURCE_FILES
     src/OpenACCIR.h
     src/OpenACCIR.cpp
+    src/accir_constructor.h
+    src/accir_constructor.cpp
     )
 
 # tools based on accparser
@@ -67,6 +69,7 @@ target_link_libraries(accparser
 add_executable(main.out main.cpp ${ACCPARSER_GRAMMAR_TARGET_FILES})
 add_dependencies(main.out accparser)
 target_link_libraries(main.out
+    accparser
     antlr4-runtime
     )
 

@@ -57,6 +57,10 @@ Output:
                         (private(abc) 
                             (private(abc) private ( 
                                 (abc a b c) ))))))) <EOF>)
+A PARALLEL directive begins.
+A PRIVATE clause begins.
+A PRIVATE clause ends.
+A PARALLEL directive ends.
 ```
 
 On each line, the output follows the format `(root child_1 child_2 ... child_n)`.

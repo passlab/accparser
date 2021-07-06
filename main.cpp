@@ -2,6 +2,7 @@
 #include <antlr4-runtime.h>
 #include "acclexer.h"
 #include "accparser.h"
+#include "accir_constructor.h"
 
 int main(int argc, char** argv) {
 
@@ -23,6 +24,9 @@ int main(int argc, char** argv) {
     antlr4::tree::ParseTree* tree = parser.acc();
 
     std::cout << tree->toStringTree(true) << std::endl;
+
+    antlr4::tree::ParseTreeWalker* walker = new antlr4::tree::ParseTreeWalker();
+    walker->walk(new OpenACCIRConstructor(), tree);
 
     return 0;
 }

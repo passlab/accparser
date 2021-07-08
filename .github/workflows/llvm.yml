@@ -55,8 +55,19 @@ jobs:
         cd $GITHUB_WORKSPACE/build
         ./main.out ../tests/parallel.txt
 
-    - name: Publish
-      if: ${{ matrix.llvm == 12 }}
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+
+    # Use GitHub Actions' cache to shorten build times and decrease load on servers
+    - uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    # Specify the target branch
     - uses: helaili/jekyll-action@v2
       env:
         JEKYLL_PAT: ${{ secrets.GITHUB_TOKEN }}

@@ -107,7 +107,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gems-
     # Specify the target branch
-    - uses: helaili/jekyll-action@v2
+    - name: Publish
+      if: ${{ github.event_name == 'push' }}
+      uses: helaili/jekyll-action@v2
       with:
         jekyll_src: 'docs'
         token: ${{ secrets.GITHUB_TOKEN }}

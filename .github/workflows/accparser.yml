@@ -109,8 +109,8 @@ jobs:
     # Specify the target branch
     - uses: helaili/jekyll-action@v2
       env:
-        jekyll_src: 'docs'
       with:
+        jekyll_src: 'docs'
         token: ${{ secrets.GITHUB_TOKEN }}
         target_branch: 'gh-pages'
 

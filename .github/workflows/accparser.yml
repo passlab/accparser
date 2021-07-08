@@ -108,7 +108,6 @@ jobs:
           ${{ runner.os }}-gems-
     # Specify the target branch
     - uses: helaili/jekyll-action@v2
-      env:
       with:
         jekyll_src: 'docs'
         token: ${{ secrets.GITHUB_TOKEN }}

@@ -54,3 +54,13 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/build
         ./main.out ../tests/parallel.txt
+
+    - name: Publish
+      if: ${{ matrix.llvm == 12 }}
+    - uses: helaili/jekyll-action@v2
+      env:
+        JEKYLL_PAT: ${{ secrets.GITHUB_TOKEN }}
+        jekyll_src: 'docs'
+      with:
+        target_branch: 'gh-pages'
+

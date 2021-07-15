@@ -111,7 +111,7 @@ jobs:
       if: ${{ github.event_name == 'push' }}
       uses: helaili/jekyll-action@v2
       with:
-        jekyll_src: 'docs'
+        jekyll_src: 'website'
         token: ${{ secrets.GITHUB_TOKEN }}
         target_branch: 'gh-pages'
 

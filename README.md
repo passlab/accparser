@@ -54,9 +54,11 @@ Output:
             (parallelprivate(abc) parallel 
                 (private(abc) 
                     (private(abc) 
-                        (private(abc) 
-                            (private(abc) private ( 
-                                (abc a b c) ))))))) <EOF>)
+                        (private(abc) private ( 
+                            (abc 
+                                (a a) 
+                                (b b) 
+                                (c c)) )))))) <EOF>)
 A PARALLEL directive begins.
 A PRIVATE clause begins.
 A PRIVATE clause ends.

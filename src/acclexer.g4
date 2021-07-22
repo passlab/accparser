@@ -56,6 +56,10 @@ PARALLEL
    : 'parallel'
    ;
 
+LOOP
+   : 'loop'
+   ;
+
 D_LEFT_PAREN
    : '('
    ;
@@ -68,6 +72,50 @@ D_BLANK
    : [ ]+ -> skip
    ;
 
+ASYNC
+   : 'async' -> pushMode (expr_clause)
+   ;
+
+WAIT
+   : 'wait' -> pushMode (expr_clause)
+   ;
+
+NUM_GANGS
+   : 'num_gangs' -> pushMode (expr_clause)
+   ;
+
+NUM_WORKERS
+   : 'num_workers' -> pushMode (expr_clause)
+   ;
+
+COPY
+   : 'copy' -> pushMode (expr_clause)
+   ;
+
+COPYIN
+   : 'copyin' -> pushMode (expr_clause)
+   ;
+
+COPYOUT
+   : 'copyout' -> pushMode (expr_clause)
+   ;
+
+NO_CREATE
+   : 'no_create' -> pushMode (expr_clause)
+   ;
+
+PRESENT
+   : 'present' -> pushMode (expr_clause)
+   ;
+
+DEVICEPTR
+   : 'deviceptr' -> pushMode (expr_clause)
+   ;
+
+ATTACH
+   : 'attach' -> pushMode (expr_clause)
+   ;
+
 PRIVATE
    : 'private' -> pushMode (expr_clause)
    ;
@@ -76,24 +124,8 @@ FIRSTPRIVATE
    : 'firstprivate' -> pushMode (expr_clause)
    ;
 
-PRESENT
-   : 'present' -> pushMode (expr_clause)
-   ;
-
-ATTACH
-   : 'attach' -> pushMode (expr_clause)
-   ;
-
-NO_CREATE
-   : 'no_create' -> pushMode (expr_clause)
-   ;
-
-DEVICEPTR
-   : 'deviceptr' -> pushMode (expr_clause)
-   ;
-
-COPY
-   : 'copy' -> pushMode (expr_clause)
+COLLAPSE
+   : 'collapse' -> pushMode (expr_clause)
    ;
 
 D_LINE_END

@@ -100,6 +100,7 @@ acc
 
 openacc_directive
    : parallel_directive
+   | loop_directive
    ;
 
 parallel_directive
@@ -107,12 +108,47 @@ parallel_directive
    ;
 
 parallel_clause_list
-   : parallel_clause*
+   : parallel_clauses*
    ;
 
-parallel_clause
-   : private_clause
+parallel_clauses
+   : async_clause
+   | wait_clause
+   | num_gangs_clause
+   | num_workers_clause
+   | copy_clause
+   | copyin_clause
+   | copyout_clause
+   | private_clause
    | firstprivate_clause
+   ;
+
+async_clause
+   : ASYNC LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+wait_clause
+   : WAIT LEFT_PAREN int_expr_list RIGHT_PAREN
+   ;
+
+num_gangs_clause
+   : NUM_GANGS LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+num_workers_clause
+   : NUM_WORKERS LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+copy_clause
+   : COPY LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+copyin_clause
+   : COPYIN LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+copyout_clause
+   : COPYOUT LEFT_PAREN var_list RIGHT_PAREN
    ;
 
 private_clause
@@ -123,8 +159,41 @@ firstprivate_clause
    : FIRSTPRIVATE LEFT_PAREN var_list RIGHT_PAREN
    ;
 
+loop_directive
+   : LOOP loop_clause_list
+   ;
+
+loop_clause_list
+   : loop_clauses*
+   ;
+
+loop_clauses
+   : collapse_clause
+   | private_clause
+   ;
+
+collapse_clause
+   : COLLAPSE LEFT_PAREN const_int RIGHT_PAREN
+   ;
+
+const_int
+   : EXPR
+   ;
+
+int_expr_list
+   : int_expr+
+   ;
+
+int_expr
+   : EXPR
+   ;
+
 var_list
-   : EXPR+
+   : var+
+   ;
+
+var
+   : EXPR
    ; finally
    {
   cleanUp();

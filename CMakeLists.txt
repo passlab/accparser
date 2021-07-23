@@ -28,10 +28,9 @@ set(ACCPARSER_GRAMMAR_FILES
 
 # OpenACCIR source files
 set(ACCIR_SOURCE_FILES
-    src/OpenACCIR.h
+    src/OpenACCASTConstructor.cpp
     src/OpenACCIR.cpp
-    src/accir_constructor.h
-    src/accir_constructor.cpp
+    src/OpenACCIRToString.cpp
     )
 
 # tools based on accparser
@@ -60,13 +59,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 include_directories(SYSTEM /usr/include/antlr4-runtime)
 
 # The accparser library for installation and distribution
-add_library(accparser SHARED ${ACCIR_SOURCE_FILES})
+add_library(accparser SHARED ${ACCIR_SOURCE_FILES} ${ACCPARSER_GRAMMAR_TARGET_FILES})
 add_dependencies(accparser accparser_grammar)
 target_link_libraries(accparser
     antlr4-runtime
     )
 
-add_executable(main.out main.cpp ${ACCPARSER_GRAMMAR_TARGET_FILES})
+add_executable(main.out main.cpp)
 add_dependencies(main.out accparser)
 target_link_libraries(main.out
     accparser
@@ -81,6 +80,7 @@ set(executable_targets
 # Install headers and libraries
 install(FILES
         src/OpenACCIR.h
+        src/OpenACCKinds.h
         DESTINATION include)
 install(TARGETS ${accparser_targets}
         LIBRARY DESTINATION lib

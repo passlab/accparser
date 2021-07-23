@@ -2,7 +2,10 @@
 #include <antlr4-runtime.h>
 #include "acclexer.h"
 #include "accparser.h"
-#include "accir_constructor.h"
+#include "OpenACCASTConstructor.h"
+#include "OpenACCIR.h"
+
+extern OpenACCDirective* current_directive;
 
 int main(int argc, char** argv) {
 
@@ -27,6 +30,8 @@ int main(int argc, char** argv) {
 
     antlr4::tree::ParseTreeWalker* walker = new antlr4::tree::ParseTreeWalker();
     walker->walk(new OpenACCIRConstructor(), tree);
+
+    std::cout << current_directive->generatePragmaString() << "\n";
 
     return 0;
 }

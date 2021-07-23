@@ -1,0 +1,3 @@
+
+# Exclude the website files from the GitHub language stats
+website/ linguist-documentation

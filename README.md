@@ -59,10 +59,9 @@ Output:
                                 (a a) 
                                 (b b) 
                                 (c c)) )))))) <EOF>)
-A PARALLEL directive begins.
-A PRIVATE clause begins.
-A PRIVATE clause ends.
-A PARALLEL directive ends.
+
+# unparse the original input from the generated OpenACCIR
+#pragma acc parallel private(a, b, c)
 ```
 
 On each line, the output follows the format `(root child_1 child_2 ... child_n)`.

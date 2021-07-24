@@ -60,11 +60,11 @@ LOOP
    : 'loop'
    ;
 
-D_LEFT_PAREN
+LEFT_PAREN
    : '('
    ;
 
-D_RIGHT_PAREN
+RIGHT_PAREN
    : ')'
    ;
 
@@ -128,17 +128,34 @@ COLLAPSE
    : 'collapse' -> pushMode (expr_clause)
    ;
 
-D_LINE_END
+GANG
+   : 'gang'
+   ;
+
+WORKER
+   : 'worker' [ ]*
+   { if (_input->LA(1) == '(') pushMode(worker_clause); }
+   ;
+
+NUM
+   : 'num'
+   ;
+
+COLON
+   : ':'
+   ;
+
+LINE_END
    : [\n\r] -> skip
    ;
 
 mode expr_clause;
-LEFT_PAREN
-   : '('
+EXPR_LEFT_PAREN
+   : '(' -> type (LEFT_PAREN)
    ;
 
-RIGHT_PAREN
-   : ')' -> popMode
+EXPR_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
    ;
 
 COMMA
@@ -153,7 +170,40 @@ EXPR
    : [a-zA-Z_] [a-zA-Z0-9_]*
    ;
 
-LINE_END
+EXPR_LINE_END
+   : [\n\r] -> skip
+   ;
+
+mode worker_clause;
+WORKER_LEFT_PAREN
+   : '(' -> type (LEFT_PAREN)
+   ;
+
+WORKER_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+WORKER_NUM
+   : 'num' -> type (NUM)
+   ;
+
+WORKER_COLON
+   : ':' -> type (COLON)
+   ;
+
+WORKER_COMMA
+   : ',' -> skip
+   ;
+
+WORKER_BLANK
+   : [ ]+ -> skip
+   ;
+
+WORKER_EXPR
+   : [a-zA-Z_] [a-zA-Z0-9_]* -> type (EXPR)
+   ;
+
+WORKER_LINE_END
    : [\n\r] -> skip
    ;
 

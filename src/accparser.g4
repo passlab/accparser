@@ -99,8 +99,9 @@ acc
    ;
 
 openacc_directive
-   : parallel_directive
-   | loop_directive
+   : loop_directive
+   | parallel_directive
+   | parallel_loop_directive
    ;
 
 parallel_directive
@@ -169,11 +170,50 @@ loop_clause_list
 
 loop_clauses
    : collapse_clause
+   | gang_clause
    | private_clause
+   | worker_clause
    ;
 
 collapse_clause
    : COLLAPSE LEFT_PAREN const_int RIGHT_PAREN
+   ;
+
+gang_clause
+   : GANG
+   ;
+
+worker_clause
+   : WORKER
+   | WORKER worker_clause_args
+   ;
+
+worker_clause_args
+   : LEFT_PAREN NUM COLON int_expr RIGHT_PAREN
+   | LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+parallel_loop_directive
+   : PARALLEL LOOP parallel_loop_clause_list
+   ;
+
+parallel_loop_clause_list
+   : parallel_loop_clauses*
+   ;
+
+parallel_loop_clauses
+   : async_clause
+   | collapse_clause
+   | copy_clause
+   | copyin_clause
+   | copyout_clause
+   | firstprivate_clause
+   | gang_clause
+   | num_gangs_clause
+   | num_workers_clause
+   | private_clause
+   | wait_clause
+   | worker_clause
    ;
 
 const_int

@@ -35,7 +35,14 @@ set(ACCIR_SOURCE_FILES
 
 # tools based on accparser
 set(ACCPARSER_TOOLS
+    utils/omp-translator/OpenMPTranslator.cpp
     )
+if (OMPPARSER)
+    set(ACCIR_SOURCE_FILES ${ACCIR_SOURCE_FILES} ${ACCPARSER_TOOLS} src/driver.cpp)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator/ompparser)
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator/ompparser/src)
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator)
+endif()
 
 set(ACCPARSER_GRAMMAR_TARGET_FILES
   acclexer.cpp
@@ -64,6 +71,17 @@ add_dependencies(accparser accparser_grammar)
 target_link_libraries(accparser
     antlr4-runtime
     )
+if (OMPPARSER)
+    target_link_libraries(accparser
+        ompparser
+        )
+    add_executable(test_omp.out test_omp.cpp)
+    add_dependencies(test_omp.out accparser)
+    target_link_libraries(test_omp.out
+        accparser
+        antlr4-runtime
+        )
+endif()
 
 add_executable(main.out main.cpp)
 add_dependencies(main.out accparser)

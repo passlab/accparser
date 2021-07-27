@@ -5,7 +5,7 @@ std::string OpenACCDirective::generatePragmaString(std::string prefix,
                                                    std::string beginning_symbol,
                                                    std::string ending_symbol) {
 
-  if (this->getBaseLang() == Lang_Fortran && prefix == "#pragma acc ") {
+  if (this->getBaseLang() == ACC_Lang_Fortran && prefix == "#pragma acc ") {
     prefix = "!$acc ";
   };
   std::string result = prefix;

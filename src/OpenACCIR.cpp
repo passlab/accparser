@@ -11,7 +11,7 @@ void OpenACCClause::addLangExpr(std::string expression, int line, int col) {
   };
   expressions.push_back(expression);
 
-  locations.push_back(SourceLocation(line, col));
+  locations.push_back(ACC_SourceLocation(line, col));
 };
 
 /**
@@ -42,10 +42,12 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_copyin:
   case ACCC_copyout:
   case ACCC_firstprivate:
+  case ACCC_gang:
   case ACCC_num_gangs:
   case ACCC_num_workers:
   case ACCC_private:
-  case ACCC_wait: {
+  case ACCC_wait:
+  case ACCC_worker: {
     if (current_clauses->size() == 0) {
       new_clause = new OpenACCClause(kind);
       current_clauses = new std::vector<OpenACCClause *>();

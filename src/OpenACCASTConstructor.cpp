@@ -19,6 +19,17 @@ void OpenACCIRConstructor::enterPrivate_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_private);
 }
 
+void OpenACCIRConstructor::exitGang_clause(accparser::Gang_clauseContext *ctx) {
+  std::string expression = ctx->getText();
+  current_clause = current_directive->addOpenACCClause(ACCC_gang);
+};
+
+void OpenACCIRConstructor::exitWorker_clause(
+    accparser::Worker_clauseContext *ctx) {
+  std::string expression = ctx->getText();
+  current_clause = current_directive->addOpenACCClause(ACCC_worker);
+};
+
 void OpenACCIRConstructor::exitVar(accparser::VarContext *ctx) {
   std::string expression = ctx->getText();
   current_clause->addLangExpr(expression);

@@ -1,0 +1,5 @@
+project(omp-translator)
+
+add_subdirectory("ompparser")
+
+target_link_libraries(ompparser accparser)

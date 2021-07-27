@@ -7,22 +7,22 @@
 
 #include "OpenACCKinds.h"
 
-enum OpenACCBaseLang { Lang_C, Lang_Cplusplus, Lang_Fortran, Lang_unknown };
+enum OpenACCBaseLang { ACC_Lang_C, ACC_Lang_Cplusplus, ACC_Lang_Fortran, ACC_Lang_unknown };
 
-class SourceLocation {
+class ACC_SourceLocation {
   int line;
   int column;
 
-  SourceLocation *parent_construct;
+  ACC_SourceLocation *parent_construct;
 
 public:
-  SourceLocation(int _line = 0, int _col = 0,
-                 SourceLocation *_parent_construct = NULL)
+  ACC_SourceLocation(int _line = 0, int _col = 0,
+                 ACC_SourceLocation *_parent_construct = NULL)
       : line(_line), column(_col), parent_construct(_parent_construct){};
-  void setParentConstruct(SourceLocation *_parent_construct) {
+  void setParentConstruct(ACC_SourceLocation *_parent_construct) {
     parent_construct = _parent_construct;
   };
-  SourceLocation *getParentConstruct() { return parent_construct; };
+  ACC_SourceLocation *getParentConstruct() { return parent_construct; };
   int getLine() { return line; };
   void setLine(int _line) { line = _line; };
   int getColumn() { return column; };
@@ -36,7 +36,7 @@ public:
  * will have an inherit class from this one, and the superclass contains fields
  * for the parameters
  */
-class OpenACCClause : public SourceLocation {
+class OpenACCClause : public ACC_SourceLocation {
 protected:
   OpenACCClauseKind kind;
   // the clause position in the vector of clauses in original order
@@ -48,11 +48,11 @@ protected:
    */
   std::vector<std::string> expressions;
 
-  std::vector<SourceLocation> locations;
+  std::vector<ACC_SourceLocation> locations;
 
 public:
   OpenACCClause(OpenACCClauseKind k, int _line = 0, int _col = 0)
-      : SourceLocation(_line, _col), kind(k){};
+      : ACC_SourceLocation(_line, _col), kind(k){};
 
   OpenACCClauseKind getKind() { return kind; };
   int getClausePosition() { return clause_position; };
@@ -74,7 +74,7 @@ public:
 /**
  * The class for all the OpenACC directives
  */
-class OpenACCDirective : public SourceLocation {
+class OpenACCDirective : public ACC_SourceLocation {
 protected:
   OpenACCDirectiveKind kind;
   OpenACCBaseLang lang;
@@ -148,9 +148,9 @@ protected:
   void *normalizeClause(OpenACCClauseKind kind);
 
 public:
-  OpenACCDirective(OpenACCDirectiveKind k, OpenACCBaseLang _lang = Lang_unknown,
+  OpenACCDirective(OpenACCDirectiveKind k, OpenACCBaseLang _lang = ACC_Lang_unknown,
                    int _line = 0, int _col = 0)
-      : SourceLocation(_line, _col), kind(k), lang(_lang){};
+      : ACC_SourceLocation(_line, _col), kind(k), lang(_lang){};
 
   OpenACCDirectiveKind getKind() { return kind; };
 

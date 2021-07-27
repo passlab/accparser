@@ -9,5 +9,10 @@ public:
   virtual void
   enterPrivate_clause(accparser::Private_clauseContext * /*ctx*/) override;
 
+  virtual void
+  exitGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
+  virtual void
+  exitWorker_clause(accparser::Worker_clauseContext * /*ctx*/) override;
+
   virtual void exitVar(accparser::VarContext * /*ctx*/) override;
 };

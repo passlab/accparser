@@ -32,6 +32,16 @@ make
 
 It will produce a library `libaccparser.so` and an executable `main.out`
 
+Optionally, we can also enable the OpenMP translator.
+
+```bash
+git submodule update --init
+mkdir build
+cd build
+cmake -DOMPPARSER=true -DCMAKE_INSTALL_PREFIX=../accparser-install ..
+make install
+```
+
 ## Run
 
 To try accparser a bit quickly, a test file `parallel.txt` under `/tests` can be used.

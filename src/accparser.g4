@@ -221,7 +221,7 @@ const_int
    ;
 
 int_expr_list
-   : int_expr+
+   : (int_expr COMMA | int_expr)+
    ;
 
 int_expr
@@ -229,7 +229,7 @@ int_expr
    ;
 
 var_list
-   : var+
+   : (var COMMA | var)+
    ;
 
 var

@@ -167,7 +167,7 @@ BLANK
    ;
 
 EXPR
-   : [a-zA-Z_] [a-zA-Z0-9_]*
+   : EXPRESSION
    ;
 
 EXPR_LINE_END
@@ -200,10 +200,11 @@ WORKER_BLANK
    ;
 
 WORKER_EXPR
-   : [a-zA-Z_] [a-zA-Z0-9_]* -> type (EXPR)
+   : EXPRESSION -> type (EXPR)
    ;
 
 WORKER_LINE_END
    : [\n\r] -> skip
    ;
 
+fragment EXPRESSION : ~[ ,()]+ ;

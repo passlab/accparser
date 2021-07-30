@@ -75,9 +75,9 @@ if (OMPPARSER)
     target_link_libraries(accparser
         ompparser
         )
-    add_executable(test_omp.out test_omp.cpp)
-    add_dependencies(test_omp.out accparser)
-    target_link_libraries(test_omp.out
+    add_executable(omp_demo.out omp_demo.cpp)
+    add_dependencies(omp_demo.out accparser)
+    target_link_libraries(omp_demo.out
         accparser
         antlr4-runtime
         )

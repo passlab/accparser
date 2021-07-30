@@ -207,4 +207,7 @@ WORKER_LINE_END
    : [\n\r] -> skip
    ;
 
-fragment EXPRESSION : ~[ ,()]+ ;
+fragment EXPRESSION
+   : ~ [ ,()]+
+   ;
+

@@ -24,10 +24,26 @@ void OpenACCIRConstructor::exitGang_clause(accparser::Gang_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_gang);
 };
 
+void OpenACCIRConstructor::enterNum_gangs_clause(
+    accparser::Num_gangs_clauseContext *ctx) {
+  std::string expression = ctx->getText();
+  current_clause = current_directive->addOpenACCClause(ACCC_num_gangs);
+};
+
 void OpenACCIRConstructor::exitWorker_clause(
     accparser::Worker_clauseContext *ctx) {
   std::string expression = ctx->getText();
   current_clause = current_directive->addOpenACCClause(ACCC_worker);
+};
+
+void OpenACCIRConstructor::exitConst_int(accparser::Const_intContext *ctx) {
+  std::string expression = ctx->getText();
+  current_clause->addLangExpr(expression);
+};
+
+void OpenACCIRConstructor::exitInt_expr(accparser::Int_exprContext *ctx) {
+  std::string expression = ctx->getText();
+  current_clause->addLangExpr(expression);
 };
 
 void OpenACCIRConstructor::exitVar(accparser::VarContext *ctx) {

@@ -12,7 +12,11 @@ public:
   virtual void
   exitGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
   virtual void
+  enterNum_gangs_clause(accparser::Num_gangs_clauseContext * /*ctx*/) override;
+  virtual void
   exitWorker_clause(accparser::Worker_clauseContext * /*ctx*/) override;
 
+  virtual void exitConst_int(accparser::Const_intContext * /*ctx*/) override;
+  virtual void exitInt_expr(accparser::Int_exprContext * /*ctx*/) override;
   virtual void exitVar(accparser::VarContext * /*ctx*/) override;
 };

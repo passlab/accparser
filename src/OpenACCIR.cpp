@@ -46,7 +46,12 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_num_gangs:
   case ACCC_num_workers:
   case ACCC_private:
+  case ACCC_attach:
+  case ACCC_deviceptr:
+  case ACCC_present:
+  case ACCC_no_create:
   case ACCC_wait:
+  case ACCC_async:
   case ACCC_worker: {
     if (current_clauses->size() == 0) {
       new_clause = new OpenACCClause(kind);
@@ -59,6 +64,9 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
                   << kind << ", ignored\n";
       } else if (kind == ACCC_num_workers) {
         std::cerr << "Cannot have two num_workers clause for the directive "
+                  << kind << ", ignored\n";
+      } else if (kind == ACCC_async) {
+        std::cerr << "Cannot have two async clause for the directive "
                   << kind << ", ignored\n";
       } else {
         /* we can have multiple clause and we merge them together now, thus we

@@ -122,6 +122,10 @@ parallel_clauses
    | copyout_clause
    | private_clause
    | firstprivate_clause
+   | attach_clause
+   | deviceptr_clause
+   | present_clause
+   | no_create_clause
    ;
 
 async_clause
@@ -160,6 +164,21 @@ firstprivate_clause
    : FIRSTPRIVATE LEFT_PAREN var_list RIGHT_PAREN
    ;
 
+attach_clause
+   : ATTACH LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+deviceptr_clause
+   : DEVICEPTR LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+no_create_clause
+   : NO_CREATE LEFT_PAREN var_list RIGHT_PAREN
+   ;
+   
+present_clause
+   : PRESENT LEFT_PAREN var_list RIGHT_PAREN
+   ;
 loop_directive
    : LOOP loop_clause_list
    ;

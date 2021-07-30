@@ -1,0 +1,1 @@
+#pragma acc parallel attach(a, b, c)

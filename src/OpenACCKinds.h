@@ -32,6 +32,11 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(num_gangs)
     OPENACC_CLAUSE(num_workers)
     OPENACC_CLAUSE(private)
+    OPENACC_CLAUSE(attach)
+    OPENACC_CLAUSE(deviceptr)
+    OPENACC_CLAUSE(present)
+    OPENACC_CLAUSE(no_create)
+    OPENACC_CLAUSE(async)
     OPENACC_CLAUSE(wait)
     OPENACC_CLAUSE(worker)
 

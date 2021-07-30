@@ -87,6 +87,21 @@ std::string OpenACCClause::toString() {
   case ACCC_firstprivate:
     result += "firstprivate ";
     break;
+  case ACCC_no_create:
+    result += "no_create ";
+    break;
+  case ACCC_async:
+    result += "async ";
+    break;
+  case ACCC_attach:
+    result += "attach ";
+    break;
+  case ACCC_deviceptr:
+    result += "deviceptr ";
+    break;
+  case ACCC_present:
+    result += "present ";
+    break;
   case ACCC_copy:
     result += "copy ";
     break;

@@ -1,0 +1,1 @@
+#pragma acc parallel deviceptr(a, b, c)

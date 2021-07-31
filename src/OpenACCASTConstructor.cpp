@@ -62,6 +62,11 @@ void OpenACCIRConstructor::enterNum_workers_clause(accparser::Num_workers_clause
   current_clause = current_directive->addOpenACCClause(ACCC_num_workers);
 };
 
+void OpenACCIRConstructor::enterWait_clause(accparser::Wait_clauseContext *ctx) {
+  std::string expression = ctx->getText();
+  current_clause = current_directive->addOpenACCClause(ACCC_wait);
+};
+
 void OpenACCIRConstructor::enterVector_length_clause(accparser::Vector_length_clauseContext *ctx) {
   std::string expression = ctx->getText();
   current_clause = current_directive->addOpenACCClause(ACCC_vector_length);

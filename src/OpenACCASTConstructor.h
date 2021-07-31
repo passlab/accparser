@@ -34,6 +34,9 @@ public:
   enterNum_workers_clause(accparser::Num_workers_clauseContext * /*ctx*/) override;
   
   virtual void
+  enterWait_clause(accparser::Wait_clauseContext * /*ctx*/) override;
+  
+  virtual void
   enterVector_length_clause(accparser::Vector_length_clauseContext * /*ctx*/) override;
 
   virtual void

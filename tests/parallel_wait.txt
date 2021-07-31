@@ -1,0 +1,1 @@
+#pragma acc parallel wait(12, 23, 34)

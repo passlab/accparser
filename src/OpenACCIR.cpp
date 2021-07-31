@@ -45,6 +45,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_gang:
   case ACCC_num_gangs:
   case ACCC_num_workers:
+  case ACCC_vector_length:
   case ACCC_private:
   case ACCC_attach:
   case ACCC_deviceptr:

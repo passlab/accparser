@@ -93,6 +93,9 @@ std::string OpenACCClause::toString() {
   case ACCC_async:
     result += "async ";
     break;
+  case ACCC_vector_length:
+    result += "vector_length ";
+    break;
   case ACCC_attach:
     result += "attach ";
     break;

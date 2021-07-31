@@ -75,6 +75,10 @@ D_BLANK
 ASYNC
    : 'async' -> pushMode (expr_clause)
    ;
+   
+VECTOR_LENGTH
+   : 'vector_length' -> pushMode (expr_clause)
+   ;
 
 WAIT
    : 'wait' -> pushMode (expr_clause)

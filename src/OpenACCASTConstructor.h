@@ -29,6 +29,12 @@ public:
 
   virtual void
   enterAttach_clause(accparser::Attach_clauseContext * /*ctx*/) override;
+  
+  virtual void
+  enterNum_workers_clause(accparser::Num_workers_clauseContext * /*ctx*/) override;
+  
+  virtual void
+  enterVector_length_clause(accparser::Vector_length_clauseContext * /*ctx*/) override;
 
   virtual void
   exitGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;

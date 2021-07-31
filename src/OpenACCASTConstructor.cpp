@@ -57,6 +57,16 @@ void OpenACCIRConstructor::enterNum_gangs_clause(accparser::Num_gangs_clauseCont
   current_clause = current_directive->addOpenACCClause(ACCC_num_gangs);
 };
 
+void OpenACCIRConstructor::enterNum_workers_clause(accparser::Num_workers_clauseContext *ctx) {
+  std::string expression = ctx->getText();
+  current_clause = current_directive->addOpenACCClause(ACCC_num_workers);
+};
+
+void OpenACCIRConstructor::enterVector_length_clause(accparser::Vector_length_clauseContext *ctx) {
+  std::string expression = ctx->getText();
+  current_clause = current_directive->addOpenACCClause(ACCC_vector_length);
+};
+
 void OpenACCIRConstructor::exitWorker_clause(accparser::Worker_clauseContext *ctx) {
   std::string expression = ctx->getText();
   current_clause = current_directive->addOpenACCClause(ACCC_worker);

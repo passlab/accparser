@@ -1,0 +1,2 @@
+
+#pragma acc parallel num_workers(6)

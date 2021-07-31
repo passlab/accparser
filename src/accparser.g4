@@ -117,6 +117,7 @@ parallel_clauses
    | wait_clause
    | num_gangs_clause
    | num_workers_clause
+   | vector_length_clause
    | copy_clause
    | copyin_clause
    | copyout_clause
@@ -142,6 +143,10 @@ num_gangs_clause
 
 num_workers_clause
    : NUM_WORKERS LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+  
+vector_length_clause
+   : VECTOR_LENGTH LEFT_PAREN int_expr RIGHT_PAREN
    ;
 
 copy_clause

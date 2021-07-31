@@ -78,8 +78,6 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
     break;
   }
   case ACCC_default: {
-    //OpenACCDefaultClauseKind default_kind =
-    //    (OpenACCDefaultClauseKind)va_arg(args, int);
     new_clause = OpenACCDefaultClause::addDefaultClause(this);
     break;
   }

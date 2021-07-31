@@ -159,15 +159,19 @@ LINE_END
 
 mode default_clause;
 NONE
-   : 'none' -> popMode
+   : 'none'
    ;
    
 DEFAULT_PRESENT
-   : 'present' -> type (PRESENT) , popMode
+   : 'present' -> type (PRESENT)
    ;
    
 DEFAULT_LEFT_PAREN
    : '(' -> type (LEFT_PAREN)
+   ;
+   
+DEFAULT_RIGHT_PAREN
+   : '(' -> type (RIGHT_PAREN) , popMode
    ;
    
 mode expr_clause;

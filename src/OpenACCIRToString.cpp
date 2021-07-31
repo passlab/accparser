@@ -129,7 +129,7 @@ std::string OpenACCClause::toString() {
     break;
   case ACCC_wait:
     result += "wait ";
-    break;
+    break;    
   default:
     printf("The clause enum is not supported yet.\n");
   }

@@ -78,9 +78,9 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
     break;
   }
   case ACCC_default: {
-    OpenACCDefaultClauseKind default_kind =
-        (OpenACCDefaultClauseKind)va_arg(args, int);
-    new_clause = OpenACCDefaultClause::addDefaultClause(this, default_kind);
+    //OpenACCDefaultClauseKind default_kind =
+    //    (OpenACCDefaultClauseKind)va_arg(args, int);
+    new_clause = OpenACCDefaultClause::addDefaultClause(this);
     break;
   }
   default: {
@@ -99,8 +99,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
 };
 
 OpenACCClause *
-OpenACCDefaultClause::addDefaultClause(OpenACCDirective *directive,
-                                       OpenACCDefaultClauseKind default_kind) {
+OpenACCDefaultClause::addDefaultClause(OpenACCDirective *directive) {
 
   std::map<OpenACCClauseKind, std::vector<OpenACCClause *> *> *all_clauses =
       directive->getAllClauses();
@@ -109,7 +108,7 @@ OpenACCDefaultClause::addDefaultClause(OpenACCDirective *directive,
   OpenACCClause *new_clause = NULL;
 
   if (current_clauses->size() == 0) {
-    new_clause = new OpenACCDefaultClause(default_kind);
+    new_clause = new OpenACCDefaultClause();
     current_clauses = new std::vector<OpenACCClause *>();
     current_clauses->push_back(new_clause);
     (*all_clauses)[ACCC_default] = current_clauses;

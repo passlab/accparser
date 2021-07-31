@@ -127,12 +127,22 @@ parallel_clauses
    | deviceptr_clause
    | present_clause
    | no_create_clause
+   | default_clause
    ;
 
 async_clause
    : ASYNC LEFT_PAREN int_expr RIGHT_PAREN
    ;
+   
+default_clause
+   : DEFAULT LEFT_PAREN default_kind RIGHT_PAREN
+   ;
 
+default_kind
+   : NONE
+   | PRESENT
+   ;
+   
 wait_clause
    : WAIT LEFT_PAREN int_expr_list RIGHT_PAREN
    ;

@@ -49,6 +49,7 @@ enum OpenACCClauseKind {
 // OpenACC attributes for 'default' clause.
 enum OpenACCDefaultClauseKind {
 #define OPENACC_DEFAULT_KIND(Name) ACCC_DEFAULT_##Name,
+    OPENACC_DEFAULT_KIND(unspecified)
     OPENACC_DEFAULT_KIND(none)
     OPENACC_DEFAULT_KIND(present)
 

@@ -77,6 +77,19 @@ void OpenACCIRConstructor::exitWorker_clause(accparser::Worker_clauseContext *ct
   current_clause = current_directive->addOpenACCClause(ACCC_worker);
 };
 
+void OpenACCIRConstructor::enterDefault_clause(accparser::Default_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_default);
+};
+
+void OpenACCIRConstructor::exitDefault_kind(accparser::Default_kindContext *ctx) {
+  std::string expression = ctx->getText();
+  OpenACCDefaultClauseKind kind = ACCC_DEFAULT_unspecified;
+  if (expression == "none") kind = ACCC_DEFAULT_none;
+  else if (expression == "present") kind = ACCC_DEFAULT_present;
+  ((OpenACCDefaultClause *)current_clause)->setDefaultClauseKind(kind);
+
+};
+
 void OpenACCIRConstructor::exitConst_int(accparser::Const_intContext *ctx) {
   std::string expression = ctx->getText();
   current_clause->addLangExpr(expression);

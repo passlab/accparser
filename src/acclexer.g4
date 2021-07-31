@@ -131,6 +131,10 @@ FIRSTPRIVATE
 COLLAPSE
    : 'collapse' -> pushMode (expr_clause)
    ;
+   
+DEFAULT
+   : 'default' -> pushMode (default_clause)
+   ;
 
 GANG
    : 'gang'
@@ -153,6 +157,19 @@ LINE_END
    : [\n\r] -> skip
    ;
 
+mode default_clause;
+NONE
+   : 'none' -> popMode
+   ;
+   
+DEFAULT_PRESENT
+   : 'present' -> type (PRESENT) , popMode
+   ;
+   
+DEFAULT_LEFT_PAREN
+   : '(' -> type (LEFT_PAREN)
+   ;
+   
 mode expr_clause;
 EXPR_LEFT_PAREN
    : '(' -> type (LEFT_PAREN)

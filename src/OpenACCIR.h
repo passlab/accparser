@@ -67,7 +67,7 @@ public:
 
   std::vector<std::string> *getExpressions() { return &expressions; };
 
-  std::string toString();
+  virtual std::string toString();
   std::string expressionToString();
 };
 
@@ -180,22 +180,16 @@ public:
 class OpenACCDefaultClause : public OpenACCClause {
 
 protected:
-  OpenACCDefaultClauseKind default_kind = ACCC_DEFAULT_unknown;
-  OpenACCDirective *variant_directive =
-      NULL; // variant directive inside the DEFAULT clause
+  OpenACCDefaultClauseKind default_kind = ACCC_DEFAULT_unspecified;
 
 public:
-  OpenACCDefaultClause(OpenACCDefaultClauseKind _default_kind)
-      : OpenACCClause(ACCC_default), default_kind(_default_kind){};
+  OpenACCDefaultClause()
+      : OpenACCClause(ACCC_default){};
 
   OpenACCDefaultClauseKind getDefaultClauseKind() { return default_kind; };
+  
+  void setDefaultClauseKind(OpenACCDefaultClauseKind _default_kind) { default_kind = _default_kind; };
 
-  OpenACCDirective *getVariantDirective() { return variant_directive; };
-  void setVariantDirective(OpenACCDirective *_variant_directive) {
-    variant_directive = _variant_directive;
-  };
-
-  static OpenACCClause *addDefaultClause(OpenACCDirective *,
-                                         OpenACCDefaultClauseKind);
+  static OpenACCClause *addDefaultClause(OpenACCDirective *);
   std::string toString();
 };

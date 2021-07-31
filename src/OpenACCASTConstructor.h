@@ -37,6 +37,12 @@ public:
   enterWait_clause(accparser::Wait_clauseContext * /*ctx*/) override;
   
   virtual void
+  enterDefault_clause(accparser::Default_clauseContext * /*ctx*/) override;
+  
+  virtual void
+  exitDefault_kind(accparser::Default_kindContext * /*ctx*/) override;
+  
+  virtual void
   enterVector_length_clause(accparser::Vector_length_clauseContext * /*ctx*/) override;
 
   virtual void

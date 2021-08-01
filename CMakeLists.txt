@@ -12,6 +12,10 @@ set(ACCPARSER_VERSION ${ACCPARSER_VERSION_MAJOR}.${ACCPARSER_VERSION_MINOR})
 
 find_program(NAMES antlr4)
 
+add_subdirectory(tests)
+enable_testing()
+set(CMAKE_CTEST_ARGUMENTS --output-on-failure)
+
 # Not used, but keep this for the purpose to keep track of the original source files
 set(ACCPARSER_SOURCE_FILES
     src/acclexer.g4
@@ -61,15 +65,18 @@ add_custom_target(accparser_grammar DEPENDS ${ACCPARSER_GRAMMAR_TARGET_FILES})
 
 add_compile_options(-Wall)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-include_directories(SYSTEM /usr/include/antlr4-runtime)
-
 # The accparser library for installation and distribution
 add_library(accparser SHARED ${ACCIR_SOURCE_FILES} ${ACCPARSER_GRAMMAR_TARGET_FILES})
 add_dependencies(accparser accparser_grammar)
 target_link_libraries(accparser
     antlr4-runtime
+    )
+target_include_directories(accparser PUBLIC
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+target_include_directories(accparser SYSTEM PUBLIC
+    /usr/include/antlr4-runtime
     )
 if (OMPPARSER)
     target_link_libraries(accparser
@@ -83,18 +90,6 @@ if (OMPPARSER)
         )
 endif()
 
-add_executable(main.out main.cpp)
-add_dependencies(main.out accparser)
-target_link_libraries(main.out
-    accparser
-    antlr4-runtime
-    )
-
-set(accparser_targets accparser)
-set(executable_targets
-    main.out
-    )
-
 # Install headers and libraries
 install(FILES
         src/OpenACCIR.h
@@ -102,7 +97,4 @@ install(FILES
         DESTINATION include)
 install(TARGETS ${accparser_targets}
         LIBRARY DESTINATION lib
-        )
-install(TARGETS ${executable_targets}
-        RUNTIME DESTINATION bin
         )

@@ -75,7 +75,7 @@ D_BLANK
 ASYNC
    : 'async' -> pushMode (expr_clause)
    ;
-   
+
 VECTOR_LENGTH
    : 'vector_length' -> pushMode (expr_clause)
    ;
@@ -131,7 +131,7 @@ FIRSTPRIVATE
 COLLAPSE
    : 'collapse' -> pushMode (expr_clause)
    ;
-   
+
 DEFAULT
    : 'default' -> pushMode (default_clause)
    ;
@@ -161,19 +161,19 @@ mode default_clause;
 NONE
    : 'none'
    ;
-   
+
 DEFAULT_PRESENT
    : 'present' -> type (PRESENT)
    ;
-   
+
 DEFAULT_LEFT_PAREN
    : '(' -> type (LEFT_PAREN)
    ;
-   
+
 DEFAULT_RIGHT_PAREN
-   : '(' -> type (RIGHT_PAREN) , popMode
+   : ')' -> type (RIGHT_PAREN) , popMode
    ;
-   
+
 mode expr_clause;
 EXPR_LEFT_PAREN
    : '(' -> type (LEFT_PAREN)

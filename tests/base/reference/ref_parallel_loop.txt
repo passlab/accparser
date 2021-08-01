@@ -1,0 +1,1 @@
+#pragma acc parallel loop gang worker private (a, b, c)

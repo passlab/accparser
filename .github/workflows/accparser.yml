@@ -53,7 +53,7 @@ jobs:
     - name: Test
       run: |
         cd $GITHUB_WORKSPACE/build
-        ./main.out ../tests/parallel.txt
+        make test
 
   build-gnu:
     strategy:
@@ -91,7 +91,7 @@ jobs:
     - name: Test
       run: |
         cd $GITHUB_WORKSPACE/build
-        ./main.out ../tests/parallel.txt
+        make test
 
   publish:
     needs: [build-llvm, build-gnu]

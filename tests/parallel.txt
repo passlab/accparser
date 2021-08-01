@@ -1,2 +1,0 @@
-
-#pragma acc parallel private(a, b, c) num_gangs(6)

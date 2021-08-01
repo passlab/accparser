@@ -1,2 +1,0 @@
-
-#pragma acc parallel present(a, b, c)

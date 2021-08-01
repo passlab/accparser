@@ -60,20 +60,9 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
       current_clauses->push_back(new_clause);
       clauses[kind] = current_clauses;
     } else {
-      /*if (kind == ACCC_num_gangs) {
-        std::cerr << "Cannot have two num_gangs clause for the directive "
-                  << kind << ", ignored\n";
-      } else if (kind == ACCC_num_workers) {
-        std::cerr << "Cannot have two num_workers clause for the directive "
-                  << kind << ", ignored\n";
-      } else if (kind == ACCC_async) {
-        std::cerr << "Cannot have two async clause for the directive "
-                  << kind << ", ignored\n";
-      } else {*/
-        /* we can have multiple clause and we merge them together now, thus we
-         * return the object that is already created */
-        new_clause = current_clauses->at(0);
-      //}
+      /* we can have multiple clause and we merge them together now, thus we
+       * return the object that is already created */
+      new_clause = current_clauses->at(0);
     }
     break;
   }

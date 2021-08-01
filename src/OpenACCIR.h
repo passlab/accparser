@@ -7,7 +7,12 @@
 
 #include "OpenACCKinds.h"
 
-enum OpenACCBaseLang { ACC_Lang_C, ACC_Lang_Cplusplus, ACC_Lang_Fortran, ACC_Lang_unknown };
+enum OpenACCBaseLang {
+  ACC_Lang_C,
+  ACC_Lang_Cplusplus,
+  ACC_Lang_Fortran,
+  ACC_Lang_unknown
+};
 
 class ACC_SourceLocation {
   int line;
@@ -17,7 +22,7 @@ class ACC_SourceLocation {
 
 public:
   ACC_SourceLocation(int _line = 0, int _col = 0,
-                 ACC_SourceLocation *_parent_construct = NULL)
+                     ACC_SourceLocation *_parent_construct = NULL)
       : line(_line), column(_col), parent_construct(_parent_construct){};
   void setParentConstruct(ACC_SourceLocation *_parent_construct) {
     parent_construct = _parent_construct;
@@ -148,8 +153,9 @@ protected:
   void *normalizeClause(OpenACCClauseKind kind);
 
 public:
-  OpenACCDirective(OpenACCDirectiveKind k, OpenACCBaseLang _lang = ACC_Lang_unknown,
-                   int _line = 0, int _col = 0)
+  OpenACCDirective(OpenACCDirectiveKind k,
+                   OpenACCBaseLang _lang = ACC_Lang_unknown, int _line = 0,
+                   int _col = 0)
       : ACC_SourceLocation(_line, _col), kind(k), lang(_lang){};
 
   OpenACCDirectiveKind getKind() { return kind; };
@@ -183,12 +189,13 @@ protected:
   OpenACCDefaultClauseKind default_kind = ACCC_DEFAULT_unspecified;
 
 public:
-  OpenACCDefaultClause()
-      : OpenACCClause(ACCC_default){};
+  OpenACCDefaultClause() : OpenACCClause(ACCC_default){};
 
   OpenACCDefaultClauseKind getDefaultClauseKind() { return default_kind; };
-  
-  void setDefaultClauseKind(OpenACCDefaultClauseKind _default_kind) { default_kind = _default_kind; };
+
+  void setDefaultClauseKind(OpenACCDefaultClauseKind _default_kind) {
+    default_kind = _default_kind;
+  };
 
   static OpenACCClause *addDefaultClause(OpenACCDirective *);
   std::string toString();

@@ -1,0 +1,26 @@
+
+#pragma acc parallel private(a, b, c) num_gangs(6)
+
+#pragma acc parallel async(5)
+
+#pragma acc parallel attach(a, b, c)
+
+#pragma acc parallel copy(a, b, c)
+
+#pragma acc parallel default(present)
+
+#pragma acc parallel deviceptr(a, b, c)
+
+#pragma acc parallel firstprivate(a, b, c)
+
+#pragma acc parallel no_create(a, b, c)
+
+#pragma acc parallel num_workers(6)
+
+#pragma acc parallel present(a, b, c)
+
+#pragma acc parallel vector_length(512)
+
+#pragma acc parallel wait(12, 23, 34)
+
+

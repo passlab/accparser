@@ -133,7 +133,7 @@ parallel_clauses
 async_clause
    : ASYNC LEFT_PAREN int_expr RIGHT_PAREN
    ;
-   
+
 default_clause
    : DEFAULT LEFT_PAREN default_kind RIGHT_PAREN
    ;
@@ -142,7 +142,7 @@ default_kind
    : NONE
    | PRESENT
    ;
-   
+
 wait_clause
    : WAIT LEFT_PAREN int_expr_list RIGHT_PAREN
    ;
@@ -154,7 +154,7 @@ num_gangs_clause
 num_workers_clause
    : NUM_WORKERS LEFT_PAREN int_expr RIGHT_PAREN
    ;
-  
+
 vector_length_clause
    : VECTOR_LENGTH LEFT_PAREN int_expr RIGHT_PAREN
    ;
@@ -190,10 +190,11 @@ deviceptr_clause
 no_create_clause
    : NO_CREATE LEFT_PAREN var_list RIGHT_PAREN
    ;
-   
+
 present_clause
    : PRESENT LEFT_PAREN var_list RIGHT_PAREN
    ;
+
 loop_directive
    : LOOP loop_clause_list
    ;

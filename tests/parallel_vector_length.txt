@@ -1,2 +1,0 @@
-
-#pragma acc parallel vector_length(512)

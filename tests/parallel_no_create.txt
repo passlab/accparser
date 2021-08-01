@@ -1,2 +1,0 @@
-
-#pragma acc parallel no_create(a, b, c)

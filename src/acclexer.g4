@@ -4,11 +4,13 @@ lexer grammar acclexer;
 // Lexer file header. Appears at the top of h + cpp files. Use e.g. for copyrights.
 
 @ lexer :: header
-{/* lexer header section */}
+{ /* lexer header section */
+}
 // Appears before any #include in h + cpp files.
 
 @ lexer :: preinclude
-{/* lexer precinclude section */}
+{ /* lexer precinclude section */
+}
 // Follows directly after the standard #includes in h + cpp files.
 
 @ lexer :: postinclude
@@ -21,26 +23,34 @@ lexer grammar acclexer;
 // Directly preceds the lexer class declaration in the h file (e.g. for additional types etc.).
 
 @ lexer :: context
-{/* lexer context section */}
+{ /* lexer context section */
+}
 // Appears in the public part of the lexer in the h file.
 
 @ lexer :: members
-{/* public lexer declarations section */
-bool canTestFoo() { return true; }
-bool isItFoo() { return true; }
-bool isItBar() { return true; }
-
-void myFooLexerAction() { /* do something*/ };
-void myBarLexerAction() { /* do something*/ };
+{ /* public lexer declarations section */
+  bool lookAhead(std::string word) {
+    size_t i;
+    for (i = 0; i < word.size(); i++) {
+      if (_input->LA(i + 1) != (size_t)word[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 // Appears in the private part of the lexer in the h file.
 
 @ lexer :: declarations
-{/* private lexer declarations/members section */}
+{ /* private lexer declarations/members section */
+  int parenthesis_local_count, parenthesis_global_count, bracket_count;
+  int brace_count;
+}
 // Appears in line with the other class member definitions in the cpp file.
 
 @ lexer :: definitions
-{/* lexer definitions section */}
+{ /* lexer definitions section */
+}
 channels { CommentsChannel , DirectiveChannel }
 tokens { EXPR }
 PRAGMA
@@ -142,7 +152,10 @@ GANG
 
 WORKER
    : 'worker' [ ]*
-   { if (_input->LA(1) == '(') pushMode(worker_clause); }
+   {
+  if (_input->LA(1) == '(')
+    pushMode(worker_clause);
+}
    ;
 
 NUM
@@ -176,7 +189,13 @@ DEFAULT_RIGHT_PAREN
 
 mode expr_clause;
 EXPR_LEFT_PAREN
-   : '(' -> type (LEFT_PAREN)
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
    ;
 
 EXPR_RIGHT_PAREN
@@ -184,15 +203,17 @@ EXPR_RIGHT_PAREN
    ;
 
 COMMA
-   : ',' -> skip
+   : ',' [ ]*
+   {
+  skip();
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
    ;
 
 BLANK
    : [ ]+ -> skip
-   ;
-
-EXPR
-   : EXPRESSION
    ;
 
 EXPR_LINE_END
@@ -201,7 +222,15 @@ EXPR_LINE_END
 
 mode worker_clause;
 WORKER_LEFT_PAREN
-   : '(' -> type (LEFT_PAREN)
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  if (lookAhead("num") == false) {
+    pushMode(expression_mode);
+  }
+}
    ;
 
 WORKER_RIGHT_PAREN
@@ -209,11 +238,27 @@ WORKER_RIGHT_PAREN
    ;
 
 WORKER_NUM
-   : 'num' -> type (NUM)
+   : 'num' [ ]*
+   {
+  if (_input->LA(1) == ':' && _input->LA(2) == ':') {
+    more();
+    pushMode(expression_mode);
+  } else if (_input->LA(1) == ':' && _input->LA(2) != ':') {
+    setType(NUM);
+  }
+}
    ;
 
 WORKER_COLON
-   : ':' -> type (COLON)
+   : ':' [ ]*
+   {
+  if (_input->LA(1) == ':')
+    more();
+  else {
+    setType(COLON);
+    pushMode(expression_mode);
+  }
+}
    ;
 
 WORKER_COMMA
@@ -224,15 +269,67 @@ WORKER_BLANK
    : [ ]+ -> skip
    ;
 
-WORKER_EXPR
-   : EXPRESSION -> type (EXPR)
-   ;
-
 WORKER_LINE_END
    : [\n\r] -> skip
    ;
 
-fragment EXPRESSION
-   : ~ [ ,()]+
+mode expression_mode;
+EXPRESSION_LEFT_PAREN
+   : '('
+   {
+  parenthesis_local_count++;
+  parenthesis_global_count++;
+  more();
+}
+   ;
+
+EXPRESSION_RIGHT_PAREN
+   : ')'
+   {
+  parenthesis_local_count--;
+  parenthesis_global_count--;
+  if (parenthesis_global_count == 0) {
+    popMode();
+    setType(RIGHT_PAREN);
+    parenthesis_local_count = 0;
+    parenthesis_global_count = 0;
+    bracket_count = 0;
+  } else {
+    more();
+  };
+}
+   ;
+
+EXPRESSION_CHAR
+   : . [ ]*
+   {
+  switch (_input->LA(1)) {
+  case ')': {
+    if (parenthesis_global_count - 1 == 0) {
+      popMode();
+      setType(EXPR);
+      parenthesis_local_count = 0;
+      bracket_count = 0;
+    } else {
+      parenthesis_global_count--;
+      parenthesis_local_count--;
+      more();
+    };
+    break;
+  }
+  case ',': {
+    if (parenthesis_local_count == 0) {
+      setType(EXPR);
+      popMode();
+    } else {
+      more();
+    };
+    break;
+  }
+  default: {
+    more();
+  }
+  }
+}
    ;
 

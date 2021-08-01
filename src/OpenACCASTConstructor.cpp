@@ -38,7 +38,7 @@ void OpenACCIRConstructor::enterNo_create_clause(
 
 void OpenACCIRConstructor::enterAsync_clause(
     accparser::Async_clauseContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_async);
 }
 
@@ -58,37 +58,37 @@ void OpenACCIRConstructor::enterDeviceptr_clause(
 }
 
 void OpenACCIRConstructor::exitGang_clause(accparser::Gang_clauseContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_gang);
 };
 
 void OpenACCIRConstructor::enterNum_gangs_clause(
     accparser::Num_gangs_clauseContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_num_gangs);
 };
 
 void OpenACCIRConstructor::enterNum_workers_clause(
     accparser::Num_workers_clauseContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_num_workers);
 };
 
 void OpenACCIRConstructor::enterWait_clause(
     accparser::Wait_clauseContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_wait);
 };
 
 void OpenACCIRConstructor::enterVector_length_clause(
     accparser::Vector_length_clauseContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_vector_length);
 };
 
-void OpenACCIRConstructor::exitWorker_clause(
+void OpenACCIRConstructor::enterWorker_clause(
     accparser::Worker_clauseContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_worker);
 };
 
@@ -99,7 +99,7 @@ void OpenACCIRConstructor::enterDefault_clause(
 
 void OpenACCIRConstructor::exitDefault_kind(
     accparser::Default_kindContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   OpenACCDefaultClauseKind kind = ACCC_DEFAULT_unspecified;
   if (expression == "none")
     kind = ACCC_DEFAULT_none;
@@ -109,19 +109,36 @@ void OpenACCIRConstructor::exitDefault_kind(
 };
 
 void OpenACCIRConstructor::exitConst_int(accparser::Const_intContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause->addLangExpr(expression);
 };
 
 void OpenACCIRConstructor::exitInt_expr(accparser::Int_exprContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause->addLangExpr(expression);
 };
 
 void OpenACCIRConstructor::exitVar(accparser::VarContext *ctx) {
-  std::string expression = ctx->getText();
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause->addLangExpr(expression);
 };
+
+std::string trimEnclosingWhiteSpace(std::string expression) {
+
+  const std::string white_space = " \n\r\t\f\v";
+
+  size_t start = expression.find_first_not_of(white_space);
+  if (start != std::string::npos) {
+    expression = expression.substr(start);
+  }
+
+  size_t end = expression.find_last_not_of(white_space);
+  if (end != std::string::npos) {
+    expression = expression.substr(0, end + 1);
+  }
+
+  return expression;
+}
 
 OpenACCDirective *parseOpenACC(std::string source) {
 
@@ -136,13 +153,9 @@ OpenACCDirective *parseOpenACC(std::string source) {
   current_directive = NULL;
   antlr4::tree::ParseTree *tree = parser.acc();
 
-  std::cout << tree->toStringTree(true) << std::endl;
-
   antlr4::tree::ParseTreeWalker *walker = new antlr4::tree::ParseTreeWalker();
   walker->walk(new OpenACCIRConstructor(), tree);
-
   assert(current_directive != NULL);
-  std::cout << current_directive->generatePragmaString() << "\n";
 
   return current_directive;
 }

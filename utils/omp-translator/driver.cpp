@@ -1,11 +1,9 @@
 #include "OpenACCASTConstructor.h"
-#include "OpenACCIR.h"
 #include "OpenMPIR.h"
 #include "OpenMPTranslator.h"
 #include "acclexer.h"
 #include "accparser.h"
 #include <antlr4-runtime.h>
-#include <iostream>
 
 extern OpenACCDirective *current_directive;
 
@@ -34,4 +32,3 @@ OpenMPDirective *parseOpenACCtoOpenMP(std::string source) {
 
   return omp_directive;
 }
-

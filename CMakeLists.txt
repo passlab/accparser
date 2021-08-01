@@ -40,9 +40,10 @@ set(ACCIR_SOURCE_FILES
 # tools based on accparser
 set(ACCPARSER_TOOLS
     utils/omp-translator/OpenMPTranslator.cpp
+    utils/omp-translator/driver.cpp
     )
 if (OMPPARSER)
-    set(ACCIR_SOURCE_FILES ${ACCIR_SOURCE_FILES} ${ACCPARSER_TOOLS} src/driver.cpp)
+    set(ACCIR_SOURCE_FILES ${ACCIR_SOURCE_FILES} ${ACCPARSER_TOOLS})
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator/ompparser)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator/ompparser/src)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator)

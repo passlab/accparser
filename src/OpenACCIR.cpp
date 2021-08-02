@@ -41,7 +41,6 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_attach:
   case ACCC_collapse:
   case ACCC_copy:
-  case ACCC_copyin:
   case ACCC_copyout:
   case ACCC_deviceptr:
   case ACCC_firstprivate:
@@ -63,6 +62,10 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
        * return the object that is already created */
       new_clause = current_clauses->at(0);
     }
+    break;
+  }
+  case ACCC_copyin: {
+    new_clause = OpenACCCopyinClause::addCopyinClause(this);
     break;
   }
   case ACCC_default: {
@@ -89,6 +92,25 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
 };
 
 OpenACCClause *
+OpenACCCopyinClause::addCopyinClause(OpenACCDirective *directive) {
+
+  std::map<OpenACCClauseKind, std::vector<OpenACCClause *> *> *all_clauses =
+      directive->getAllClauses();
+  std::vector<OpenACCClause *> *current_clauses =
+      directive->getClauses(ACCC_copyin);
+  OpenACCClause *new_clause = NULL;
+
+  if (current_clauses->size() == 0) {
+    new_clause = new OpenACCCopyinClause();
+    current_clauses = new std::vector<OpenACCClause *>();
+    current_clauses->push_back(new_clause);
+    (*all_clauses)[ACCC_copyin] = current_clauses;
+  };
+
+  return new_clause;
+};
+
+OpenACCClause *
 OpenACCDefaultClause::addDefaultClause(OpenACCDirective *directive) {
 
   std::map<OpenACCClauseKind, std::vector<OpenACCClause *> *> *all_clauses =
@@ -102,7 +124,7 @@ OpenACCDefaultClause::addDefaultClause(OpenACCDirective *directive) {
     current_clauses = new std::vector<OpenACCClause *>();
     current_clauses->push_back(new_clause);
     (*all_clauses)[ACCC_default] = current_clauses;
-  } else { /* could be an error since if clause may only appear once */
+  } else { /* could be an error since default clause may only appear once */
     std::cerr << "Cannot have two default clause for the directive "
               << directive->getKind() << ", ignored\n";
   };
@@ -124,7 +146,7 @@ OpenACCWorkerClause::addWorkerClause(OpenACCDirective *directive) {
     current_clauses = new std::vector<OpenACCClause *>();
     current_clauses->push_back(new_clause);
     (*all_clauses)[ACCC_worker] = current_clauses;
-  } else { /* could be an error since if clause may only appear once */
+  } else { /* could be an error since worker clause may only appear once */
     std::cerr << "Cannot have two worker clause for the directive "
               << directive->getKind() << ", ignored\n";
   };

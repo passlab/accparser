@@ -182,6 +182,25 @@ public:
   OpenACCBaseLang getBaseLang() { return lang; };
 };
 
+// Copyin Clause
+class OpenACCCopyinClause : public OpenACCClause {
+
+protected:
+  OpenACCCopyinClauseModifier modifier = ACCC_COPYIN_unspecified;
+
+public:
+  OpenACCCopyinClause() : OpenACCClause(ACCC_copyin){};
+
+  OpenACCCopyinClauseModifier getCopyinClauseModifier() { return modifier; };
+
+  void setCopyinClauseModifier(OpenACCCopyinClauseModifier _modifier) {
+    modifier = _modifier;
+  };
+
+  static OpenACCClause *addCopyinClause(OpenACCDirective *);
+  std::string toString();
+};
+
 // Default Clause
 class OpenACCDefaultClause : public OpenACCClause {
 

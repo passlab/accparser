@@ -47,6 +47,19 @@ void OpenACCIRConstructor::enterCopy_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_copy);
 }
 
+void OpenACCIRConstructor::enterCopyin_clause(
+    accparser::Copyin_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_copyin);
+  ((OpenACCCopyinClause *)current_clause)
+      ->setCopyinClauseModifier(ACCC_COPYIN_unspecified);
+}
+
+void OpenACCIRConstructor::exitCopyin_clause_modifier(
+    accparser::Copyin_clause_modifierContext *ctx) {
+  ((OpenACCCopyinClause *)current_clause)
+      ->setCopyinClauseModifier(ACCC_COPYIN_readonly);
+}
+
 void OpenACCIRConstructor::enterPresent_clause(
     accparser::Present_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_present);
@@ -88,7 +101,6 @@ void OpenACCIRConstructor::enterVector_length_clause(
 
 void OpenACCIRConstructor::enterWorker_clause(
     accparser::Worker_clauseContext *ctx) {
-  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_worker);
   ((OpenACCWorkerClause *)current_clause)
       ->setWorkerClauseModifier(ACCC_WORKER_unspecified);

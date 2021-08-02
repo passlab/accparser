@@ -165,6 +165,11 @@ copy_clause
 
 copyin_clause
    : COPYIN LEFT_PAREN var_list RIGHT_PAREN
+   | COPYIN LEFT_PAREN copyin_clause_modifier COLON var_list RIGHT_PAREN
+   ;
+
+copyin_clause_modifier
+   : READONLY
    ;
 
 copyout_clause

@@ -107,7 +107,7 @@ COPY
    ;
 
 COPYIN
-   : 'copyin' -> pushMode (expr_clause)
+   : 'copyin' -> pushMode (copyin_clause)
    ;
 
 COPYOUT
@@ -220,6 +220,63 @@ EXPR_LINE_END
    : [\n\r] -> skip
    ;
 
+mode copyin_clause;
+COPYIN_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  if (lookAhead("readonly") == false) {
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+COPYIN_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+READONLY
+   : 'readonly' [ ]*
+   {
+  if (_input->LA(1) == ':' && _input->LA(2) == ':') {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+COPYIN_COLON
+   : ':' [ ]*
+   {
+  if (_input->LA(1) == ':')
+    more();
+  else {
+    setType(COLON);
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+COPYIN_COMMA
+   : ',' [ ]*
+   {
+  skip();
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
+   ;
+
+COPYIN_BLANK
+   : [ ]+ -> skip
+   ;
+
+COPYIN_LINE_END
+   : [\n\r] -> skip
+   ;
+
 mode worker_clause;
 WORKER_LEFT_PAREN
    : '(' [ ]*
@@ -259,10 +316,6 @@ WORKER_COLON
     pushMode(expression_mode);
   }
 }
-   ;
-
-WORKER_COMMA
-   : ',' -> skip
    ;
 
 WORKER_BLANK

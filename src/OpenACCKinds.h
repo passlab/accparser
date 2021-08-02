@@ -46,6 +46,16 @@ enum OpenACCClauseKind {
 };
 
 
+// OpenACC attributes for 'copyin' clause.
+enum OpenACCCopyinClauseModifier {
+#define OPENACC_COPYIN_MODIFIER(Name) ACCC_COPYIN_##Name,
+    OPENACC_COPYIN_MODIFIER(unspecified)
+    OPENACC_COPYIN_MODIFIER(readonly)
+
+    OPENACC_COPYIN_MODIFIER(unknown)
+#undef OPENACC_WORKER_MODIFIER
+};
+
 // OpenACC attributes for 'default' clause.
 enum OpenACCDefaultClauseKind {
 #define OPENACC_DEFAULT_KIND(Name) ACCC_DEFAULT_##Name,

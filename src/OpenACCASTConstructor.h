@@ -17,6 +17,12 @@ public:
   enterCopy_clause(accparser::Copy_clauseContext * /*ctx*/) override;
 
   virtual void
+  enterCopyin_clause(accparser::Copyin_clauseContext * /*ctx*/) override;
+
+  virtual void exitCopyin_clause_modifier(
+      accparser::Copyin_clause_modifierContext * /*ctx*/) override;
+
+  virtual void
   enterNo_create_clause(accparser::No_create_clauseContext * /*ctx*/) override;
 
   virtual void

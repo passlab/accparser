@@ -117,9 +117,6 @@ std::string OpenACCClause::toString() {
   case ACCC_gang:
     result += "gang ";
     break;
-  case ACCC_copyin:
-    result += "copyin ";
-    break;
   case ACCC_collapse:
     result += "collapse ";
     break;
@@ -135,6 +132,27 @@ std::string OpenACCClause::toString() {
   clause_string += ") ";
   if (clause_string.size() > 3) {
     result += clause_string;
+  }
+
+  return result;
+};
+
+std::string OpenACCCopyinClause::toString() {
+
+  std::string result = "copyin (";
+  std::string parameter_string = "";
+  OpenACCCopyinClauseModifier modifier = this->getCopyinClauseModifier();
+  switch (modifier) {
+  case ACCC_COPYIN_readonly:
+    parameter_string = "readonly: ";
+    break;
+  default:;
+  };
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
   }
 
   return result;

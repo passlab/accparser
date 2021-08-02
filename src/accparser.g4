@@ -224,8 +224,12 @@ worker_clause
    ;
 
 worker_clause_args
-   : LEFT_PAREN NUM COLON int_expr RIGHT_PAREN
+   : LEFT_PAREN worker_clause_modifier COLON int_expr RIGHT_PAREN
    | LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+worker_clause_modifier
+   : NUM
    ;
 
 parallel_loop_directive

@@ -200,3 +200,22 @@ public:
   static OpenACCClause *addDefaultClause(OpenACCDirective *);
   std::string toString();
 };
+
+// Worker Clause
+class OpenACCWorkerClause : public OpenACCClause {
+
+protected:
+  OpenACCWorkerClauseModifier modifier = ACCC_WORKER_unspecified;
+
+public:
+  OpenACCWorkerClause() : OpenACCClause(ACCC_worker){};
+
+  OpenACCWorkerClauseModifier getWorkerClauseModifier() { return modifier; };
+
+  void setWorkerClauseModifier(OpenACCWorkerClauseModifier _modifier) {
+    modifier = _modifier;
+  };
+
+  static OpenACCClause *addWorkerClause(OpenACCDirective *);
+  std::string toString();
+};

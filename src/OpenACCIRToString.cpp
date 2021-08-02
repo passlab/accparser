@@ -116,16 +116,12 @@ std::string OpenACCClause::toString() {
     break;
   case ACCC_gang:
     result += "gang ";
-    ;
     break;
   case ACCC_copyin:
     result += "copyin ";
     break;
   case ACCC_collapse:
     result += "collapse ";
-    break;
-  case ACCC_worker:
-    result += "worker ";
     break;
   case ACCC_wait:
     result += "wait ";
@@ -164,6 +160,27 @@ std::string OpenACCDefaultClause::toString() {
     result += parameter_string + ") ";
   } else {
     result = result.substr(0, result.size() - 2);
+  }
+
+  return result;
+};
+
+std::string OpenACCWorkerClause::toString() {
+
+  std::string result = "worker (";
+  std::string parameter_string = "";
+  OpenACCWorkerClauseModifier modifier = this->getWorkerClauseModifier();
+  switch (modifier) {
+  case ACCC_WORKER_num:
+    parameter_string = "num: ";
+    break;
+  default:;
+  };
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
   }
 
   return result;

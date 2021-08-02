@@ -52,6 +52,8 @@ public:
   enterNum_gangs_clause(accparser::Num_gangs_clauseContext * /*ctx*/) override;
   virtual void
   enterWorker_clause(accparser::Worker_clauseContext * /*ctx*/) override;
+  virtual void exitWorker_clause_modifier(
+      accparser::Worker_clause_modifierContext * /*ctx*/) override;
 
   virtual void exitConst_int(accparser::Const_intContext * /*ctx*/) override;
   virtual void exitInt_expr(accparser::Int_exprContext * /*ctx*/) override;

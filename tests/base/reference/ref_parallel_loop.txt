@@ -1,1 +1,3 @@
 #pragma acc parallel loop gang worker private (a, b, c)
+#pragma acc parallel loop gang worker (num: 6)
+#pragma acc parallel loop gang worker (16)

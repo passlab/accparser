@@ -57,6 +57,15 @@ enum OpenACCDefaultClauseKind {
 #undef OPENACC_DEFAULT_KIND
 };
 
+// OpenACC attributes for 'worker' clause.
+enum OpenACCWorkerClauseModifier {
+#define OPENACC_WORKER_MODIFIER(Name) ACCC_WORKER_##Name,
+    OPENACC_WORKER_MODIFIER(unspecified)
+    OPENACC_WORKER_MODIFIER(num)
+
+    OPENACC_WORKER_MODIFIER(unknown)
+#undef OPENACC_WORKER_MODIFIER
+};
 
 #endif
 

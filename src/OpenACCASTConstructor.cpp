@@ -90,6 +90,15 @@ void OpenACCIRConstructor::enterWorker_clause(
     accparser::Worker_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_worker);
+  ((OpenACCWorkerClause *)current_clause)
+      ->setWorkerClauseModifier(ACCC_WORKER_unspecified);
+};
+
+void OpenACCIRConstructor::exitWorker_clause_modifier(
+    accparser::Worker_clause_modifierContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  ((OpenACCWorkerClause *)current_clause)
+      ->setWorkerClauseModifier(ACCC_WORKER_num);
 };
 
 void OpenACCIRConstructor::enterDefault_clause(

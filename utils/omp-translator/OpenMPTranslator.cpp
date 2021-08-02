@@ -5,7 +5,7 @@
 OpenMPDirective *convertParallelLoop(OpenACCDirective *openacc_directive) {
 
   OpenMPDirective *result =
-      new OpenMPDirective(OMPD_teams_distribute_parallel_for);
+      new OpenMPDirective(OMPD_target_parallel_for);
 
   return result;
 }

@@ -26,8 +26,8 @@ set(ACCPARSER_SOURCE_FILES
     )
 
 set(ACCPARSER_GRAMMAR_FILES
-    ${CMAKE_SOURCE_DIR}/src/acclexer.g4
-    ${CMAKE_SOURCE_DIR}/src/accparser.g4
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/acclexer.g4
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/accparser.g4
     )
 
 # OpenACCIR source files
@@ -42,9 +42,11 @@ set(ACCPARSER_TOOLS
     utils/omp-translator/OpenMPTranslator.cpp
     utils/omp-translator/driver.cpp
     )
-if (OMPPARSER)
+if (USE_OMPPARSER)
     set(ACCIR_SOURCE_FILES ${ACCIR_SOURCE_FILES} ${ACCPARSER_TOOLS})
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator/ompparser)
+    if (NOT USE_REX)
+        add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator/ompparser)
+    endif()
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator/ompparser/src)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils/omp-translator)
 endif()
@@ -57,8 +59,8 @@ set(ACCPARSER_GRAMMAR_TARGET_FILES
 add_custom_command(OUTPUT
     ${ACCPARSER_GRAMMAR_TARGET_FILES}
     COMMAND
-    antlr4 ${ACCPARSER_GRAMMAR_FILES} -Werror -Dlanguage=Cpp -listener -visitor -o ${CMAKE_BINARY_DIR}
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+    antlr4 ${ACCPARSER_GRAMMAR_FILES} -Werror -Dlanguage=Cpp -listener -visitor -o ${CMAKE_CURRENT_BINARY_DIR}
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     DEPENDS "${ACCPARSER_GRAMMAR_FILES}"
     )
 
@@ -79,7 +81,7 @@ target_include_directories(accparser PUBLIC
 target_include_directories(accparser SYSTEM PUBLIC
     /usr/include/antlr4-runtime
     )
-if (OMPPARSER)
+if (USE_OMPPARSER)
     target_link_libraries(accparser
         ompparser
         )

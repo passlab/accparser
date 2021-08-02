@@ -38,7 +38,7 @@ Optionally, we can also enable the OpenMP translator.
 git submodule update --init
 mkdir build
 cd build
-cmake -DOMPPARSER=true -DCMAKE_INSTALL_PREFIX=../accparser-install ..
+cmake -DUSE_OMPPARSER=true -DCMAKE_INSTALL_PREFIX=../accparser-install ..
 make install
 ```
 

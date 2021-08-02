@@ -91,6 +91,13 @@ if (OMPPARSER)
         )
 endif()
 
+add_executable(acc_demo.out acc_demo.cpp)
+add_dependencies(acc_demo.out accparser)
+target_link_libraries(acc_demo.out
+    accparser
+    antlr4-runtime
+    )
+
 # Install headers and libraries
 install(FILES
         src/OpenACCIR.h

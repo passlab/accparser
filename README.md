@@ -30,7 +30,7 @@ cmake ..
 make
 ```
 
-It will produce a library `libaccparser.so` and an executable `main.out`
+It will produce a library `libaccparser.so` and an executable `acc_demo.out`
 
 Optionally, we can also enable the OpenMP translator.
 
@@ -44,11 +44,7 @@ make install
 
 ## Run
 
-To try accparser a bit quickly, a test file `parallel.txt` under `/tests` can be used.
-
-```bash
-./main.out ../tests/parallel.txt
-```
+Given a test file `foo.txt` with the following content to try accparser.
 
 Input:
 
@@ -56,9 +52,30 @@ Input:
 #pragma acc parallel private(a, b, c)
 ```
 
+```bash
+./acc_demo.out ./foo.txt
+```
+The output includes the OpenACC source code, recognized tokens, parse tree, and the OpenACC code unparsed from the generated OpenACC IR.
+
 Output:
 
 ```bash
+======================================
+Line: 1
+GIVEN INPUT: #pragma acc parallel private(a, b, c)
+======================================
+TOKEN : TOKEN_STRING
+ACC : "acc"
+PARALLEL : "parallel"
+PRIVATE : "private"
+LEFT_PAREN : "("
+EXPR : "a"
+EXPR : "b"
+EXPR : "c"
+RIGHT_PAREN : ")"
+EOF : "<EOF>"
+======================================
+PARSE TREE:
 (accparallelprivate(abc)<EOF> acc 
         (parallelprivate(abc) 
             (parallelprivate(abc) parallel 
@@ -69,11 +86,11 @@ Output:
                                 (a a) 
                                 (b b) 
                                 (c c)) )))))) <EOF>)
-
-# unparse the original input from the generated OpenACCIR
-#pragma acc parallel private(a, b, c)
+======================================
+GENERATED OUTPUT: #pragma acc parallel private (a, b, c)
+======================================
 ```
 
-On each line, the output follows the format `(root child_1 child_2 ... child_n)`.
+At each line of the parse tree section, the output follows the format `(root child_1 child_2 ... child_n)`.
 For example, the first line shows that the root is `accparallelprivate(abc)`. Its children include `acc` and `parallelprivate(abc)`.
 The latter has its own children that are listed at other lines.

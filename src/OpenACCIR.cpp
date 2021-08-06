@@ -45,6 +45,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_copy:
   case ACCC_deviceptr:
   case ACCC_firstprivate:
+  case ACCC_device_type:
   case ACCC_gang:
   case ACCC_no_create:
   case ACCC_num_gangs:

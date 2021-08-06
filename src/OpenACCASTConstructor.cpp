@@ -26,6 +26,11 @@ void OpenACCIRConstructor::enterFirstprivate_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_firstprivate);
 }
 
+void OpenACCIRConstructor::enterDevice_type_clause(
+    accparser::Device_type_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_device_type);
+}
+
 void OpenACCIRConstructor::enterAttach_clause(
     accparser::Attach_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_attach);

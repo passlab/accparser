@@ -123,6 +123,7 @@ parallel_clauses
    | copy_clause
    | copyin_clause
    | copyout_clause
+   | device_type_clause
    | create_clause
    | private_clause
    | firstprivate_clause
@@ -203,11 +204,19 @@ create_clause
    ;
    
 create_clause_modifier
-   : CREATE_ZERO
+   : ZERO
    ;
 
 private_clause
    : PRIVATE LEFT_PAREN var_list RIGHT_PAREN
+   ;
+   
+device_type_clause
+   : DEVICE_TYPE LEFT_PAREN device_type_list RIGHT_PAREN
+   ;
+   
+device_type_list
+   : (var COMMA | var)+
    ;
 
 firstprivate_clause

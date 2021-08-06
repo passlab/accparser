@@ -29,6 +29,9 @@ public:
       accparser::Copyout_clause_modifierContext * /*ctx*/) override;
       
   virtual void
+  enterDevice_type_clause(accparser::Device_type_clauseContext * /*ctx*/) override;
+      
+  virtual void
   enterCreate_clause(accparser::Create_clauseContext * /*ctx*/) override;
 
   virtual void exitCreate_clause_modifier(

@@ -87,6 +87,9 @@ std::string OpenACCClause::toString() {
   case ACCC_firstprivate:
     result += "firstprivate ";
     break;
+  case ACCC_device_type:
+    result += "device_type ";
+    break;
   case ACCC_no_create:
     result += "no_create ";
     break;

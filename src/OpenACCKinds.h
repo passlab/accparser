@@ -40,6 +40,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(present)
     OPENACC_CLAUSE(no_create)
     OPENACC_CLAUSE(async)
+    OPENACC_CLAUSE(device_type)
     OPENACC_CLAUSE(wait)
     OPENACC_CLAUSE(worker)
 

@@ -114,6 +114,7 @@ parallel_clause_list
 
 parallel_clauses
    : async_clause
+   | if_clause
    | wait_clause
    | num_gangs_clause
    | num_workers_clause
@@ -133,6 +134,14 @@ parallel_clauses
 
 async_clause
    : ASYNC LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+   
+if_clause
+   : IF LEFT_PAREN condition RIGHT_PAREN
+   ;
+   
+condition
+   : EXPR
    ;
 
 default_clause

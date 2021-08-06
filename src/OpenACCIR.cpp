@@ -38,6 +38,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
 
   switch (kind) {
   case ACCC_async:
+  case ACCC_if:
   case ACCC_attach:
   case ACCC_collapse:
   case ACCC_copy:

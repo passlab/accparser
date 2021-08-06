@@ -42,6 +42,9 @@ public:
 
   virtual void
   enterAsync_clause(accparser::Async_clauseContext * /*ctx*/) override;
+  
+  virtual void
+  enterIf_clause(accparser::If_clauseContext * /*ctx*/) override;
 
   virtual void
   enterPresent_clause(accparser::Present_clauseContext * /*ctx*/) override;
@@ -75,6 +78,7 @@ public:
 
   virtual void exitConst_int(accparser::Const_intContext * /*ctx*/) override;
   virtual void exitInt_expr(accparser::Int_exprContext * /*ctx*/) override;
+  virtual void exitCondition(accparser::ConditionContext * /*ctx*/) override;
   virtual void exitVar(accparser::VarContext * /*ctx*/) override;
 };
 

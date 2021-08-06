@@ -42,6 +42,12 @@ void OpenACCIRConstructor::enterAsync_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_async);
 }
 
+void OpenACCIRConstructor::enterIf_clause(
+    accparser::If_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_if);
+}
+
 void OpenACCIRConstructor::enterCopy_clause(
     accparser::Copy_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_copy);
@@ -161,6 +167,11 @@ void OpenACCIRConstructor::exitConst_int(accparser::Const_intContext *ctx) {
 };
 
 void OpenACCIRConstructor::exitInt_expr(accparser::Int_exprContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause->addLangExpr(expression);
+};
+
+void OpenACCIRConstructor::exitCondition(accparser::ConditionContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause->addLangExpr(expression);
 };

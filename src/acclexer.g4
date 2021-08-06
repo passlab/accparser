@@ -349,53 +349,6 @@ COPYOUT_BLANK
 COPYOUT_LINE_END
    : [\n\r] -> skip
    ;
-   
-mode device_type_clause;
-DEVICE_TYPE_LEFT_PAREN
-   : '(' [ ]*
-   {
-  setType(LEFT_PAREN);
-  parenthesis_global_count = 1;
-  parenthesis_local_count = 0;
-  if (lookAhead("readonly") == false) {
-    pushMode(expression_mode);
-  }
-}
-   ;
-
-DEVICE_TYPE_RIGHT_PAREN
-   : ')' -> type (RIGHT_PAREN) , popMode
-   ;
-
-DEVICE_TYPE_COLON
-   : ':' [ ]*
-   {
-  if (_input->LA(1) == ':')
-    more();
-  else {
-    setType(COLON);
-    pushMode(expression_mode);
-  }
-}
-   ;
-
-DEVICE_TYPE_COMMA
-   : ',' [ ]*
-   {
-  skip();
-  pushMode(expression_mode);
-  parenthesis_global_count = 1;
-  parenthesis_local_count = 0;
-}
-   ;
-
-DEVICE_TYPE_BLANK
-   : [ ]+ -> skip
-   ;
-
-DEVICE_TYPE_LINE_END
-   : [\n\r] -> skip
-   ;
 
 mode create_clause;
 CREATE_LEFT_PAREN

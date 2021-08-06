@@ -30,6 +30,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(firstprivate)
     OPENACC_CLAUSE(gang)
     OPENACC_CLAUSE(if)
+    OPENACC_CLAUSE(self)
     OPENACC_CLAUSE(num_gangs)
     OPENACC_CLAUSE(num_workers)
     OPENACC_CLAUSE(vector_length)

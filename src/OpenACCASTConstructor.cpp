@@ -48,6 +48,12 @@ void OpenACCIRConstructor::enterIf_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_if);
 }
 
+void OpenACCIRConstructor::enterSelf_clause(
+    accparser::Self_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_self);
+}
+
 void OpenACCIRConstructor::enterCopy_clause(
     accparser::Copy_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_copy);

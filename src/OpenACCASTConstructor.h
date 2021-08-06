@@ -45,6 +45,9 @@ public:
   
   virtual void
   enterIf_clause(accparser::If_clauseContext * /*ctx*/) override;
+  
+  virtual void
+  enterSelf_clause(accparser::Self_clauseContext * /*ctx*/) override;
 
   virtual void
   enterPresent_clause(accparser::Present_clauseContext * /*ctx*/) override;

@@ -96,6 +96,9 @@ std::string OpenACCClause::toString() {
   case ACCC_if:
     result += "if ";
     break;
+  case ACCC_self:
+    result += "self ";
+    break;
   case ACCC_vector_length:
     result += "vector_length ";
     break;

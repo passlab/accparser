@@ -115,6 +115,7 @@ parallel_clause_list
 parallel_clauses
    : async_clause
    | if_clause
+   | self_clause
    | wait_clause
    | num_gangs_clause
    | num_workers_clause
@@ -138,6 +139,11 @@ async_clause
    
 if_clause
    : IF LEFT_PAREN condition RIGHT_PAREN
+   ;
+   
+self_clause
+   : SELF
+   | SELF LEFT_PAREN condition RIGHT_PAREN
    ;
    
 condition

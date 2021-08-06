@@ -34,3 +34,11 @@
 #pragma acc parallel create(12, 23, 34)
 
 #pragma acc parallel create(zero: 12, 23, 34)
+
+#pragma acc parallel if(5)
+
+#pragma acc parallel if(x==3)
+
+#pragma acc parallel self(5)
+
+#pragma acc parallel self(x==3)

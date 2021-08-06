@@ -90,6 +90,10 @@ IF
    : 'if' -> pushMode (expr_clause)
    ;
 
+SELF
+   : 'self' -> pushMode (expr_clause)
+   ;
+
 VECTOR_LENGTH
    : 'vector_length' -> pushMode (expr_clause)
    ;

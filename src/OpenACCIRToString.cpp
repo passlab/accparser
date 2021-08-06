@@ -158,6 +158,48 @@ std::string OpenACCCopyinClause::toString() {
   return result;
 };
 
+std::string OpenACCCopyoutClause::toString() {
+
+  std::string result = "copyout (";
+  std::string parameter_string = "";
+  OpenACCCopyoutClauseModifier modifier = this->getCopyoutClauseModifier();
+  switch (modifier) {
+  case ACCC_COPYOUT_zero:
+    parameter_string = "zero: ";
+    break;
+  default:;
+  };
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
+  }
+
+  return result;
+};
+
+std::string OpenACCCreateClause::toString() {
+
+  std::string result = "create (";
+  std::string parameter_string = "";
+  OpenACCCreateClauseModifier modifier = this->getCreateClauseModifier();
+  switch (modifier) {
+  case ACCC_CREATE_zero:
+    parameter_string = "zero: ";
+    break;
+  default:;
+  };
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
+  }
+
+  return result;
+};
+
 std::string OpenACCDefaultClause::toString() {
 
   std::string result = "default (";

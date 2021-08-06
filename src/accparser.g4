@@ -121,6 +121,7 @@ parallel_clauses
    | copy_clause
    | copyin_clause
    | copyout_clause
+   | create_clause
    | private_clause
    | firstprivate_clause
    | attach_clause
@@ -174,6 +175,20 @@ copyin_clause_modifier
 
 copyout_clause
    : COPYOUT LEFT_PAREN var_list RIGHT_PAREN
+   | COPYOUT LEFT_PAREN copyout_clause_modifier COLON var_list RIGHT_PAREN
+   ;
+   
+copyout_clause_modifier
+   : ZERO
+   ;
+   
+create_clause
+   : CREATE LEFT_PAREN var_list RIGHT_PAREN
+   | CREATE LEFT_PAREN create_clause_modifier COLON var_list RIGHT_PAREN
+   ;
+   
+create_clause_modifier
+   : CREATE_ZERO
    ;
 
 private_clause

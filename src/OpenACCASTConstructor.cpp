@@ -60,6 +60,32 @@ void OpenACCIRConstructor::exitCopyin_clause_modifier(
       ->setCopyinClauseModifier(ACCC_COPYIN_readonly);
 }
 
+void OpenACCIRConstructor::enterCopyout_clause(
+    accparser::Copyout_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_copyout);
+  ((OpenACCCopyoutClause *)current_clause)
+      ->setCopyoutClauseModifier(ACCC_COPYOUT_unspecified);
+}
+
+void OpenACCIRConstructor::exitCopyout_clause_modifier(
+    accparser::Copyout_clause_modifierContext *ctx) {
+  ((OpenACCCopyoutClause *)current_clause)
+      ->setCopyoutClauseModifier(ACCC_COPYOUT_zero);
+}
+
+void OpenACCIRConstructor::enterCreate_clause(
+    accparser::Create_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_create);
+  ((OpenACCCreateClause *)current_clause)
+      ->setCreateClauseModifier(ACCC_CREATE_unspecified);
+}
+
+void OpenACCIRConstructor::exitCreate_clause_modifier(
+    accparser::Create_clause_modifierContext *ctx) {
+  ((OpenACCCreateClause *)current_clause)
+      ->setCreateClauseModifier(ACCC_CREATE_zero);
+}
+
 void OpenACCIRConstructor::enterPresent_clause(
     accparser::Present_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_present);

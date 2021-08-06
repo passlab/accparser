@@ -27,4 +27,10 @@
 
 #pragma acc parallel wait(12, 23, 34)
 
+#pragma acc parallel copyout(12, 23, 34)
 
+#pragma acc parallel copyout(zero: 12, 23, 34)
+
+#pragma acc parallel create(12, 23, 34)
+
+#pragma acc parallel create(zero: 12, 23, 34)

@@ -25,6 +25,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(copy)
     OPENACC_CLAUSE(copyin)
     OPENACC_CLAUSE(copyout)
+    OPENACC_CLAUSE(create)
     OPENACC_CLAUSE(default)
     OPENACC_CLAUSE(firstprivate)
     OPENACC_CLAUSE(gang)
@@ -53,7 +54,27 @@ enum OpenACCCopyinClauseModifier {
     OPENACC_COPYIN_MODIFIER(readonly)
 
     OPENACC_COPYIN_MODIFIER(unknown)
-#undef OPENACC_WORKER_MODIFIER
+#undef OPENACC_COPYIN_MODIFIER
+};
+
+// OpenACC attributes for 'copyout' clause.
+enum OpenACCCopyoutClauseModifier {
+#define OPENACC_COPYOUT_MODIFIER(Name) ACCC_COPYOUT_##Name,
+    OPENACC_COPYOUT_MODIFIER(unspecified)
+    OPENACC_COPYOUT_MODIFIER(zero)
+
+    OPENACC_COPYOUT_MODIFIER(unknown)
+#undef OPENACC_COPYOUT_MODIFIER
+};
+
+// OpenACC attributes for 'create' clause.
+enum OpenACCCreateClauseModifier {
+#define OPENACC_CREATE_MODIFIER(Name) ACCC_CREATE_##Name,
+    OPENACC_CREATE_MODIFIER(unspecified)
+    OPENACC_CREATE_MODIFIER(zero)
+
+    OPENACC_CREATE_MODIFIER(unknown)
+#undef OPENACC_CREATE_MODIFIER
 };
 
 // OpenACC attributes for 'default' clause.

@@ -201,6 +201,44 @@ public:
   std::string toString();
 };
 
+// Copyout Clause
+class OpenACCCopyoutClause : public OpenACCClause {
+
+protected:
+  OpenACCCopyoutClauseModifier modifier = ACCC_COPYOUT_unspecified;
+
+public:
+  OpenACCCopyoutClause() : OpenACCClause(ACCC_copyout){};
+
+  OpenACCCopyoutClauseModifier getCopyoutClauseModifier() { return modifier; };
+
+  void setCopyoutClauseModifier(OpenACCCopyoutClauseModifier _modifier) {
+    modifier = _modifier;
+  };
+
+  static OpenACCClause *addCopyoutClause(OpenACCDirective *);
+  std::string toString();
+};
+
+// Create Clause
+class OpenACCCreateClause : public OpenACCClause {
+
+protected:
+  OpenACCCreateClauseModifier modifier = ACCC_CREATE_unspecified;
+
+public:
+  OpenACCCreateClause() : OpenACCClause(ACCC_create){};
+
+  OpenACCCreateClauseModifier getCreateClauseModifier() { return modifier; };
+
+  void setCreateClauseModifier(OpenACCCreateClauseModifier _modifier) {
+    modifier = _modifier;
+  };
+
+  static OpenACCClause *addCreateClause(OpenACCDirective *);
+  std::string toString();
+};
+
 // Default Clause
 class OpenACCDefaultClause : public OpenACCClause {
 

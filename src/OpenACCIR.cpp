@@ -41,7 +41,6 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_attach:
   case ACCC_collapse:
   case ACCC_copy:
-  case ACCC_copyout:
   case ACCC_deviceptr:
   case ACCC_firstprivate:
   case ACCC_gang:
@@ -66,6 +65,14 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   }
   case ACCC_copyin: {
     new_clause = OpenACCCopyinClause::addCopyinClause(this);
+    break;
+  }
+  case ACCC_copyout: {
+    new_clause = OpenACCCopyoutClause::addCopyoutClause(this);
+    break;
+  }
+  case ACCC_create: {
+    new_clause = OpenACCCreateClause::addCreateClause(this);
     break;
   }
   case ACCC_default: {
@@ -105,6 +112,44 @@ OpenACCCopyinClause::addCopyinClause(OpenACCDirective *directive) {
     current_clauses = new std::vector<OpenACCClause *>();
     current_clauses->push_back(new_clause);
     (*all_clauses)[ACCC_copyin] = current_clauses;
+  };
+
+  return new_clause;
+};
+
+OpenACCClause *
+OpenACCCopyoutClause::addCopyoutClause(OpenACCDirective *directive) {
+
+  std::map<OpenACCClauseKind, std::vector<OpenACCClause *> *> *all_clauses =
+      directive->getAllClauses();
+  std::vector<OpenACCClause *> *current_clauses =
+      directive->getClauses(ACCC_copyout);
+  OpenACCClause *new_clause = NULL;
+
+  if (current_clauses->size() == 0) {
+    new_clause = new OpenACCCopyoutClause();
+    current_clauses = new std::vector<OpenACCClause *>();
+    current_clauses->push_back(new_clause);
+    (*all_clauses)[ACCC_copyout] = current_clauses;
+  };
+
+  return new_clause;
+};
+
+OpenACCClause *
+OpenACCCreateClause::addCreateClause(OpenACCDirective *directive) {
+
+  std::map<OpenACCClauseKind, std::vector<OpenACCClause *> *> *all_clauses =
+      directive->getAllClauses();
+  std::vector<OpenACCClause *> *current_clauses =
+      directive->getClauses(ACCC_create);
+  OpenACCClause *new_clause = NULL;
+
+  if (current_clauses->size() == 0) {
+    new_clause = new OpenACCCreateClause();
+    current_clauses = new std::vector<OpenACCClause *>();
+    current_clauses->push_back(new_clause);
+    (*all_clauses)[ACCC_create] = current_clauses;
   };
 
   return new_clause;

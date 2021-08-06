@@ -111,9 +111,13 @@ COPYIN
    ;
 
 COPYOUT
-   : 'copyout' -> pushMode (expr_clause)
+   : 'copyout' -> pushMode (copyout_clause)
    ;
-
+   
+CREATE
+   : 'create' -> pushMode (create_clause)
+   ;
+   
 NO_CREATE
    : 'no_create' -> pushMode (expr_clause)
    ;
@@ -274,6 +278,120 @@ COPYIN_BLANK
    ;
 
 COPYIN_LINE_END
+   : [\n\r] -> skip
+   ;
+   
+mode copyout_clause;
+COPYOUT_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  if (lookAhead("readonly") == false) {
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+COPYOUT_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+ZERO
+   : 'zero' [ ]*
+   {
+  if (_input->LA(1) == ':' && _input->LA(2) == ':') {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+COPYOUT_COLON
+   : ':' [ ]*
+   {
+  if (_input->LA(1) == ':')
+    more();
+  else {
+    setType(COLON);
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+COPYOUT_COMMA
+   : ',' [ ]*
+   {
+  skip();
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
+   ;
+
+COPYOUT_BLANK
+   : [ ]+ -> skip
+   ;
+
+COPYOUT_LINE_END
+   : [\n\r] -> skip
+   ;
+
+mode create_clause;
+CREATE_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  if (lookAhead("readonly") == false) {
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+CREATE_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+CREATE_ZERO
+   : 'zero' [ ]*
+   {
+  if (_input->LA(1) == ':' && _input->LA(2) == ':') {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+CREATE_COLON
+   : ':' [ ]*
+   {
+  if (_input->LA(1) == ':')
+    more();
+  else {
+    setType(COLON);
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+CREATE_COMMA
+   : ',' [ ]*
+   {
+  skip();
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
+   ;
+
+CREATE_BLANK
+   : [ ]+ -> skip
+   ;
+
+CREATE_LINE_END
    : [\n\r] -> skip
    ;
 

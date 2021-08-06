@@ -130,6 +130,10 @@ CREATE
    : 'create' -> pushMode (create_clause)
    ;
    
+REDUCTION
+   : 'reduction' -> pushMode (reduction_clause)
+   ;
+   
 NO_CREATE
    : 'no_create' -> pushMode (expr_clause)
    ;
@@ -405,6 +409,140 @@ CREATE_BLANK
    ;
 
 CREATE_LINE_END
+   : [\n\r] -> skip
+   ;
+   
+mode reduction_clause;
+REDUCTION_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
+   ;
+
+REDUCTION_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+ADD
+   : '+' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+   
+MUL
+   : '*' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+   
+MAX
+   : 'max' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+   
+MIN
+   : 'min' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+   
+BITAND
+   : '&' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+   
+BITOR
+   : '|' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+   
+BITXOR
+   : '^' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+   
+LOGAND
+   : '&&' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+   
+LOGOR
+   : '||' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+REDUCTION_COLON
+   : ':' [ ]*
+   {
+  if (_input->LA(1) == ':')
+    more();
+  else {
+    setType(COLON);
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+REDUCTION_COMMA
+   : ',' [ ]*
+   {
+  skip();
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
+   ;
+
+REDUCTION_BLANK
+   : [ ]+ -> skip
+   ;
+
+REDUCTION_LINE_END
    : [\n\r] -> skip
    ;
 

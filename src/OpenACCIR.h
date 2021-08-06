@@ -201,6 +201,25 @@ public:
   std::string toString();
 };
 
+// Reduction Clause
+class OpenACCReductionClause : public OpenACCClause {
+
+protected:
+  OpenACCReductionClauseOperator reduction_operator = ACCC_REDUCTION_unspecified;
+
+public:
+  OpenACCReductionClause() : OpenACCClause(ACCC_reduction){};
+
+  OpenACCReductionClauseOperator getReductionClauseOperator() { return reduction_operator; };
+
+  void setReductionClauseOperator(OpenACCReductionClauseOperator _operator) {
+    reduction_operator = _operator;
+  };
+
+  static OpenACCClause *addReductionClause(OpenACCDirective *);
+  std::string toString();
+};
+
 // Copyout Clause
 class OpenACCCopyoutClause : public OpenACCClause {
 

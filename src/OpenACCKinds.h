@@ -24,6 +24,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(collapse)
     OPENACC_CLAUSE(copy)
     OPENACC_CLAUSE(copyin)
+    OPENACC_CLAUSE(reduction)
     OPENACC_CLAUSE(copyout)
     OPENACC_CLAUSE(create)
     OPENACC_CLAUSE(default)
@@ -57,6 +58,24 @@ enum OpenACCCopyinClauseModifier {
 
     OPENACC_COPYIN_MODIFIER(unknown)
 #undef OPENACC_COPYIN_MODIFIER
+};
+
+// OpenACC attributes for 'reduction' clause.
+enum OpenACCReductionClauseOperator {
+#define OPENACC_REDUCTION_OPERATOR(Name) ACCC_REDUCTION_##Name,
+    OPENACC_REDUCTION_OPERATOR(unspecified)
+    OPENACC_REDUCTION_OPERATOR(readonly)
+    OPENACC_REDUCTION_OPERATOR(add)
+    OPENACC_REDUCTION_OPERATOR(mul)
+    OPENACC_REDUCTION_OPERATOR(max)
+    OPENACC_REDUCTION_OPERATOR(min)
+    OPENACC_REDUCTION_OPERATOR(bitand)
+    OPENACC_REDUCTION_OPERATOR(bitor)
+    OPENACC_REDUCTION_OPERATOR(bitxor)
+    OPENACC_REDUCTION_OPERATOR(logand)
+    OPENACC_REDUCTION_OPERATOR(logor)
+    OPENACC_REDUCTION_OPERATOR(unknown)
+#undef OPENACC_REDUCTION_OPERATOR
 };
 
 // OpenACC attributes for 'copyout' clause.

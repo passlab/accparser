@@ -77,6 +77,38 @@ void OpenACCIRConstructor::exitCopyin_clause_modifier(
       ->setCopyinClauseModifier(ACCC_COPYIN_readonly);
 }
 
+void OpenACCIRConstructor::enterReduction_clause(
+    accparser::Reduction_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_reduction);
+  ((OpenACCReductionClause *)current_clause)
+      ->setReductionClauseOperator(ACCC_REDUCTION_unspecified);
+}
+
+void OpenACCIRConstructor::exitReduction_operator(
+    accparser::Reduction_operatorContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  OpenACCReductionClauseOperator reduction_operator = ACCC_REDUCTION_unspecified;
+  if (expression == "+")
+    reduction_operator = ACCC_REDUCTION_add;
+  else if (expression == "*")
+    reduction_operator = ACCC_REDUCTION_mul;
+  else if (expression == "max")
+    reduction_operator = ACCC_REDUCTION_max;
+  else if (expression == "min")
+    reduction_operator = ACCC_REDUCTION_min;
+  else if (expression == "&")
+    reduction_operator = ACCC_REDUCTION_bitand;
+  else if (expression == "|")
+    reduction_operator = ACCC_REDUCTION_bitor;
+  else if (expression == "^")
+    reduction_operator = ACCC_REDUCTION_bitxor;
+  else if (expression == "&&")
+    reduction_operator = ACCC_REDUCTION_logand;
+  else if (expression == "||")
+    reduction_operator = ACCC_REDUCTION_logor;
+  ((OpenACCReductionClause *)current_clause)->setReductionClauseOperator(reduction_operator);
+};
+
 void OpenACCIRConstructor::enterCopyout_clause(
     accparser::Copyout_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_copyout);

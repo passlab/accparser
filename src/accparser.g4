@@ -122,6 +122,7 @@ parallel_clauses
    | vector_length_clause
    | copy_clause
    | copyin_clause
+   | reduction_clause
    | copyout_clause
    | device_type_clause
    | create_clause
@@ -188,6 +189,22 @@ copyin_clause
 copyin_clause_modifier
    : READONLY
    ;
+   
+reduction_clause
+   :  REDUCTION LEFT_PAREN reduction_operator COLON var_list RIGHT_PAREN
+   ;
+
+reduction_operator
+   : ADD
+   | MUL   
+   | MAX  
+   | MIN   
+   | BITAND  
+   | BITOR   
+   | BITXOR   
+   | LOGAND   
+   | LOGOR
+   ;  
 
 copyout_clause
    : COPYOUT LEFT_PAREN var_list RIGHT_PAREN

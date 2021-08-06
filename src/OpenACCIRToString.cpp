@@ -167,6 +167,51 @@ std::string OpenACCCopyinClause::toString() {
   return result;
 };
 
+std::string OpenACCReductionClause::toString() {
+
+  std::string result = "reduction (";
+  std::string parameter_string = "";
+  OpenACCReductionClauseOperator reduction_operator = this->getReductionClauseOperator();
+  switch (reduction_operator) {
+  case ACCC_REDUCTION_add:
+    parameter_string = "+: ";
+    break;
+  case ACCC_REDUCTION_mul:
+    parameter_string = "*: ";
+    break;
+  case ACCC_REDUCTION_max:
+    parameter_string = "max: ";
+    break;
+  case ACCC_REDUCTION_min:
+    parameter_string = "min: ";
+    break;
+  case ACCC_REDUCTION_bitand:
+    parameter_string = "$: ";
+    break;
+  case ACCC_REDUCTION_bitor:
+    parameter_string = "|: ";
+    break;
+  case ACCC_REDUCTION_bitxor:
+    parameter_string = "^: ";
+    break;
+  case ACCC_REDUCTION_logand:
+    parameter_string = "&&: ";
+    break;
+  case ACCC_REDUCTION_logor:
+    parameter_string = "||: ";
+    break;
+  default:;
+  };
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
+  }
+
+  return result;
+};
+
 std::string OpenACCCopyoutClause::toString() {
 
   std::string result = "copyout (";

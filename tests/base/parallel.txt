@@ -56,3 +56,37 @@
 #pragma acc parallel self(x==3)
 
 #pragma acc parallel device_type(x, y, z)
+
+#pragma acc parallel reduction( +: x, y, z)
+
+#pragma acc parallel reduction( * : x, y, z)
+
+#pragma acc parallel reduction( max : x, y, z)
+
+#pragma acc parallel reduction( max : x, y, max)
+
+#pragma acc parallel reduction( max : max, y, z)
+
+#pragma acc parallel reduction( max : max::x, y, max)
+
+#pragma acc parallel reduction( max : max::x, max, max::y)
+
+#pragma acc parallel reduction( min : x, y, z)
+
+#pragma acc parallel reduction( min : x, y, min)
+
+#pragma acc parallel reduction( min : min, y, z)
+
+#pragma acc parallel reduction( min : min::x, y, min)
+
+#pragma acc parallel reduction( min : min::x, min, min::y)
+
+#pragma acc parallel reduction( & : x[5], y, z)
+
+#pragma acc parallel reduction( | : x, y, z)
+
+#pragma acc parallel reduction( ^ : x, y, z)
+
+#pragma acc parallel reduction( && : x, y, z)
+
+#pragma acc parallel reduction( || : x, y, z)

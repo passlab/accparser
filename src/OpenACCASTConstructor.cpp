@@ -77,6 +77,12 @@ void OpenACCIRConstructor::exitCopyin_clause_modifier(
       ->setCopyinClauseModifier(ACCC_COPYIN_readonly);
 }
 
+void OpenACCIRConstructor::exitCopyin_clause(
+    accparser::Copyin_clauseContext *ctx) {
+  ((OpenACCCopyinClause *)current_clause)
+      ->mergeCopyinClause(current_directive, current_clause);
+}
+
 void OpenACCIRConstructor::enterReduction_clause(
     accparser::Reduction_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_reduction);

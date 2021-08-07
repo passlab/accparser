@@ -23,6 +23,9 @@ public:
       accparser::Copyin_clause_modifierContext * /*ctx*/) override;
       
   virtual void
+  exitCopyin_clause(accparser::Copyin_clauseContext * /*ctx*/) override;
+      
+  virtual void
   enterReduction_clause(accparser::Reduction_clauseContext * /*ctx*/) override;
 
   virtual void exitReduction_operator(

@@ -199,6 +199,7 @@ public:
 
   static OpenACCClause *addCopyinClause(OpenACCDirective *);
   std::string toString();
+  void mergeCopyinClause(OpenACCDirective *, OpenACCClause*);
 };
 
 // Reduction Clause

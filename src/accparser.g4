@@ -114,150 +114,27 @@ parallel_clause_list
 
 parallel_clauses
    : async_clause
-   | if_clause
-   | self_clause
-   | wait_clause
-   | num_gangs_clause
-   | num_workers_clause
-   | vector_length_clause
+   | attach_clause
    | copy_clause
    | copyin_clause
-   | reduction_clause
    | copyout_clause
-   | device_type_clause
    | create_clause
-   | private_clause
-   | firstprivate_clause
-   | attach_clause
-   | deviceptr_clause
-   | present_clause
-   | no_create_clause
    | default_clause
-   ;
-
-async_clause
-   : ASYNC
-   | ASYNC LEFT_PAREN int_expr RIGHT_PAREN
-   ;
-   
-if_clause
-   : IF LEFT_PAREN condition RIGHT_PAREN
-   ;
-   
-self_clause
-   : SELF
-   | SELF LEFT_PAREN condition RIGHT_PAREN
-   ;
-   
-condition
-   : EXPR
-   ;
-
-default_clause
-   : DEFAULT LEFT_PAREN default_kind RIGHT_PAREN
-   ;
-
-default_kind
-   : NONE
-   | PRESENT
-   ;
-
-wait_clause
-   : WAIT
-   | WAIT LEFT_PAREN int_expr_list RIGHT_PAREN
-   ;
-
-num_gangs_clause
-   : NUM_GANGS LEFT_PAREN int_expr RIGHT_PAREN
-   ;
-
-num_workers_clause
-   : NUM_WORKERS LEFT_PAREN int_expr RIGHT_PAREN
-   ;
-
-vector_length_clause
-   : VECTOR_LENGTH LEFT_PAREN int_expr RIGHT_PAREN
-   ;
-
-copy_clause
-   : COPY LEFT_PAREN var_list RIGHT_PAREN
-   ;
-
-copyin_clause
-   : COPYIN LEFT_PAREN var_list RIGHT_PAREN
-   | COPYIN LEFT_PAREN copyin_clause_modifier COLON var_list RIGHT_PAREN
-   ;
-
-copyin_clause_modifier
-   : READONLY
+   | device_type_clause
+   | deviceptr_clause
+   | firstprivate_clause
+   | if_clause
+   | no_create_clause
+   | num_gangs_clause
+   | num_workers_clause
+   | present_clause
+   | private_clause
+   | reduction_clause
+   | self_clause
+   | vector_length_clause
+   | wait_clause
    ;
    
-reduction_clause
-   :  REDUCTION LEFT_PAREN reduction_operator COLON var_list RIGHT_PAREN
-   ;
-
-reduction_operator
-   : ADD
-   | MUL   
-   | MAX  
-   | MIN   
-   | BITAND  
-   | BITOR   
-   | BITXOR   
-   | LOGAND   
-   | LOGOR
-   ;  
-
-copyout_clause
-   : COPYOUT LEFT_PAREN var_list RIGHT_PAREN
-   | COPYOUT LEFT_PAREN copyout_clause_modifier COLON var_list RIGHT_PAREN
-   ;
-   
-copyout_clause_modifier
-   : ZERO
-   ;
-   
-create_clause
-   : CREATE LEFT_PAREN var_list RIGHT_PAREN
-   | CREATE LEFT_PAREN create_clause_modifier COLON var_list RIGHT_PAREN
-   ;
-   
-create_clause_modifier
-   : ZERO
-   ;
-
-private_clause
-   : PRIVATE LEFT_PAREN var_list RIGHT_PAREN
-   ;
-   
-device_type_clause
-   : DEVICE_TYPE LEFT_PAREN device_type_list RIGHT_PAREN
-   ;
-   
-device_type_list
-   : (var COMMA | var)+
-   ;
-
-firstprivate_clause
-   : FIRSTPRIVATE LEFT_PAREN var_list RIGHT_PAREN
-   ;
-
-attach_clause
-   : ATTACH LEFT_PAREN var_list RIGHT_PAREN
-   ;
-
-deviceptr_clause
-   : DEVICEPTR LEFT_PAREN var_list RIGHT_PAREN
-   ;
-
-no_create_clause
-   : NO_CREATE LEFT_PAREN var_list RIGHT_PAREN
-   ;
-
-present_clause
-   : PRESENT LEFT_PAREN var_list RIGHT_PAREN
-   ;
-
 loop_directive
    : LOOP loop_clause_list
    ;
@@ -272,29 +149,7 @@ loop_clauses
    | private_clause
    | worker_clause
    ;
-
-collapse_clause
-   : COLLAPSE LEFT_PAREN const_int RIGHT_PAREN
-   ;
-
-gang_clause
-   : GANG
-   ;
-
-worker_clause
-   : WORKER
-   | WORKER worker_clause_args
-   ;
-
-worker_clause_args
-   : LEFT_PAREN worker_clause_modifier COLON int_expr RIGHT_PAREN
-   | LEFT_PAREN int_expr RIGHT_PAREN
-   ;
-
-worker_clause_modifier
-   : NUM
-   ;
-
+   
 parallel_loop_directive
    : PARALLEL LOOP parallel_loop_clause_list
    ;
@@ -316,6 +171,151 @@ parallel_loop_clauses
    | private_clause
    | wait_clause
    | worker_clause
+   ;
+
+async_clause
+   : ASYNC
+   | ASYNC LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+attach_clause
+   : ATTACH LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+collapse_clause
+   : COLLAPSE LEFT_PAREN const_int RIGHT_PAREN
+   ;
+      
+copy_clause
+   : COPY LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+copyin_clause
+   : COPYIN LEFT_PAREN var_list RIGHT_PAREN
+   | COPYIN LEFT_PAREN copyin_clause_modifier COLON var_list RIGHT_PAREN
+   ;
+
+copyin_clause_modifier
+   : READONLY
+   ;
+   
+copyout_clause
+   : COPYOUT LEFT_PAREN var_list RIGHT_PAREN
+   | COPYOUT LEFT_PAREN copyout_clause_modifier COLON var_list RIGHT_PAREN
+   ;
+   
+copyout_clause_modifier
+   : ZERO
+   ;
+   
+create_clause
+   : CREATE LEFT_PAREN var_list RIGHT_PAREN
+   | CREATE LEFT_PAREN create_clause_modifier COLON var_list RIGHT_PAREN
+   ;
+   
+create_clause_modifier
+   : ZERO
+   ;   
+   
+default_clause
+   : DEFAULT LEFT_PAREN default_kind RIGHT_PAREN
+   ;
+
+default_kind
+   : NONE
+   | PRESENT
+   ;
+   
+device_type_clause
+   : DEVICE_TYPE LEFT_PAREN device_type_list RIGHT_PAREN
+   ;
+   
+device_type_list
+   : (var COMMA | var)+
+   ;   
+   
+deviceptr_clause
+   : DEVICEPTR LEFT_PAREN var_list RIGHT_PAREN
+   ;   
+   
+firstprivate_clause
+   : FIRSTPRIVATE LEFT_PAREN var_list RIGHT_PAREN
+   ;   
+   
+if_clause
+   : IF LEFT_PAREN condition RIGHT_PAREN
+   ;   
+
+gang_clause
+   : GANG
+   ;
+   
+no_create_clause
+   : NO_CREATE LEFT_PAREN var_list RIGHT_PAREN
+   ;
+      
+num_gangs_clause
+   : NUM_GANGS LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+num_workers_clause
+   : NUM_WORKERS LEFT_PAREN int_expr RIGHT_PAREN
+   ;   
+   
+present_clause
+   : PRESENT LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+private_clause
+   : PRIVATE LEFT_PAREN var_list RIGHT_PAREN
+   ;
+   
+reduction_clause
+   :  REDUCTION LEFT_PAREN reduction_operator COLON var_list RIGHT_PAREN
+   ;   
+
+reduction_operator
+   : ADD
+   | MUL   
+   | MAX  
+   | MIN   
+   | BITAND  
+   | BITOR   
+   | BITXOR   
+   | LOGAND   
+   | LOGOR
+   ; 
+      
+self_clause
+   : SELF
+   | SELF LEFT_PAREN condition RIGHT_PAREN
+   ;
+   
+condition
+   : EXPR
+   ;
+
+vector_length_clause
+   : VECTOR_LENGTH LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+wait_clause
+   : WAIT
+   | WAIT LEFT_PAREN int_expr_list RIGHT_PAREN
+   ;   
+
+worker_clause
+   : WORKER
+   | WORKER worker_clause_args
+   ;
+
+worker_clause_args
+   : LEFT_PAREN worker_clause_modifier COLON int_expr RIGHT_PAREN
+   | LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+worker_clause_modifier
+   : NUM
    ;
 
 const_int

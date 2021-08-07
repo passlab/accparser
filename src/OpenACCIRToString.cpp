@@ -81,41 +81,35 @@ std::string OpenACCClause::toString() {
   std::string result;
 
   switch (this->getKind()) {
-  case ACCC_private:
-    result += "private ";
-    break;
-  case ACCC_firstprivate:
-    result += "firstprivate ";
-    break;
-  case ACCC_device_type:
-    result += "device_type ";
-    break;
-  case ACCC_no_create:
-    result += "no_create ";
-    break;
   case ACCC_async:
     result += "async ";
     break;
-  case ACCC_if:
-    result += "if ";
-    break;
-  case ACCC_self:
-    result += "self ";
-    break;
-  case ACCC_vector_length:
-    result += "vector_length ";
-    break;
   case ACCC_attach:
     result += "attach ";
-    break;
+    break;    
+  case ACCC_collapse:
+    result += "collapse ";
+    break; 
+  case ACCC_copy:
+    result += "copy ";
+    break;    
+  case ACCC_device_type:
+    result += "device_type ";
+    break;  
   case ACCC_deviceptr:
     result += "deviceptr ";
     break;
-  case ACCC_present:
-    result += "present ";
-    break;
-  case ACCC_copy:
-    result += "copy ";
+  case ACCC_firstprivate:
+    result += "firstprivate ";
+    break; 
+  case ACCC_gang:
+    result += "gang ";
+    break;    
+  case ACCC_if:
+    result += "if ";
+    break;    
+  case ACCC_no_create:
+    result += "no_create ";
     break;
   case ACCC_num_gangs:
     result += "num_gangs ";
@@ -123,11 +117,17 @@ std::string OpenACCClause::toString() {
   case ACCC_num_workers:
     result += "num_workers ";
     break;
-  case ACCC_gang:
-    result += "gang ";
+  case ACCC_present:
+    result += "present ";
     break;
-  case ACCC_collapse:
-    result += "collapse ";
+  case ACCC_private:
+    result += "private ";
+    break;
+  case ACCC_self:
+    result += "self ";
+    break;
+  case ACCC_vector_length:
+    result += "vector_length ";
     break;
   case ACCC_wait:
     result += "wait ";
@@ -154,52 +154,6 @@ std::string OpenACCCopyinClause::toString() {
   switch (modifier) {
   case ACCC_COPYIN_readonly:
     parameter_string = "readonly: ";
-    break;
-  default:;
-  };
-  parameter_string += this->expressionToString();
-  if (parameter_string.size() > 0) {
-    result += parameter_string + ") ";
-  } else {
-    result = result.substr(0, result.size() - 1);
-  }
-
-  return result;
-};
-
-std::string OpenACCReductionClause::toString() {
-
-  std::string result = "reduction (";
-  std::string parameter_string = "";
-  OpenACCReductionClauseOperator reduction_operator =
-      this->getOperator();
-  switch (reduction_operator) {
-  case ACCC_REDUCTION_add:
-    parameter_string = "+: ";
-    break;
-  case ACCC_REDUCTION_mul:
-    parameter_string = "*: ";
-    break;
-  case ACCC_REDUCTION_max:
-    parameter_string = "max: ";
-    break;
-  case ACCC_REDUCTION_min:
-    parameter_string = "min: ";
-    break;
-  case ACCC_REDUCTION_bitand:
-    parameter_string = "$: ";
-    break;
-  case ACCC_REDUCTION_bitor:
-    parameter_string = "|: ";
-    break;
-  case ACCC_REDUCTION_bitxor:
-    parameter_string = "^: ";
-    break;
-  case ACCC_REDUCTION_logand:
-    parameter_string = "&&: ";
-    break;
-  case ACCC_REDUCTION_logor:
-    parameter_string = "||: ";
     break;
   default:;
   };
@@ -275,6 +229,52 @@ std::string OpenACCDefaultClause::toString() {
     result += parameter_string + ") ";
   } else {
     result = result.substr(0, result.size() - 2);
+  }
+
+  return result;
+};
+
+std::string OpenACCReductionClause::toString() {
+
+  std::string result = "reduction (";
+  std::string parameter_string = "";
+  OpenACCReductionClauseOperator reduction_operator =
+      this->getOperator();
+  switch (reduction_operator) {
+  case ACCC_REDUCTION_add:
+    parameter_string = "+: ";
+    break;
+  case ACCC_REDUCTION_mul:
+    parameter_string = "*: ";
+    break;
+  case ACCC_REDUCTION_max:
+    parameter_string = "max: ";
+    break;
+  case ACCC_REDUCTION_min:
+    parameter_string = "min: ";
+    break;
+  case ACCC_REDUCTION_bitand:
+    parameter_string = "$: ";
+    break;
+  case ACCC_REDUCTION_bitor:
+    parameter_string = "|: ";
+    break;
+  case ACCC_REDUCTION_bitxor:
+    parameter_string = "^: ";
+    break;
+  case ACCC_REDUCTION_logand:
+    parameter_string = "&&: ";
+    break;
+  case ACCC_REDUCTION_logor:
+    parameter_string = "||: ";
+    break;
+  default:;
+  };
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
   }
 
   return result;

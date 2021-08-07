@@ -182,6 +182,17 @@ public:
   OpenACCBaseLang getBaseLang() { return lang; };
 };
 
+// Async Clause
+class OpenACCAsyncClause : public OpenACCClause {
+
+public:
+  OpenACCAsyncClause() : OpenACCClause(ACCC_async){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
 // Copyin Clause
 class OpenACCCopyinClause : public OpenACCClause {
 
@@ -195,84 +206,6 @@ public:
 
   void setModifier(OpenACCCopyinClauseModifier _modifier) {
     modifier = _modifier;
-  };
-
-  static OpenACCClause *addClause(OpenACCDirective *);
-  std::string toString();
-  void mergeClause(OpenACCDirective *, OpenACCClause *);
-};
-
-// Async Clause
-class OpenACCAsyncClause : public OpenACCClause {
-
-public:
-  OpenACCAsyncClause() : OpenACCClause(ACCC_async){};
-
-  static OpenACCClause *addClause(OpenACCDirective *);
-  std::string toString();
-  void mergeClause(OpenACCDirective *, OpenACCClause *);
-};
-
-// Num_gangs Clause
-class OpenACCNumGangsClause : public OpenACCClause {
-
-public:
-  OpenACCNumGangsClause() : OpenACCClause(ACCC_num_gangs){};
-
-  static OpenACCClause *addClause(OpenACCDirective *);
-  std::string toString();
-  void mergeClause(OpenACCDirective *, OpenACCClause *);
-};
-
-// Num_workers Clause
-class OpenACCNumWorkersClause : public OpenACCClause {
-
-public:
-  OpenACCNumWorkersClause() : OpenACCClause(ACCC_num_workers){};
-
-  static OpenACCClause *addClause(OpenACCDirective *);
-  std::string toString();
-  void mergeClause(OpenACCDirective *, OpenACCClause *);
-};
-
-// Vector_length Clause
-class OpenACCVectorLengthClause : public OpenACCClause {
-
-public:
-  OpenACCVectorLengthClause() : OpenACCClause(ACCC_vector_length){};
-
-  static OpenACCClause *addClause(OpenACCDirective *);
-  std::string toString();
-  void mergeClause(OpenACCDirective *, OpenACCClause *);
-};
-
-// Vector_length Clause
-class OpenACCSelfClause : public OpenACCClause {
-
-public:
-  OpenACCSelfClause() : OpenACCClause(ACCC_self){};
-
-  static OpenACCClause *addClause(OpenACCDirective *);
-  std::string toString();
-  void mergeClause(OpenACCDirective *, OpenACCClause *);
-};
-
-// Reduction Clause
-class OpenACCReductionClause : public OpenACCClause {
-
-protected:
-  OpenACCReductionClauseOperator reduction_operator =
-      ACCC_REDUCTION_unspecified;
-
-public:
-  OpenACCReductionClause() : OpenACCClause(ACCC_reduction){};
-
-  OpenACCReductionClauseOperator getOperator() {
-    return reduction_operator;
-  };
-
-  void setOperator(OpenACCReductionClauseOperator _operator) {
-    reduction_operator = _operator;
   };
 
   static OpenACCClause *addClause(OpenACCDirective *);
@@ -337,6 +270,73 @@ public:
 
   static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
+};
+
+// Num_gangs Clause
+class OpenACCNumGangsClause : public OpenACCClause {
+
+public:
+  OpenACCNumGangsClause() : OpenACCClause(ACCC_num_gangs){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Num_workers Clause
+class OpenACCNumWorkersClause : public OpenACCClause {
+
+public:
+  OpenACCNumWorkersClause() : OpenACCClause(ACCC_num_workers){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Reduction Clause
+class OpenACCReductionClause : public OpenACCClause {
+
+protected:
+  OpenACCReductionClauseOperator reduction_operator =
+      ACCC_REDUCTION_unspecified;
+
+public:
+  OpenACCReductionClause() : OpenACCClause(ACCC_reduction){};
+
+  OpenACCReductionClauseOperator getOperator() {
+    return reduction_operator;
+  };
+
+  void setOperator(OpenACCReductionClauseOperator _operator) {
+    reduction_operator = _operator;
+  };
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Self Clause
+class OpenACCSelfClause : public OpenACCClause {
+
+public:
+  OpenACCSelfClause() : OpenACCClause(ACCC_self){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Vector_length Clause
+class OpenACCVectorLengthClause : public OpenACCClause {
+
+public:
+  OpenACCVectorLengthClause() : OpenACCClause(ACCC_vector_length){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Worker Clause

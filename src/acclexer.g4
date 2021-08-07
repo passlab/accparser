@@ -81,6 +81,14 @@ RIGHT_PAREN
 D_BLANK
    : [ ]+ -> skip
    ;
+   
+COLON
+   : ':'
+   ;
+
+LINE_END
+   : [\n\r] -> skip
+   ;
 
 ASYNC
    : 'async' [ ]*
@@ -88,9 +96,81 @@ ASYNC
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
    ;
-  
+
+ATTACH
+   : 'attach' -> pushMode (expr_clause)
+   ;
+
+COLLAPSE
+   : 'collapse' -> pushMode (expr_clause)
+   ;
+        
+COPY
+   : 'copy' -> pushMode (expr_clause)
+   ;
+
+COPYIN
+   : 'copyin' -> pushMode (copyin_clause)
+   ;
+
+COPYOUT
+   : 'copyout' -> pushMode (copyout_clause)
+   ;
+   
+CREATE
+   : 'create' -> pushMode (create_clause)
+   ;
+
+DEFAULT
+   : 'default' -> pushMode (default_clause)
+   ;
+
+DEVICE_TYPE
+   : 'device_type' -> pushMode (expr_clause)
+   ;
+   
+DEVICEPTR
+   : 'deviceptr' -> pushMode (expr_clause)
+   ;
+
+FIRSTPRIVATE
+   : 'firstprivate' -> pushMode (expr_clause)
+   ;
+
+GANG
+   : 'gang'
+   ;
+      
 IF
    : 'if' -> pushMode (expr_clause)
+   ;
+
+NO_CREATE
+   : 'no_create' -> pushMode (expr_clause)
+   ;
+
+NUM
+   : 'num'
+   ;
+     
+NUM_GANGS
+   : 'num_gangs' -> pushMode (expr_clause)
+   ;
+
+NUM_WORKERS
+   : 'num_workers' -> pushMode (expr_clause)
+   ;
+
+PRESENT
+   : 'present' -> pushMode (expr_clause)
+   ;
+   
+PRIVATE
+   : 'private' -> pushMode (expr_clause)
+   ;
+      
+REDUCTION
+   : 'reduction' -> pushMode (reduction_clause)
    ;
 
 SELF
@@ -110,143 +190,13 @@ WAIT
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
    ;
-
-NUM_GANGS
-   : 'num_gangs' -> pushMode (expr_clause)
-   ;
-
-NUM_WORKERS
-   : 'num_workers' -> pushMode (expr_clause)
-   ;
-
-DEVICE_TYPE
-   : 'device_type' -> pushMode (expr_clause)
-   ;
-
-COPY
-   : 'copy' -> pushMode (expr_clause)
-   ;
-
-COPYIN
-   : 'copyin' -> pushMode (copyin_clause)
-   ;
-
-COPYOUT
-   : 'copyout' -> pushMode (copyout_clause)
-   ;
    
-CREATE
-   : 'create' -> pushMode (create_clause)
-   ;
-   
-REDUCTION
-   : 'reduction' -> pushMode (reduction_clause)
-   ;
-   
-NO_CREATE
-   : 'no_create' -> pushMode (expr_clause)
-   ;
-
-PRESENT
-   : 'present' -> pushMode (expr_clause)
-   ;
-
-DEVICEPTR
-   : 'deviceptr' -> pushMode (expr_clause)
-   ;
-
-ATTACH
-   : 'attach' -> pushMode (expr_clause)
-   ;
-
-PRIVATE
-   : 'private' -> pushMode (expr_clause)
-   ;
-
-FIRSTPRIVATE
-   : 'firstprivate' -> pushMode (expr_clause)
-   ;
-
-COLLAPSE
-   : 'collapse' -> pushMode (expr_clause)
-   ;
-
-DEFAULT
-   : 'default' -> pushMode (default_clause)
-   ;
-
-GANG
-   : 'gang'
-   ;
-
 WORKER
    : 'worker' [ ]*
    {
   if (_input->LA(1) == '(')
     pushMode(worker_clause);
 }
-   ;
-
-NUM
-   : 'num'
-   ;
-
-COLON
-   : ':'
-   ;
-
-LINE_END
-   : [\n\r] -> skip
-   ;
-
-mode default_clause;
-NONE
-   : 'none'
-   ;
-
-DEFAULT_PRESENT
-   : 'present' -> type (PRESENT)
-   ;
-
-DEFAULT_LEFT_PAREN
-   : '(' -> type (LEFT_PAREN)
-   ;
-
-DEFAULT_RIGHT_PAREN
-   : ')' -> type (RIGHT_PAREN) , popMode
-   ;
-
-mode expr_clause;
-EXPR_LEFT_PAREN
-   : '(' [ ]*
-   {
-  setType(LEFT_PAREN);
-  pushMode(expression_mode);
-  parenthesis_global_count = 1;
-  parenthesis_local_count = 0;
-}
-   ;
-
-EXPR_RIGHT_PAREN
-   : ')' -> type (RIGHT_PAREN) , popMode
-   ;
-
-COMMA
-   : ',' [ ]*
-   {
-  skip();
-  pushMode(expression_mode);
-  parenthesis_global_count = 1;
-  parenthesis_local_count = 0;
-}
-   ;
-
-BLANK
-   : [ ]+ -> skip
-   ;
-
-EXPR_LINE_END
-   : [\n\r] -> skip
    ;
 
 mode copyin_clause;
@@ -421,6 +371,31 @@ CREATE_LINE_END
    : [\n\r] -> skip
    ;
    
+mode default_clause;
+NONE
+   : 'none'
+   ;
+
+DEFAULT_PRESENT
+   : 'present' -> type (PRESENT)
+   ;
+
+DEFAULT_LEFT_PAREN
+   : '(' -> type (LEFT_PAREN)
+   ;
+
+DEFAULT_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+BLANK
+   : [ ]+ -> skip
+   ;
+
+EXPR_LINE_END
+   : [\n\r] -> skip
+   ;
+ 
 mode reduction_clause;
 REDUCTION_LEFT_PAREN
    : '(' [ ]*
@@ -603,6 +578,31 @@ WORKER_BLANK
 WORKER_LINE_END
    : [\n\r] -> skip
    ;
+   
+mode expr_clause;
+EXPR_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
+   ;
+
+EXPR_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+COMMA
+   : ',' [ ]*
+   {
+  skip();
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+}
+   ;
 
 mode expression_mode;
 EXPRESSION_LEFT_PAREN
@@ -663,4 +663,3 @@ EXPRESSION_CHAR
   }
 }
    ;
-

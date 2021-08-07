@@ -21,31 +21,31 @@ public:
 
   virtual void exitCopyin_clause_modifier(
       accparser::Copyin_clause_modifierContext * /*ctx*/) override;
-      
+
   virtual void
   exitCopyin_clause(accparser::Copyin_clauseContext * /*ctx*/) override;
-      
+
   virtual void
   enterReduction_clause(accparser::Reduction_clauseContext * /*ctx*/) override;
 
   virtual void exitReduction_operator(
       accparser::Reduction_operatorContext * /*ctx*/) override;
-  
+
   virtual void
   exitReduction_clause(accparser::Reduction_clauseContext * /*ctx*/) override;
-  
+
   virtual void
   enterCopyout_clause(accparser::Copyout_clauseContext * /*ctx*/) override;
 
   virtual void exitCopyout_clause_modifier(
       accparser::Copyout_clause_modifierContext * /*ctx*/) override;
-      
+
   virtual void
   exitCopyout_clause(accparser::Copyout_clauseContext * /*ctx*/) override;
-      
-  virtual void
-  enterDevice_type_clause(accparser::Device_type_clauseContext * /*ctx*/) override;
-      
+
+  virtual void enterDevice_type_clause(
+      accparser::Device_type_clauseContext * /*ctx*/) override;
+
   virtual void
   enterCreate_clause(accparser::Create_clauseContext * /*ctx*/) override;
 
@@ -54,7 +54,7 @@ public:
 
   virtual void
   exitCreate_clause(accparser::Create_clauseContext * /*ctx*/) override;
-  
+
   virtual void
   enterNo_create_clause(accparser::No_create_clauseContext * /*ctx*/) override;
 
@@ -63,12 +63,17 @@ public:
 
   virtual void
   enterAsync_clause(accparser::Async_clauseContext * /*ctx*/) override;
-  
+
   virtual void
-  enterIf_clause(accparser::If_clauseContext * /*ctx*/) override;
-  
+  exitAsync_clause(accparser::Async_clauseContext * /*ctx*/) override;
+
+  virtual void enterIf_clause(accparser::If_clauseContext * /*ctx*/) override;
+
   virtual void
   enterSelf_clause(accparser::Self_clauseContext * /*ctx*/) override;
+
+  virtual void
+  exitSelf_clause(accparser::Self_clauseContext * /*ctx*/) override;
 
   virtual void
   enterPresent_clause(accparser::Present_clauseContext * /*ctx*/) override;
@@ -77,6 +82,9 @@ public:
   enterAttach_clause(accparser::Attach_clauseContext * /*ctx*/) override;
 
   virtual void enterNum_workers_clause(
+      accparser::Num_workers_clauseContext * /*ctx*/) override;
+
+  virtual void exitNum_workers_clause(
       accparser::Num_workers_clauseContext * /*ctx*/) override;
 
   virtual void
@@ -91,10 +99,15 @@ public:
   virtual void enterVector_length_clause(
       accparser::Vector_length_clauseContext * /*ctx*/) override;
 
+  virtual void exitVector_length_clause(
+      accparser::Vector_length_clauseContext * /*ctx*/) override;
+
   virtual void
   exitGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
   virtual void
   enterNum_gangs_clause(accparser::Num_gangs_clauseContext * /*ctx*/) override;
+  virtual void
+  exitNum_gangs_clause(accparser::Num_gangs_clauseContext * /*ctx*/) override;
   virtual void
   enterWorker_clause(accparser::Worker_clauseContext * /*ctx*/) override;
   virtual void exitWorker_clause_modifier(

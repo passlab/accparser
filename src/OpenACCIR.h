@@ -199,19 +199,77 @@ public:
 
   static OpenACCClause *addCopyinClause(OpenACCDirective *);
   std::string toString();
-  void mergeCopyinClause(OpenACCDirective *, OpenACCClause*);
+  void mergeCopyinClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Async Clause
+class OpenACCAsyncClause : public OpenACCClause {
+
+public:
+  OpenACCAsyncClause() : OpenACCClause(ACCC_async){};
+
+  static OpenACCClause *addAsyncClause(OpenACCDirective *);
+  std::string toString();
+  void mergeAsyncClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Num_gangs Clause
+class OpenACCNumGangsClause : public OpenACCClause {
+
+public:
+  OpenACCNumGangsClause() : OpenACCClause(ACCC_num_gangs){};
+
+  static OpenACCClause *addNumGangsClause(OpenACCDirective *);
+  std::string toString();
+  void mergeNumGangsClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Num_workers Clause
+class OpenACCNumWorkersClause : public OpenACCClause {
+
+public:
+  OpenACCNumWorkersClause() : OpenACCClause(ACCC_num_workers){};
+
+  static OpenACCClause *addNumWorkersClause(OpenACCDirective *);
+  std::string toString();
+  void mergeNumWorkersClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Vector_length Clause
+class OpenACCVectorLengthClause : public OpenACCClause {
+
+public:
+  OpenACCVectorLengthClause() : OpenACCClause(ACCC_vector_length){};
+
+  static OpenACCClause *addVectorLengthClause(OpenACCDirective *);
+  std::string toString();
+  void mergeVectorLengthClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Vector_length Clause
+class OpenACCSelfClause : public OpenACCClause {
+
+public:
+  OpenACCSelfClause() : OpenACCClause(ACCC_self){};
+
+  static OpenACCClause *addSelfClause(OpenACCDirective *);
+  std::string toString();
+  void mergeSelfClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Reduction Clause
 class OpenACCReductionClause : public OpenACCClause {
 
 protected:
-  OpenACCReductionClauseOperator reduction_operator = ACCC_REDUCTION_unspecified;
+  OpenACCReductionClauseOperator reduction_operator =
+      ACCC_REDUCTION_unspecified;
 
 public:
   OpenACCReductionClause() : OpenACCClause(ACCC_reduction){};
 
-  OpenACCReductionClauseOperator getReductionClauseOperator() { return reduction_operator; };
+  OpenACCReductionClauseOperator getReductionClauseOperator() {
+    return reduction_operator;
+  };
 
   void setReductionClauseOperator(OpenACCReductionClauseOperator _operator) {
     reduction_operator = _operator;
@@ -219,7 +277,7 @@ public:
 
   static OpenACCClause *addReductionClause(OpenACCDirective *);
   std::string toString();
-  void mergeReductionClause(OpenACCDirective *, OpenACCClause*);
+  void mergeReductionClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Copyout Clause
@@ -239,7 +297,7 @@ public:
 
   static OpenACCClause *addCopyoutClause(OpenACCDirective *);
   std::string toString();
-  void mergeCopyoutClause(OpenACCDirective *, OpenACCClause*);
+  void mergeCopyoutClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Create Clause
@@ -259,7 +317,7 @@ public:
 
   static OpenACCClause *addCreateClause(OpenACCDirective *);
   std::string toString();
-  void mergeCreateClause(OpenACCDirective *, OpenACCClause*);
+  void mergeCreateClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Default Clause

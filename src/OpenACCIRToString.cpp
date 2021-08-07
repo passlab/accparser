@@ -171,7 +171,8 @@ std::string OpenACCReductionClause::toString() {
 
   std::string result = "reduction (";
   std::string parameter_string = "";
-  OpenACCReductionClauseOperator reduction_operator = this->getReductionClauseOperator();
+  OpenACCReductionClauseOperator reduction_operator =
+      this->getReductionClauseOperator();
   switch (reduction_operator) {
   case ACCC_REDUCTION_add:
     parameter_string = "+: ";

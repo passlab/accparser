@@ -47,8 +47,13 @@ void OpenACCIRConstructor::enterAsync_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_async);
 }
 
-void OpenACCIRConstructor::enterIf_clause(
-    accparser::If_clauseContext *ctx) {
+void OpenACCIRConstructor::exitAsync_clause(
+    accparser::Async_clauseContext *ctx) {
+  ((OpenACCAsyncClause *)current_clause)
+      ->mergeAsyncClause(current_directive, current_clause);
+}
+
+void OpenACCIRConstructor::enterIf_clause(accparser::If_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_if);
 }
@@ -57,6 +62,11 @@ void OpenACCIRConstructor::enterSelf_clause(
     accparser::Self_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_self);
+}
+
+void OpenACCIRConstructor::exitSelf_clause(accparser::Self_clauseContext *ctx) {
+  ((OpenACCSelfClause *)current_clause)
+      ->mergeSelfClause(current_directive, current_clause);
 }
 
 void OpenACCIRConstructor::enterCopy_clause(
@@ -93,7 +103,8 @@ void OpenACCIRConstructor::enterReduction_clause(
 void OpenACCIRConstructor::exitReduction_operator(
     accparser::Reduction_operatorContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
-  OpenACCReductionClauseOperator reduction_operator = ACCC_REDUCTION_unspecified;
+  OpenACCReductionClauseOperator reduction_operator =
+      ACCC_REDUCTION_unspecified;
   if (expression == "+")
     reduction_operator = ACCC_REDUCTION_add;
   else if (expression == "*")
@@ -112,7 +123,8 @@ void OpenACCIRConstructor::exitReduction_operator(
     reduction_operator = ACCC_REDUCTION_logand;
   else if (expression == "||")
     reduction_operator = ACCC_REDUCTION_logor;
-  ((OpenACCReductionClause *)current_clause)->setReductionClauseOperator(reduction_operator);
+  ((OpenACCReductionClause *)current_clause)
+      ->setReductionClauseOperator(reduction_operator);
 };
 
 void OpenACCIRConstructor::exitReduction_clause(
@@ -180,10 +192,22 @@ void OpenACCIRConstructor::enterNum_gangs_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_num_gangs);
 };
 
+void OpenACCIRConstructor::exitNum_gangs_clause(
+    accparser::Num_gangs_clauseContext *ctx) {
+  ((OpenACCNumGangsClause *)current_clause)
+      ->mergeNumGangsClause(current_directive, current_clause);
+};
+
 void OpenACCIRConstructor::enterNum_workers_clause(
     accparser::Num_workers_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_num_workers);
+};
+
+void OpenACCIRConstructor::exitNum_workers_clause(
+    accparser::Num_workers_clauseContext *ctx) {
+  ((OpenACCNumWorkersClause *)current_clause)
+      ->mergeNumWorkersClause(current_directive, current_clause);
 };
 
 void OpenACCIRConstructor::enterWait_clause(
@@ -196,6 +220,12 @@ void OpenACCIRConstructor::enterVector_length_clause(
     accparser::Vector_length_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_vector_length);
+};
+
+void OpenACCIRConstructor::exitVector_length_clause(
+    accparser::Vector_length_clauseContext *ctx) {
+  ((OpenACCVectorLengthClause *)current_clause)
+      ->mergeVectorLengthClause(current_directive, current_clause);
 };
 
 void OpenACCIRConstructor::enterWorker_clause(

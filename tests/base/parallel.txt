@@ -138,3 +138,33 @@
 #pragma acc parallel reduction( max : x, y, max) reduction( max : x, y, min)
 
 #pragma acc parallel copyin( readonly : x, y, z) copyout( zero : x, y, z) create( zero : x, y, z) reduction( + : x, y, z)
+
+#pragma acc parallel async( expression1) async( expression2) async( expression3)
+
+#pragma acc parallel async( expression1) async( expression2) async( expression1)
+
+#pragma acc parallel async(expression1) async
+
+#pragma acc parallel async async(expression1) async
+
+#pragma acc parallel num_workers( expression1) num_workers( expression2) num_workers( expression3)
+
+#pragma acc parallel num_workers( expression1) num_workers( expression2) num_workers( expression1)
+
+
+#pragma acc parallel vector_length( expression1) vector_length( expression2) vector_length( expression3)
+
+#pragma acc parallel vector_length( expression1) vector_length( expression2) vector_length( expression1)
+
+
+#pragma acc parallel self( expression1) self( expression2) self( expression3)
+
+#pragma acc parallel self( expression1) self( expression2) self( expression1)
+
+#pragma acc parallel self(expression1) self
+
+#pragma acc parallel self self(expression1) self
+
+#pragma acc parallel num_gangs( expression1) num_gangs( expression2) num_gangs( expression3)
+
+#pragma acc parallel num_gangs( expression1) num_gangs( expression2) num_gangs( expression1)

@@ -83,7 +83,10 @@ D_BLANK
    ;
 
 ASYNC
-   : 'async' -> pushMode (expr_clause)
+   : 'async' [ ]*
+   {
+  if (_input->LA(1) == '(') pushMode(expr_clause);
+}
    ;
   
 IF
@@ -91,7 +94,10 @@ IF
    ;
 
 SELF
-   : 'self' -> pushMode (expr_clause)
+   : 'self' [ ]*
+   {
+  if (_input->LA(1) == '(') pushMode(expr_clause);
+}
    ;
 
 VECTOR_LENGTH
@@ -99,7 +105,10 @@ VECTOR_LENGTH
    ;
 
 WAIT
-   : 'wait' -> pushMode (expr_clause)
+   : 'wait' [ ]*
+   {
+  if (_input->LA(1) == '(') pushMode(expr_clause);
+}
    ;
 
 NUM_GANGS

@@ -37,9 +37,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   OpenACCClause *new_clause = NULL;
 
   switch (kind) {
-  case ACCC_async:
   case ACCC_if:
-  case ACCC_self:
   case ACCC_attach:
   case ACCC_collapse:
   case ACCC_copy:
@@ -48,11 +46,8 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_device_type:
   case ACCC_gang:
   case ACCC_no_create:
-  case ACCC_num_gangs:
-  case ACCC_num_workers:
   case ACCC_present:
   case ACCC_private:
-  case ACCC_vector_length:
   case ACCC_wait: {
     if (current_clauses->size() == 0) {
       new_clause = new OpenACCClause(kind);
@@ -71,6 +66,22 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
     }
     break;
   }
+  case ACCC_async:
+  case ACCC_num_gangs:
+  case ACCC_num_workers:  
+  case ACCC_vector_length:  
+  case ACCC_self: {
+    if (current_clauses->size() == 0) {
+      new_clause = new OpenACCClause(kind);
+      current_clauses = new std::vector<OpenACCClause *>();
+      current_clauses->push_back(new_clause);
+      clauses[kind] = current_clauses;
+    } else {
+      new_clause = new OpenACCClause(kind);
+      current_clauses->push_back(new_clause);
+    }
+    break;
+  }  
   case ACCC_copyin: {
     new_clause = OpenACCCopyinClause::addCopyinClause(this);
     break;

@@ -50,7 +50,7 @@ void OpenACCIRConstructor::enterAsync_clause(
 void OpenACCIRConstructor::exitAsync_clause(
     accparser::Async_clauseContext *ctx) {
   ((OpenACCAsyncClause *)current_clause)
-      ->mergeAsyncClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 }
 
 void OpenACCIRConstructor::enterIf_clause(accparser::If_clauseContext *ctx) {
@@ -66,7 +66,7 @@ void OpenACCIRConstructor::enterSelf_clause(
 
 void OpenACCIRConstructor::exitSelf_clause(accparser::Self_clauseContext *ctx) {
   ((OpenACCSelfClause *)current_clause)
-      ->mergeSelfClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 }
 
 void OpenACCIRConstructor::enterCopy_clause(
@@ -78,26 +78,26 @@ void OpenACCIRConstructor::enterCopyin_clause(
     accparser::Copyin_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_copyin);
   ((OpenACCCopyinClause *)current_clause)
-      ->setCopyinClauseModifier(ACCC_COPYIN_unspecified);
+      ->setModifier(ACCC_COPYIN_unspecified);
 }
 
 void OpenACCIRConstructor::exitCopyin_clause_modifier(
     accparser::Copyin_clause_modifierContext *ctx) {
   ((OpenACCCopyinClause *)current_clause)
-      ->setCopyinClauseModifier(ACCC_COPYIN_readonly);
+      ->setModifier(ACCC_COPYIN_readonly);
 }
 
 void OpenACCIRConstructor::exitCopyin_clause(
     accparser::Copyin_clauseContext *ctx) {
   ((OpenACCCopyinClause *)current_clause)
-      ->mergeCopyinClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 }
 
 void OpenACCIRConstructor::enterReduction_clause(
     accparser::Reduction_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_reduction);
   ((OpenACCReductionClause *)current_clause)
-      ->setReductionClauseOperator(ACCC_REDUCTION_unspecified);
+      ->setOperator(ACCC_REDUCTION_unspecified);
 }
 
 void OpenACCIRConstructor::exitReduction_operator(
@@ -124,51 +124,51 @@ void OpenACCIRConstructor::exitReduction_operator(
   else if (expression == "||")
     reduction_operator = ACCC_REDUCTION_logor;
   ((OpenACCReductionClause *)current_clause)
-      ->setReductionClauseOperator(reduction_operator);
+      ->setOperator(reduction_operator);
 };
 
 void OpenACCIRConstructor::exitReduction_clause(
     accparser::Reduction_clauseContext *ctx) {
   ((OpenACCReductionClause *)current_clause)
-      ->mergeReductionClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 }
 
 void OpenACCIRConstructor::enterCopyout_clause(
     accparser::Copyout_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_copyout);
   ((OpenACCCopyoutClause *)current_clause)
-      ->setCopyoutClauseModifier(ACCC_COPYOUT_unspecified);
+      ->setModifier(ACCC_COPYOUT_unspecified);
 }
 
 void OpenACCIRConstructor::exitCopyout_clause_modifier(
     accparser::Copyout_clause_modifierContext *ctx) {
   ((OpenACCCopyoutClause *)current_clause)
-      ->setCopyoutClauseModifier(ACCC_COPYOUT_zero);
+      ->setModifier(ACCC_COPYOUT_zero);
 }
 
 void OpenACCIRConstructor::exitCopyout_clause(
     accparser::Copyout_clauseContext *ctx) {
   ((OpenACCCopyoutClause *)current_clause)
-      ->mergeCopyoutClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 }
 
 void OpenACCIRConstructor::enterCreate_clause(
     accparser::Create_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_create);
   ((OpenACCCreateClause *)current_clause)
-      ->setCreateClauseModifier(ACCC_CREATE_unspecified);
+      ->setModifier(ACCC_CREATE_unspecified);
 }
 
 void OpenACCIRConstructor::exitCreate_clause(
     accparser::Create_clauseContext *ctx) {
   ((OpenACCCreateClause *)current_clause)
-      ->mergeCreateClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 }
 
 void OpenACCIRConstructor::exitCreate_clause_modifier(
     accparser::Create_clause_modifierContext *ctx) {
   ((OpenACCCreateClause *)current_clause)
-      ->setCreateClauseModifier(ACCC_CREATE_zero);
+      ->setModifier(ACCC_CREATE_zero);
 }
 
 void OpenACCIRConstructor::enterPresent_clause(
@@ -195,7 +195,7 @@ void OpenACCIRConstructor::enterNum_gangs_clause(
 void OpenACCIRConstructor::exitNum_gangs_clause(
     accparser::Num_gangs_clauseContext *ctx) {
   ((OpenACCNumGangsClause *)current_clause)
-      ->mergeNumGangsClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 };
 
 void OpenACCIRConstructor::enterNum_workers_clause(
@@ -207,7 +207,7 @@ void OpenACCIRConstructor::enterNum_workers_clause(
 void OpenACCIRConstructor::exitNum_workers_clause(
     accparser::Num_workers_clauseContext *ctx) {
   ((OpenACCNumWorkersClause *)current_clause)
-      ->mergeNumWorkersClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 };
 
 void OpenACCIRConstructor::enterWait_clause(
@@ -225,21 +225,21 @@ void OpenACCIRConstructor::enterVector_length_clause(
 void OpenACCIRConstructor::exitVector_length_clause(
     accparser::Vector_length_clauseContext *ctx) {
   ((OpenACCVectorLengthClause *)current_clause)
-      ->mergeVectorLengthClause(current_directive, current_clause);
+      ->mergeClause(current_directive, current_clause);
 };
 
 void OpenACCIRConstructor::enterWorker_clause(
     accparser::Worker_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_worker);
   ((OpenACCWorkerClause *)current_clause)
-      ->setWorkerClauseModifier(ACCC_WORKER_unspecified);
+      ->setModifier(ACCC_WORKER_unspecified);
 };
 
 void OpenACCIRConstructor::exitWorker_clause_modifier(
     accparser::Worker_clause_modifierContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   ((OpenACCWorkerClause *)current_clause)
-      ->setWorkerClauseModifier(ACCC_WORKER_num);
+      ->setModifier(ACCC_WORKER_num);
 };
 
 void OpenACCIRConstructor::enterDefault_clause(
@@ -255,7 +255,7 @@ void OpenACCIRConstructor::exitDefault_kind(
     kind = ACCC_DEFAULT_none;
   else if (expression == "present")
     kind = ACCC_DEFAULT_present;
-  ((OpenACCDefaultClause *)current_clause)->setDefaultClauseKind(kind);
+  ((OpenACCDefaultClause *)current_clause)->setKind(kind);
 };
 
 void OpenACCIRConstructor::exitConst_int(accparser::Const_intContext *ctx) {

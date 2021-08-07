@@ -191,15 +191,15 @@ protected:
 public:
   OpenACCCopyinClause() : OpenACCClause(ACCC_copyin){};
 
-  OpenACCCopyinClauseModifier getCopyinClauseModifier() { return modifier; };
+  OpenACCCopyinClauseModifier getModifier() { return modifier; };
 
-  void setCopyinClauseModifier(OpenACCCopyinClauseModifier _modifier) {
+  void setModifier(OpenACCCopyinClauseModifier _modifier) {
     modifier = _modifier;
   };
 
-  static OpenACCClause *addCopyinClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeCopyinClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Async Clause
@@ -208,9 +208,9 @@ class OpenACCAsyncClause : public OpenACCClause {
 public:
   OpenACCAsyncClause() : OpenACCClause(ACCC_async){};
 
-  static OpenACCClause *addAsyncClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeAsyncClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Num_gangs Clause
@@ -219,9 +219,9 @@ class OpenACCNumGangsClause : public OpenACCClause {
 public:
   OpenACCNumGangsClause() : OpenACCClause(ACCC_num_gangs){};
 
-  static OpenACCClause *addNumGangsClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeNumGangsClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Num_workers Clause
@@ -230,9 +230,9 @@ class OpenACCNumWorkersClause : public OpenACCClause {
 public:
   OpenACCNumWorkersClause() : OpenACCClause(ACCC_num_workers){};
 
-  static OpenACCClause *addNumWorkersClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeNumWorkersClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Vector_length Clause
@@ -241,9 +241,9 @@ class OpenACCVectorLengthClause : public OpenACCClause {
 public:
   OpenACCVectorLengthClause() : OpenACCClause(ACCC_vector_length){};
 
-  static OpenACCClause *addVectorLengthClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeVectorLengthClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Vector_length Clause
@@ -252,9 +252,9 @@ class OpenACCSelfClause : public OpenACCClause {
 public:
   OpenACCSelfClause() : OpenACCClause(ACCC_self){};
 
-  static OpenACCClause *addSelfClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeSelfClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Reduction Clause
@@ -267,17 +267,17 @@ protected:
 public:
   OpenACCReductionClause() : OpenACCClause(ACCC_reduction){};
 
-  OpenACCReductionClauseOperator getReductionClauseOperator() {
+  OpenACCReductionClauseOperator getOperator() {
     return reduction_operator;
   };
 
-  void setReductionClauseOperator(OpenACCReductionClauseOperator _operator) {
+  void setOperator(OpenACCReductionClauseOperator _operator) {
     reduction_operator = _operator;
   };
 
-  static OpenACCClause *addReductionClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeReductionClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Copyout Clause
@@ -289,15 +289,15 @@ protected:
 public:
   OpenACCCopyoutClause() : OpenACCClause(ACCC_copyout){};
 
-  OpenACCCopyoutClauseModifier getCopyoutClauseModifier() { return modifier; };
+  OpenACCCopyoutClauseModifier getModifier() { return modifier; };
 
-  void setCopyoutClauseModifier(OpenACCCopyoutClauseModifier _modifier) {
+  void setModifier(OpenACCCopyoutClauseModifier _modifier) {
     modifier = _modifier;
   };
 
-  static OpenACCClause *addCopyoutClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeCopyoutClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Create Clause
@@ -309,15 +309,15 @@ protected:
 public:
   OpenACCCreateClause() : OpenACCClause(ACCC_create){};
 
-  OpenACCCreateClauseModifier getCreateClauseModifier() { return modifier; };
+  OpenACCCreateClauseModifier getModifier() { return modifier; };
 
-  void setCreateClauseModifier(OpenACCCreateClauseModifier _modifier) {
+  void setModifier(OpenACCCreateClauseModifier _modifier) {
     modifier = _modifier;
   };
 
-  static OpenACCClause *addCreateClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
-  void mergeCreateClause(OpenACCDirective *, OpenACCClause *);
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
 // Default Clause
@@ -329,13 +329,13 @@ protected:
 public:
   OpenACCDefaultClause() : OpenACCClause(ACCC_default){};
 
-  OpenACCDefaultClauseKind getDefaultClauseKind() { return default_kind; };
+  OpenACCDefaultClauseKind getKind() { return default_kind; };
 
-  void setDefaultClauseKind(OpenACCDefaultClauseKind _default_kind) {
+  void setKind(OpenACCDefaultClauseKind _default_kind) {
     default_kind = _default_kind;
   };
 
-  static OpenACCClause *addDefaultClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
 };
 
@@ -348,12 +348,12 @@ protected:
 public:
   OpenACCWorkerClause() : OpenACCClause(ACCC_worker){};
 
-  OpenACCWorkerClauseModifier getWorkerClauseModifier() { return modifier; };
+  OpenACCWorkerClauseModifier getModifier() { return modifier; };
 
-  void setWorkerClauseModifier(OpenACCWorkerClauseModifier _modifier) {
+  void setModifier(OpenACCWorkerClauseModifier _modifier) {
     modifier = _modifier;
   };
 
-  static OpenACCClause *addWorkerClause(OpenACCDirective *);
+  static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
 };

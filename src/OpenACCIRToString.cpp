@@ -150,7 +150,7 @@ std::string OpenACCCopyinClause::toString() {
 
   std::string result = "copyin (";
   std::string parameter_string = "";
-  OpenACCCopyinClauseModifier modifier = this->getCopyinClauseModifier();
+  OpenACCCopyinClauseModifier modifier = this->getModifier();
   switch (modifier) {
   case ACCC_COPYIN_readonly:
     parameter_string = "readonly: ";
@@ -172,7 +172,7 @@ std::string OpenACCReductionClause::toString() {
   std::string result = "reduction (";
   std::string parameter_string = "";
   OpenACCReductionClauseOperator reduction_operator =
-      this->getReductionClauseOperator();
+      this->getOperator();
   switch (reduction_operator) {
   case ACCC_REDUCTION_add:
     parameter_string = "+: ";
@@ -217,7 +217,7 @@ std::string OpenACCCopyoutClause::toString() {
 
   std::string result = "copyout (";
   std::string parameter_string = "";
-  OpenACCCopyoutClauseModifier modifier = this->getCopyoutClauseModifier();
+  OpenACCCopyoutClauseModifier modifier = this->getModifier();
   switch (modifier) {
   case ACCC_COPYOUT_zero:
     parameter_string = "zero: ";
@@ -238,7 +238,7 @@ std::string OpenACCCreateClause::toString() {
 
   std::string result = "create (";
   std::string parameter_string = "";
-  OpenACCCreateClauseModifier modifier = this->getCreateClauseModifier();
+  OpenACCCreateClauseModifier modifier = this->getModifier();
   switch (modifier) {
   case ACCC_CREATE_zero:
     parameter_string = "zero: ";
@@ -259,7 +259,7 @@ std::string OpenACCDefaultClause::toString() {
 
   std::string result = "default (";
   std::string parameter_string;
-  OpenACCDefaultClauseKind default_kind = this->getDefaultClauseKind();
+  OpenACCDefaultClauseKind default_kind = this->getKind();
   switch (default_kind) {
   case ACCC_DEFAULT_present:
     parameter_string = "present";
@@ -284,7 +284,7 @@ std::string OpenACCWorkerClause::toString() {
 
   std::string result = "worker (";
   std::string parameter_string = "";
-  OpenACCWorkerClauseModifier modifier = this->getWorkerClauseModifier();
+  OpenACCWorkerClauseModifier modifier = this->getModifier();
   switch (modifier) {
   case ACCC_WORKER_num:
     parameter_string = "num: ";

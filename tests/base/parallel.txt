@@ -90,3 +90,51 @@
 #pragma acc parallel reduction( && : x, y, z)
 
 #pragma acc parallel reduction( || : x, y, z)
+
+#pragma acc parallel copyin( readonly : x, y, z) copyin( readonly : x, y, a) copyin( readonly : a, b, c)
+
+#pragma acc parallel copyin( readonly : x, y, z) copyin( readonly : a, b, c) copyin( readonly : 1, 2, 3)
+
+#pragma acc parallel copyin( x, y, z) copyin( readonly : a, b, c)
+
+#pragma acc parallel copyin( readonly : x, y, z) copyin( a, b, c)
+
+#pragma acc parallel copyin( x, y, z) copyin( a, b, c)
+
+#pragma acc parallel copyout( zero : x, y, z) copyout( zero : x, y, a) copyout( zero : a, b, c)
+
+#pragma acc parallel copyout( zero : x, y, z) copyout( zero : a, b, c) copyout( zero : 1, 2, 3)
+
+#pragma acc parallel copyout( x, y, z) copyout( zero : a, b, c)
+
+#pragma acc parallel copyout( zero : x, y, z) copyout( a, b, c)
+
+#pragma acc parallel copyout( x, y, z) copyout( a, b, c)
+
+#pragma acc parallel create( zero : x, y, z) create( zero : x, y, a) create( zero : a, b, c)
+
+#pragma acc parallel create( zero : x, y, z) create( zero : a, b, c) create( zero : 1, 2, 3)
+
+#pragma acc parallel create( x, y, z) create( zero : a, b, c)
+
+#pragma acc parallel create( zero : x, y, z) create( a, b, c)
+
+#pragma acc parallel create( x, y, z) create( a, b, c)
+
+#pragma acc parallel reduction( + : x, y, z) reduction( + : x, y, a) reduction( + : a, b, c)
+
+#pragma acc parallel reduction( + : x, y, z) reduction( * : a, b, c)
+
+#pragma acc parallel reduction( max : x, y, z) reduction( min : a, b, c)
+
+#pragma acc parallel reduction( min : x, y, z) reduction( min : a, b, c)
+
+#pragma acc parallel reduction( min : x, y, z) reduction( && : a, b, c)
+
+#pragma acc parallel reduction( || : x, y, z) reduction( && : a, b, c)
+
+#pragma acc parallel reduction( && : x, y, z) reduction( && : a, b, c)
+
+#pragma acc parallel reduction( max : x, y, max) reduction( max : x, y, min)
+
+#pragma acc parallel copyin( readonly : x, y, z) copyout( zero : x, y, z) create( zero : x, y, z) reduction( + : x, y, z)

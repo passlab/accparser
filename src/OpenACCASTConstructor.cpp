@@ -115,6 +115,12 @@ void OpenACCIRConstructor::exitReduction_operator(
   ((OpenACCReductionClause *)current_clause)->setReductionClauseOperator(reduction_operator);
 };
 
+void OpenACCIRConstructor::exitReduction_clause(
+    accparser::Reduction_clauseContext *ctx) {
+  ((OpenACCReductionClause *)current_clause)
+      ->mergeReductionClause(current_directive, current_clause);
+}
+
 void OpenACCIRConstructor::enterCopyout_clause(
     accparser::Copyout_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_copyout);
@@ -128,11 +134,23 @@ void OpenACCIRConstructor::exitCopyout_clause_modifier(
       ->setCopyoutClauseModifier(ACCC_COPYOUT_zero);
 }
 
+void OpenACCIRConstructor::exitCopyout_clause(
+    accparser::Copyout_clauseContext *ctx) {
+  ((OpenACCCopyoutClause *)current_clause)
+      ->mergeCopyoutClause(current_directive, current_clause);
+}
+
 void OpenACCIRConstructor::enterCreate_clause(
     accparser::Create_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_create);
   ((OpenACCCreateClause *)current_clause)
       ->setCreateClauseModifier(ACCC_CREATE_unspecified);
+}
+
+void OpenACCIRConstructor::exitCreate_clause(
+    accparser::Create_clauseContext *ctx) {
+  ((OpenACCCreateClause *)current_clause)
+      ->mergeCreateClause(current_directive, current_clause);
 }
 
 void OpenACCIRConstructor::exitCreate_clause_modifier(

@@ -132,17 +132,15 @@ OpenACCCopyinClause::addCopyinClause(OpenACCDirective *directive) {
   return new_clause;  
 };
 
-
-
 void OpenACCCopyinClause::mergeCopyinClause(OpenACCDirective *directive, OpenACCClause* current_clause) {
-    bool para_merge = true;
     std::vector<OpenACCClause*>* current_clauses = directive->getClauses(ACCC_copyin);
     for (std::vector<OpenACCClause*>::iterator it = current_clauses->begin(); it != current_clauses->end()-1; it++) {
         if (((OpenACCCopyinClause*)(*it))->getCopyinClauseModifier() == ((OpenACCCopyinClause*)current_clause)->getCopyinClauseModifier()) {
             std::vector<std::string>* expressions_previous_clause = ((OpenACCClause*)(*it))->getExpressions();
             std::vector<std::string>* expressions_current_clause = ((OpenACCClause*)(current_clause))->getExpressions();
             for (std::vector<std::string>::iterator it_expr_current = expressions_current_clause->begin(); it_expr_current != expressions_current_clause->end(); it_expr_current++) {
-                for (std::vector<std::string>::iterator it_expr_previous = expressions_previous_clause->begin(); it_expr_previous != expressions_previous_clause->end(); it_expr_previous++) {
+                bool para_merge = true;
+                for (std::vector<std::string>::iterator it_expr_previous = expressions_previous_clause->begin(); it_expr_previous != expressions_previous_clause->end(); it_expr_previous++) {   
                     if (*it_expr_current == *it_expr_previous){ 
                         para_merge = false;
                     }
@@ -171,12 +169,33 @@ OpenACCReductionClause::addReductionClause(OpenACCDirective *directive) {
     current_clauses->push_back(new_clause);
     (*all_clauses)[ACCC_reduction] = current_clauses;
   } else {
-      /* we can have multiple clause and we merge them together now, thus we
-       * return the object that is already created */
-      new_clause = current_clauses->at(0);
+    new_clause = new OpenACCReductionClause();
+    current_clauses->push_back(new_clause);
   };
 
   return new_clause;
+};
+
+void OpenACCReductionClause::mergeReductionClause(OpenACCDirective *directive, OpenACCClause* current_clause) {
+    std::vector<OpenACCClause*>* current_clauses = directive->getClauses(ACCC_reduction);
+    for (std::vector<OpenACCClause*>::iterator it = current_clauses->begin(); it != current_clauses->end()-1; it++) {
+        if (((OpenACCReductionClause*)(*it))->getReductionClauseOperator() == ((OpenACCReductionClause*)current_clause)->getReductionClauseOperator()) {
+            std::vector<std::string>* expressions_previous_clause = ((OpenACCClause*)(*it))->getExpressions();
+            std::vector<std::string>* expressions_current_clause = ((OpenACCClause*)(current_clause))->getExpressions();
+            for (std::vector<std::string>::iterator it_expr_current = expressions_current_clause->begin(); it_expr_current != expressions_current_clause->end(); it_expr_current++) {
+                bool para_merge = true;
+                for (std::vector<std::string>::iterator it_expr_previous = expressions_previous_clause->begin(); it_expr_previous != expressions_previous_clause->end(); it_expr_previous++) {
+                    if (*it_expr_current == *it_expr_previous){ 
+                        para_merge = false;
+                    }
+                }
+                if (para_merge == true) expressions_previous_clause->push_back(*it_expr_current);
+            }
+            current_clauses->pop_back();
+            directive->getClausesInOriginalOrder()->pop_back();
+            break;
+        }
+    }
 };
 
 OpenACCClause *
@@ -194,12 +213,33 @@ OpenACCCopyoutClause::addCopyoutClause(OpenACCDirective *directive) {
     current_clauses->push_back(new_clause);
     (*all_clauses)[ACCC_copyout] = current_clauses;
   } else {
-      /* we can have multiple clause and we merge them together now, thus we
-       * return the object that is already created */
-      new_clause = current_clauses->at(0);
+    new_clause = new OpenACCCopyoutClause();
+    current_clauses->push_back(new_clause);
   };
 
-  return new_clause;
+  return new_clause;  
+};
+
+void OpenACCCopyoutClause::mergeCopyoutClause(OpenACCDirective *directive, OpenACCClause* current_clause) {
+    std::vector<OpenACCClause*>* current_clauses = directive->getClauses(ACCC_copyout);
+    for (std::vector<OpenACCClause*>::iterator it = current_clauses->begin(); it != current_clauses->end()-1; it++) {
+        if (((OpenACCCopyoutClause*)(*it))->getCopyoutClauseModifier() == ((OpenACCCopyoutClause*)current_clause)->getCopyoutClauseModifier()) {
+            std::vector<std::string>* expressions_previous_clause = ((OpenACCClause*)(*it))->getExpressions();
+            std::vector<std::string>* expressions_current_clause = ((OpenACCClause*)(current_clause))->getExpressions();
+            for (std::vector<std::string>::iterator it_expr_current = expressions_current_clause->begin(); it_expr_current != expressions_current_clause->end(); it_expr_current++) {
+                bool para_merge = true;
+                for (std::vector<std::string>::iterator it_expr_previous = expressions_previous_clause->begin(); it_expr_previous != expressions_previous_clause->end(); it_expr_previous++) {
+                    if (*it_expr_current == *it_expr_previous){ 
+                        para_merge = false;
+                    }
+                }
+                if (para_merge == true) expressions_previous_clause->push_back(*it_expr_current);
+            }
+            current_clauses->pop_back();
+            directive->getClausesInOriginalOrder()->pop_back();
+            break;
+        }
+    }
 };
 
 OpenACCClause *
@@ -217,12 +257,33 @@ OpenACCCreateClause::addCreateClause(OpenACCDirective *directive) {
     current_clauses->push_back(new_clause);
     (*all_clauses)[ACCC_create] = current_clauses;
   } else {
-      /* we can have multiple clause and we merge them together now, thus we
-       * return the object that is already created */
-      new_clause = current_clauses->at(0);
+    new_clause = new OpenACCCreateClause();
+    current_clauses->push_back(new_clause);
   };
 
-  return new_clause;
+  return new_clause;  
+};
+
+void OpenACCCreateClause::mergeCreateClause(OpenACCDirective *directive, OpenACCClause* current_clause) {
+    std::vector<OpenACCClause*>* current_clauses = directive->getClauses(ACCC_create);
+    for (std::vector<OpenACCClause*>::iterator it = current_clauses->begin(); it != current_clauses->end()-1; it++) {
+        if (((OpenACCCreateClause*)(*it))->getCreateClauseModifier() == ((OpenACCCreateClause*)current_clause)->getCreateClauseModifier()) {
+            std::vector<std::string>* expressions_previous_clause = ((OpenACCClause*)(*it))->getExpressions();
+            std::vector<std::string>* expressions_current_clause = ((OpenACCClause*)(current_clause))->getExpressions();
+            for (std::vector<std::string>::iterator it_expr_current = expressions_current_clause->begin(); it_expr_current != expressions_current_clause->end(); it_expr_current++) {
+                bool para_merge = true;
+                for (std::vector<std::string>::iterator it_expr_previous = expressions_previous_clause->begin(); it_expr_previous != expressions_previous_clause->end(); it_expr_previous++) {
+                    if (*it_expr_current == *it_expr_previous){ 
+                        para_merge = false;
+                    }
+                }
+                if (para_merge == true) expressions_previous_clause->push_back(*it_expr_current);
+            }
+            current_clauses->pop_back();
+            directive->getClausesInOriginalOrder()->pop_back();
+            break;
+        }
+    }
 };
 
 OpenACCClause *

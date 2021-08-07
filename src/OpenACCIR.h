@@ -219,6 +219,7 @@ public:
 
   static OpenACCClause *addReductionClause(OpenACCDirective *);
   std::string toString();
+  void mergeReductionClause(OpenACCDirective *, OpenACCClause*);
 };
 
 // Copyout Clause
@@ -238,6 +239,7 @@ public:
 
   static OpenACCClause *addCopyoutClause(OpenACCDirective *);
   std::string toString();
+  void mergeCopyoutClause(OpenACCDirective *, OpenACCClause*);
 };
 
 // Create Clause
@@ -257,6 +259,7 @@ public:
 
   static OpenACCClause *addCreateClause(OpenACCDirective *);
   std::string toString();
+  void mergeCreateClause(OpenACCDirective *, OpenACCClause*);
 };
 
 // Default Clause

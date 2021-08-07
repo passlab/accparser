@@ -304,7 +304,7 @@ COPYOUT_LEFT_PAREN
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
-  if (lookAhead("readonly") == false) {
+  if (lookAhead("zero") == false) {
     pushMode(expression_mode);
   }
 }
@@ -313,7 +313,7 @@ COPYOUT_LEFT_PAREN
 COPYOUT_RIGHT_PAREN
    : ')' -> type (RIGHT_PAREN) , popMode
    ;
-
+   
 ZERO
    : 'zero' [ ]*
    {
@@ -361,7 +361,7 @@ CREATE_LEFT_PAREN
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
-  if (lookAhead("readonly") == false) {
+  if (lookAhead("zero") == false) {
     pushMode(expression_mode);
   }
 }

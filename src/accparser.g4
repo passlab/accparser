@@ -136,7 +136,8 @@ parallel_clauses
    ;
 
 async_clause
-   : ASYNC LEFT_PAREN int_expr RIGHT_PAREN
+   : ASYNC
+   | ASYNC LEFT_PAREN int_expr RIGHT_PAREN
    ;
    
 if_clause
@@ -162,7 +163,8 @@ default_kind
    ;
 
 wait_clause
-   : WAIT LEFT_PAREN int_expr_list RIGHT_PAREN
+   : WAIT
+   | WAIT LEFT_PAREN int_expr_list RIGHT_PAREN
    ;
 
 num_gangs_clause

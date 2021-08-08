@@ -100,6 +100,10 @@ ASYNC
 ATTACH
    : 'attach' -> pushMode (expr_clause)
    ;
+   
+AUTO
+   : 'auto'
+   ;
 
 COLLAPSE
    : 'collapse' -> pushMode (expr_clause)
@@ -138,11 +142,18 @@ FIRSTPRIVATE
    ;
 
 GANG
-   : 'gang'
+   : 'gang' [ ]*
+   {
+  if (_input->LA(1) == '(') pushMode(expr_clause);
+}
    ;
       
 IF
    : 'if' -> pushMode (expr_clause)
+   ;
+   
+INDEPENDENT
+   : 'independent'
    ;
 
 NO_CREATE
@@ -179,7 +190,22 @@ SELF
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
    ;
+   
+SEQ
+   : 'seq'
+   ;
 
+TILE
+   : 'tile' -> pushMode (expr_clause)
+   ;
+   
+VECTOR
+   : 'vector' [ ]*
+   {
+  if (_input->LA(1) == '(') pushMode(vector_clause);
+}
+   ;
+   
 VECTOR_LENGTH
    : 'vector_length' -> pushMode (expr_clause)
    ;
@@ -395,7 +421,54 @@ BLANK
 EXPR_LINE_END
    : [\n\r] -> skip
    ;
- 
+
+mode vector_clause;
+VECTOR_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  if (lookAhead("length") == false) {
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+VECTOR_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+LENGTH
+   : 'length' [ ]*
+   { 
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+VECTOR_COLON
+   : ':' [ ]*
+   {
+  if (_input->LA(1) == ':')
+    more();
+  else {
+    setType(COLON);
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+VECTOR_BLANK
+   : [ ]+ -> skip
+   ;
+
+VECTOR_LINE_END
+   : [\n\r] -> skip
+   ;
+
 mode reduction_clause;
 REDUCTION_LEFT_PAREN
    : '(' [ ]*
@@ -529,7 +602,7 @@ REDUCTION_BLANK
 REDUCTION_LINE_END
    : [\n\r] -> skip
    ;
-
+   
 mode worker_clause;
 WORKER_LEFT_PAREN
    : '(' [ ]*
@@ -550,7 +623,7 @@ WORKER_RIGHT_PAREN
 WORKER_NUM
    : 'num' [ ]*
    {
-  if (_input->LA(1) == ':' && _input->LA(2) == ':') {
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     more();
     pushMode(expression_mode);
   } else if (_input->LA(1) == ':' && _input->LA(2) != ':') {

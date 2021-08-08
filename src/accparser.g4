@@ -144,9 +144,16 @@ loop_clause_list
    ;
 
 loop_clauses
-   : collapse_clause
+   : auto_clause
+   | collapse_clause
+   | device_type_clause
    | gang_clause
+   | independent_clause
    | private_clause
+   | reduction_clause
+   | seq_clause
+   | tile_clause
+   | vector_clause
    | worker_clause
    ;
    
@@ -180,6 +187,10 @@ async_clause
 
 attach_clause
    : ATTACH LEFT_PAREN var_list RIGHT_PAREN
+   ;
+   
+auto_clause
+   : AUTO
    ;
 
 collapse_clause
@@ -240,15 +251,24 @@ deviceptr_clause
    
 firstprivate_clause
    : FIRSTPRIVATE LEFT_PAREN var_list RIGHT_PAREN
-   ;   
-   
-if_clause
-   : IF LEFT_PAREN condition RIGHT_PAREN
-   ;   
+   ; 
 
 gang_clause
    : GANG
+   | GANG LEFT_PAREN gang_arg_list RIGHT_PAREN
    ;
+   
+gang_arg_list
+   : (var COMMA | var)+
+   ;  
+   
+if_clause
+   : IF LEFT_PAREN condition RIGHT_PAREN
+   ; 
+   
+independent_clause
+   : INDEPENDENT
+   ; 
    
 no_create_clause
    : NO_CREATE LEFT_PAREN var_list RIGHT_PAREN
@@ -289,10 +309,36 @@ reduction_operator
 self_clause
    : SELF
    | SELF LEFT_PAREN condition RIGHT_PAREN
-   ;
+   ; 
    
 condition
    : EXPR
+   ;
+   
+seq_clause
+   : SEQ
+   ;
+   
+tile_clause
+   : TILE LEFT_PAREN size_expr_list RIGHT_PAREN
+   ;
+   
+size_expr_list
+   : (var COMMA | var)+
+   ;
+   
+vector_clause
+   : VECTOR
+   | VECTOR vector_clause_args
+   ;
+   
+vector_clause_args
+   : LEFT_PAREN vector_clause_modifier COLON int_expr RIGHT_PAREN
+   | LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+   
+vector_clause_modifier
+   : LENGTH
    ;
 
 vector_length_clause

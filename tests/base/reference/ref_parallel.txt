@@ -82,3 +82,4 @@
 #pragma acc parallel self self (expression1)
 #pragma acc parallel num_gangs (expression1) num_gangs (expression2) num_gangs (expression3)
 #pragma acc parallel num_gangs (expression1) num_gangs (expression2)
+#pragma acc parallel wait wait (a, b, c, d)

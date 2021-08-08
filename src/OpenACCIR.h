@@ -193,6 +193,17 @@ public:
   void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
+// Collapse Clause
+class OpenACCCollapseClause : public OpenACCClause {
+
+public:
+  OpenACCCollapseClause() : OpenACCClause(ACCC_collapse){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
 // Copyin Clause
 class OpenACCCopyinClause : public OpenACCClause {
 
@@ -272,6 +283,17 @@ public:
   std::string toString();
 };
 
+// Gang Clause
+class OpenACCGangClause : public OpenACCClause {
+
+public:
+  OpenACCGangClause() : OpenACCClause(ACCC_gang){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
 // Num_gangs Clause
 class OpenACCNumGangsClause : public OpenACCClause {
 
@@ -304,9 +326,7 @@ protected:
 public:
   OpenACCReductionClause() : OpenACCClause(ACCC_reduction){};
 
-  OpenACCReductionClauseOperator getOperator() {
-    return reduction_operator;
-  };
+  OpenACCReductionClauseOperator getOperator() { return reduction_operator; };
 
   void setOperator(OpenACCReductionClauseOperator _operator) {
     reduction_operator = _operator;
@@ -328,11 +348,42 @@ public:
   void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
+// Vector Clause
+class OpenACCVectorClause : public OpenACCClause {
+
+protected:
+  OpenACCVectorClauseModifier modifier = ACCC_VECTOR_unspecified;
+
+public:
+  OpenACCVectorClause() : OpenACCClause(ACCC_vector){};
+
+  OpenACCVectorClauseModifier getModifier() { return modifier; };
+
+  void setModifier(OpenACCVectorClauseModifier _modifier) {
+    modifier = _modifier;
+  };
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
 // Vector_length Clause
 class OpenACCVectorLengthClause : public OpenACCClause {
 
 public:
   OpenACCVectorLengthClause() : OpenACCClause(ACCC_vector_length){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Wait Clause
+class OpenACCWaitClause : public OpenACCClause {
+
+public:
+  OpenACCWaitClause() : OpenACCClause(ACCC_wait){};
 
   static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
@@ -356,4 +407,5 @@ public:
 
   static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
 };

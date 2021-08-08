@@ -86,28 +86,34 @@ std::string OpenACCClause::toString() {
     break;
   case ACCC_attach:
     result += "attach ";
-    break;    
+    break;
+  case ACCC_auto:
+    result += "auto ";
+    break;
   case ACCC_collapse:
     result += "collapse ";
-    break; 
+    break;
   case ACCC_copy:
     result += "copy ";
-    break;    
+    break;
   case ACCC_device_type:
     result += "device_type ";
-    break;  
+    break;
   case ACCC_deviceptr:
     result += "deviceptr ";
     break;
   case ACCC_firstprivate:
     result += "firstprivate ";
-    break; 
+    break;
   case ACCC_gang:
     result += "gang ";
-    break;    
+    break;
   case ACCC_if:
     result += "if ";
-    break;    
+    break;
+  case ACCC_independent:
+    result += "independent ";
+    break;
   case ACCC_no_create:
     result += "no_create ";
     break;
@@ -125,6 +131,12 @@ std::string OpenACCClause::toString() {
     break;
   case ACCC_self:
     result += "self ";
+    break;
+  case ACCC_seq:
+    result += "seq ";
+    break;
+  case ACCC_tile:
+    result += "tile ";
     break;
   case ACCC_vector_length:
     result += "vector_length ";
@@ -238,8 +250,7 @@ std::string OpenACCReductionClause::toString() {
 
   std::string result = "reduction (";
   std::string parameter_string = "";
-  OpenACCReductionClauseOperator reduction_operator =
-      this->getOperator();
+  OpenACCReductionClauseOperator reduction_operator = this->getOperator();
   switch (reduction_operator) {
   case ACCC_REDUCTION_add:
     parameter_string = "+: ";
@@ -267,6 +278,27 @@ std::string OpenACCReductionClause::toString() {
     break;
   case ACCC_REDUCTION_logor:
     parameter_string = "||: ";
+    break;
+  default:;
+  };
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
+  }
+
+  return result;
+};
+
+std::string OpenACCVectorClause::toString() {
+
+  std::string result = "vector (";
+  std::string parameter_string = "";
+  OpenACCVectorClauseModifier modifier = this->getModifier();
+  switch (modifier) {
+  case ACCC_VECTOR_length:
+    parameter_string = "length: ";
     break;
   default:;
   };

@@ -23,6 +23,7 @@ enum OpenACCClauseKind {
 #define OPENACC_CLAUSE(Name) ACCC_##Name,
     OPENACC_CLAUSE(async)
     OPENACC_CLAUSE(attach)
+    OPENACC_CLAUSE(auto)
     OPENACC_CLAUSE(collapse)
     OPENACC_CLAUSE(copy)
     OPENACC_CLAUSE(copyin)
@@ -34,6 +35,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(firstprivate)
     OPENACC_CLAUSE(gang)
     OPENACC_CLAUSE(if)
+    OPENACC_CLAUSE(independent)
     OPENACC_CLAUSE(no_create)
     OPENACC_CLAUSE(num_gangs)
     OPENACC_CLAUSE(num_workers)
@@ -41,6 +43,9 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(private)
     OPENACC_CLAUSE(reduction)
     OPENACC_CLAUSE(self)
+    OPENACC_CLAUSE(seq)
+    OPENACC_CLAUSE(tile)
+    OPENACC_CLAUSE(vector)
     OPENACC_CLAUSE(vector_length)
     OPENACC_CLAUSE(wait)
     OPENACC_CLAUSE(worker)
@@ -103,6 +108,15 @@ enum OpenACCReductionClauseOperator {
     OPENACC_REDUCTION_OPERATOR(logor)
     OPENACC_REDUCTION_OPERATOR(unknown)
 #undef OPENACC_REDUCTION_OPERATOR
+};
+
+// OpenACC attributes for 'vector' clause.
+enum OpenACCVectorClauseModifier {
+#define OPENACC_VECTOR_MODIFIER(Name) ACCC_VECTOR_##Name,
+    OPENACC_VECTOR_MODIFIER(unspecified)
+    OPENACC_VECTOR_MODIFIER(length)
+    OPENACC_VECTOR_MODIFIER(unknown)
+#undef OPENACC_VECTOR_MODIFIER
 };
 
 // OpenACC attributes for 'worker' clause.

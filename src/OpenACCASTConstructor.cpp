@@ -6,6 +6,11 @@
 OpenACCDirective *current_directive = NULL;
 OpenACCClause *current_clause = NULL;
 
+void OpenACCIRConstructor::enterData_directive(
+    accparser::Data_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_data);
+}
+
 void OpenACCIRConstructor::enterParallel_directive(
     accparser::Parallel_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_parallel);

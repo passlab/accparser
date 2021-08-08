@@ -62,6 +62,10 @@ ACC
    | [!c] '$acc'
    ;
 
+DATA
+   : 'data'
+   ;
+   
 PARALLEL
    : 'parallel'
    ;

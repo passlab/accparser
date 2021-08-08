@@ -10,6 +10,7 @@
 // OpenACC directives.
 enum OpenACCDirectiveKind {
 #define OPENACC_DIRECTIVE(Name) ACCD_##Name,
+    OPENACC_DIRECTIVE(data)
     OPENACC_DIRECTIVE(loop)
     OPENACC_DIRECTIVE(parallel)
     OPENACC_DIRECTIVE(parallel_loop)

@@ -44,6 +44,9 @@ std::string OpenACCDirective::toString() {
   std::string result;
 
   switch (this->getKind()) {
+  case ACCD_data:
+    result += "data ";
+    break;
   case ACCD_loop:
     result += "loop ";
     break;

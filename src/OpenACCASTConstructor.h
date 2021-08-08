@@ -6,6 +6,8 @@ public:
   virtual void enterParallel_directive(
       accparser::Parallel_directiveContext * /*ctx*/) override;
   virtual void
+  enterData_directive(accparser::Data_directiveContext * /*ctx*/) override;
+  virtual void
   enterLoop_directive(accparser::Loop_directiveContext * /*ctx*/) override;
   virtual void enterParallel_loop_directive(
       accparser::Parallel_loop_directiveContext * /*ctx*/) override;

@@ -99,9 +99,53 @@ acc
    ;
 
 openacc_directive
-   : loop_directive
+   : data_directive
+   | loop_directive
    | parallel_directive
    | parallel_loop_directive
+   ;
+
+data_directive
+   : DATA data_clause_list
+   ;
+
+data_clause_list
+   : data_clauses*
+   ;
+
+data_clauses
+   : attach_clause
+   | copy_clause
+   | copyin_clause
+   | copyout_clause
+   | create_clause
+   | default_clause
+   | deviceptr_clause
+   | if_clause
+   | no_create_clause
+   | present_clause
+   ;
+
+loop_directive
+   : LOOP loop_clause_list
+   ;
+
+loop_clause_list
+   : loop_clauses*
+   ;
+
+loop_clauses
+   : auto_clause
+   | collapse_clause
+   | device_type_clause
+   | gang_clause
+   | independent_clause
+   | private_clause
+   | reduction_clause
+   | seq_clause
+   | tile_clause
+   | vector_clause
+   | worker_clause
    ;
 
 parallel_directive
@@ -133,28 +177,6 @@ parallel_clauses
    | self_clause
    | vector_length_clause
    | wait_clause
-   ;
-
-loop_directive
-   : LOOP loop_clause_list
-   ;
-
-loop_clause_list
-   : loop_clauses*
-   ;
-
-loop_clauses
-   : auto_clause
-   | collapse_clause
-   | device_type_clause
-   | gang_clause
-   | independent_clause
-   | private_clause
-   | reduction_clause
-   | seq_clause
-   | tile_clause
-   | vector_clause
-   | worker_clause
    ;
 
 parallel_loop_directive

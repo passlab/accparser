@@ -81,7 +81,7 @@ RIGHT_PAREN
 D_BLANK
    : [ ]+ -> skip
    ;
-   
+
 COLON
    : ':'
    ;
@@ -100,7 +100,7 @@ ASYNC
 ATTACH
    : 'attach' -> pushMode (expr_clause)
    ;
-   
+
 AUTO
    : 'auto'
    ;
@@ -108,7 +108,7 @@ AUTO
 COLLAPSE
    : 'collapse' -> pushMode (expr_clause)
    ;
-        
+
 COPY
    : 'copy' -> pushMode (expr_clause)
    ;
@@ -120,7 +120,7 @@ COPYIN
 COPYOUT
    : 'copyout' -> pushMode (copyout_clause)
    ;
-   
+
 CREATE
    : 'create' -> pushMode (create_clause)
    ;
@@ -132,7 +132,7 @@ DEFAULT
 DEVICE_TYPE
    : 'device_type' -> pushMode (expr_clause)
    ;
-   
+
 DEVICEPTR
    : 'deviceptr' -> pushMode (expr_clause)
    ;
@@ -147,11 +147,11 @@ GANG
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
    ;
-      
+
 IF
    : 'if' -> pushMode (expr_clause)
    ;
-   
+
 INDEPENDENT
    : 'independent'
    ;
@@ -163,7 +163,7 @@ NO_CREATE
 NUM
    : 'num'
    ;
-     
+
 NUM_GANGS
    : 'num_gangs' -> pushMode (expr_clause)
    ;
@@ -175,11 +175,11 @@ NUM_WORKERS
 PRESENT
    : 'present' -> pushMode (expr_clause)
    ;
-   
+
 PRIVATE
    : 'private' -> pushMode (expr_clause)
    ;
-      
+
 REDUCTION
    : 'reduction' -> pushMode (reduction_clause)
    ;
@@ -190,7 +190,7 @@ SELF
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
    ;
-   
+
 SEQ
    : 'seq'
    ;
@@ -198,14 +198,14 @@ SEQ
 TILE
    : 'tile' -> pushMode (expr_clause)
    ;
-   
+
 VECTOR
    : 'vector' [ ]*
    {
   if (_input->LA(1) == '(') pushMode(vector_clause);
 }
    ;
-   
+
 VECTOR_LENGTH
    : 'vector_length' -> pushMode (expr_clause)
    ;
@@ -216,7 +216,7 @@ WAIT
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
    ;
-   
+
 WORKER
    : 'worker' [ ]*
    {
@@ -281,7 +281,7 @@ COPYIN_BLANK
 COPYIN_LINE_END
    : [\n\r] -> skip
    ;
-   
+
 mode copyout_clause;
 COPYOUT_LEFT_PAREN
    : '(' [ ]*
@@ -298,7 +298,7 @@ COPYOUT_LEFT_PAREN
 COPYOUT_RIGHT_PAREN
    : ')' -> type (RIGHT_PAREN) , popMode
    ;
-   
+
 ZERO
    : 'zero' [ ]*
    {
@@ -396,7 +396,7 @@ CREATE_BLANK
 CREATE_LINE_END
    : [\n\r] -> skip
    ;
-   
+
 mode default_clause;
 NONE
    : 'none'
@@ -492,7 +492,7 @@ ADD
   }
 }
    ;
-   
+
 MUL
    : '*' [ ]*
    { 
@@ -502,7 +502,7 @@ MUL
   }
 }
    ;
-   
+
 MAX
    : 'max' [ ]*
    { 
@@ -512,7 +512,7 @@ MAX
   }
 }
    ;
-   
+
 MIN
    : 'min' [ ]*
    { 
@@ -522,7 +522,7 @@ MIN
   }
 }
    ;
-   
+
 BITAND
    : '&' [ ]*
    { 
@@ -532,7 +532,7 @@ BITAND
   }
 }
    ;
-   
+
 BITOR
    : '|' [ ]*
    { 
@@ -542,7 +542,7 @@ BITOR
   }
 }
    ;
-   
+
 BITXOR
    : '^' [ ]*
    { 
@@ -552,7 +552,7 @@ BITXOR
   }
 }
    ;
-   
+
 LOGAND
    : '&&' [ ]*
    { 
@@ -562,7 +562,7 @@ LOGAND
   }
 }
    ;
-   
+
 LOGOR
    : '||' [ ]*
    { 
@@ -602,7 +602,7 @@ REDUCTION_BLANK
 REDUCTION_LINE_END
    : [\n\r] -> skip
    ;
-   
+
 mode worker_clause;
 WORKER_LEFT_PAREN
    : '(' [ ]*
@@ -651,7 +651,7 @@ WORKER_BLANK
 WORKER_LINE_END
    : [\n\r] -> skip
    ;
-   
+
 mode expr_clause;
 EXPR_LEFT_PAREN
    : '(' [ ]*
@@ -736,3 +736,4 @@ EXPRESSION_CHAR
   }
 }
    ;
+

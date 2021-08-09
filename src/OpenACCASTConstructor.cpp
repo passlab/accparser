@@ -11,6 +11,16 @@ void OpenACCIRConstructor::enterData_directive(
   current_directive = new OpenACCDirective(ACCD_data);
 }
 
+void OpenACCIRConstructor::enterEnter_data_directive(
+    accparser::Enter_data_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_enter_data);
+}
+
+void OpenACCIRConstructor::enterExit_data_directive(
+    accparser::Exit_data_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_exit_data);
+}
+
 void OpenACCIRConstructor::enterParallel_directive(
     accparser::Parallel_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_parallel);
@@ -83,6 +93,18 @@ void OpenACCIRConstructor::exitCopyin_clause(
       ->mergeClause(current_directive, current_clause);
 }
 
+void OpenACCIRConstructor::enterCopyin_no_modifier_clause(
+    accparser::Copyin_no_modifier_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_copyin);
+  ((OpenACCCopyinClause *)current_clause)->setModifier(ACCC_COPYIN_unspecified);
+}
+
+void OpenACCIRConstructor::exitCopyin_no_modifier_clause(
+    accparser::Copyin_no_modifier_clauseContext *ctx) {
+  ((OpenACCCopyinClause *)current_clause)
+      ->mergeClause(current_directive, current_clause);
+}
+
 void OpenACCIRConstructor::enterCopyout_clause(
     accparser::Copyout_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_copyout);
@@ -97,6 +119,18 @@ void OpenACCIRConstructor::exitCopyout_clause_modifier(
 
 void OpenACCIRConstructor::exitCopyout_clause(
     accparser::Copyout_clauseContext *ctx) {
+  ((OpenACCCopyoutClause *)current_clause)
+      ->mergeClause(current_directive, current_clause);
+}
+
+void OpenACCIRConstructor::enterCopyout_no_modifier_clause(
+    accparser::Copyout_no_modifier_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_copyout);
+  ((OpenACCCopyoutClause *)current_clause)->setModifier(ACCC_COPYOUT_unspecified);
+}
+
+void OpenACCIRConstructor::exitCopyout_no_modifier_clause(
+    accparser::Copyout_no_modifier_clauseContext *ctx) {
   ((OpenACCCopyoutClause *)current_clause)
       ->mergeClause(current_directive, current_clause);
 }
@@ -134,6 +168,16 @@ void OpenACCIRConstructor::exitDefault_kind(
   ((OpenACCDefaultClause *)current_clause)->setKind(kind);
 };
 
+void OpenACCIRConstructor::enterDelete_clause(
+    accparser::Delete_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_delete);
+}
+
+void OpenACCIRConstructor::enterDetach_clause(
+    accparser::Detach_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_detach);
+}
+
 void OpenACCIRConstructor::enterDevice_type_clause(
     accparser::Device_type_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_device_type);
@@ -142,6 +186,12 @@ void OpenACCIRConstructor::enterDevice_type_clause(
 void OpenACCIRConstructor::enterDeviceptr_clause(
     accparser::Deviceptr_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_deviceptr);
+}
+
+void OpenACCIRConstructor::enterFinalize_clause(
+    accparser::Finalize_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_finalize);
 }
 
 void OpenACCIRConstructor::enterFirstprivate_clause(

@@ -40,8 +40,11 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_attach:
   case ACCC_auto:
   case ACCC_copy:
+  case ACCC_delete:
+  case ACCC_detach:
   case ACCC_device_type:
   case ACCC_deviceptr:
+  case ACCC_finalize:
   case ACCC_firstprivate:
   case ACCC_if:
   case ACCC_independent:

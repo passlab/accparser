@@ -1,0 +1,15 @@
+#pragma acc exit data async (5)
+#pragma acc exit data copyout (x, y)
+#pragma acc exit data copyout (x, y, z, a, b, c)
+#pragma acc exit data wait (12, 23, 34)
+#pragma acc exit data if (5)
+#pragma acc exit data if (x==3)
+#pragma acc exit data async (expression1) async (expression2) async (expression3)
+#pragma acc exit data async (expression1) async (expression2)
+#pragma acc exit data async (expression1) async
+#pragma acc exit data async async (expression1)
+#pragma acc exit data delete (x, y)
+#pragma acc exit data delete (x, y, z, a, b, c)
+#pragma acc exit data detach (x, y)
+#pragma acc exit data detach (x, y, z, a, b, c)
+#pragma acc exit data finalize

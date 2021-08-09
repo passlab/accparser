@@ -11,6 +11,8 @@
 enum OpenACCDirectiveKind {
 #define OPENACC_DIRECTIVE(Name) ACCD_##Name,
     OPENACC_DIRECTIVE(data)
+    OPENACC_DIRECTIVE(enter_data)
+    OPENACC_DIRECTIVE(exit_data)
     OPENACC_DIRECTIVE(loop)
     OPENACC_DIRECTIVE(parallel)
     OPENACC_DIRECTIVE(parallel_loop)
@@ -31,8 +33,11 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(copyout)
     OPENACC_CLAUSE(create)
     OPENACC_CLAUSE(default)
+    OPENACC_CLAUSE(delete)
+    OPENACC_CLAUSE(detach)
     OPENACC_CLAUSE(device_type)
     OPENACC_CLAUSE(deviceptr)
+    OPENACC_CLAUSE(finalize)
     OPENACC_CLAUSE(firstprivate)
     OPENACC_CLAUSE(gang)
     OPENACC_CLAUSE(if)

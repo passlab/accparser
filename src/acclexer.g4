@@ -66,6 +66,14 @@ DATA
    : 'data'
    ;
    
+ENTER
+   : 'enter'
+   ;
+   
+EXIT
+   : 'exit'
+   ;
+   
 PARALLEL
    : 'parallel'
    ;
@@ -133,6 +141,14 @@ DEFAULT
    : 'default' -> pushMode (default_clause)
    ;
 
+DELETE
+   : 'delete' -> pushMode (expr_clause)
+   ;
+   
+DETACH
+   : 'detach' -> pushMode (expr_clause)
+   ;
+
 DEVICE_TYPE
    : 'device_type' -> pushMode (expr_clause)
    ;
@@ -140,7 +156,11 @@ DEVICE_TYPE
 DEVICEPTR
    : 'deviceptr' -> pushMode (expr_clause)
    ;
-
+   
+FINALIZE
+   : 'finalize'
+   ;
+   
 FIRSTPRIVATE
    : 'firstprivate' -> pushMode (expr_clause)
    ;

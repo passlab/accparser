@@ -8,6 +8,10 @@ public:
   virtual void
   enterData_directive(accparser::Data_directiveContext * /*ctx*/) override;
   virtual void
+  enterEnter_data_directive(accparser::Enter_data_directiveContext * /*ctx*/) override;
+  virtual void
+  enterExit_data_directive(accparser::Exit_data_directiveContext * /*ctx*/) override;
+  virtual void
   enterLoop_directive(accparser::Loop_directiveContext * /*ctx*/) override;
   virtual void enterParallel_loop_directive(
       accparser::Parallel_loop_directiveContext * /*ctx*/) override;
@@ -26,18 +30,27 @@ public:
   exitCollapse_clause(accparser::Collapse_clauseContext * /*ctx*/) override;
   virtual void
   enterCopy_clause(accparser::Copy_clauseContext * /*ctx*/) override;
-  virtual void exitCopyin_clause_modifier(
-      accparser::Copyin_clause_modifierContext * /*ctx*/) override;
   virtual void
   enterCopyin_clause(accparser::Copyin_clauseContext * /*ctx*/) override;
   virtual void
+  exitCopyin_clause_modifier(
+      accparser::Copyin_clause_modifierContext * /*ctx*/) override;
+  virtual void
   exitCopyin_clause(accparser::Copyin_clauseContext * /*ctx*/) override;
+  virtual void
+  enterCopyin_no_modifier_clause(accparser::Copyin_no_modifier_clauseContext * /*ctx*/) override;
+  virtual void
+  exitCopyin_no_modifier_clause(accparser::Copyin_no_modifier_clauseContext * /*ctx*/) override;
   virtual void
   enterCopyout_clause(accparser::Copyout_clauseContext * /*ctx*/) override;
   virtual void exitCopyout_clause_modifier(
       accparser::Copyout_clause_modifierContext * /*ctx*/) override;
   virtual void
   exitCopyout_clause(accparser::Copyout_clauseContext * /*ctx*/) override;
+  virtual void
+  enterCopyout_no_modifier_clause(accparser::Copyout_no_modifier_clauseContext * /*ctx*/) override;
+  virtual void
+  exitCopyout_no_modifier_clause(accparser::Copyout_no_modifier_clauseContext * /*ctx*/) override;
   virtual void
   enterCreate_clause(accparser::Create_clauseContext * /*ctx*/) override;
   virtual void exitCreate_clause_modifier(
@@ -48,10 +61,16 @@ public:
   enterDefault_clause(accparser::Default_clauseContext * /*ctx*/) override;
   virtual void
   exitDefault_kind(accparser::Default_kindContext * /*ctx*/) override;
+  virtual void
+  enterDelete_clause(accparser::Delete_clauseContext * /*ctx*/) override;
+  virtual void
+  enterDetach_clause(accparser::Detach_clauseContext * /*ctx*/) override;
   virtual void enterDevice_type_clause(
       accparser::Device_type_clauseContext * /*ctx*/) override;
   virtual void
   enterDeviceptr_clause(accparser::Deviceptr_clauseContext * /*ctx*/) override;
+  virtual void
+  enterFinalize_clause(accparser::Finalize_clauseContext * /*ctx*/) override;
   virtual void enterFirstprivate_clause(
       accparser::Firstprivate_clauseContext * /*ctx*/) override;
   virtual void

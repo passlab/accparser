@@ -2,6 +2,8 @@ enable_testing()
 add_custom_target(acc_test)
 
 set(TEST_FILES
+    enter_data.txt
+    exit_data.txt
     data.txt
     parallel.txt
     loop.txt

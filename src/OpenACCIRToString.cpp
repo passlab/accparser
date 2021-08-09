@@ -47,6 +47,12 @@ std::string OpenACCDirective::toString() {
   case ACCD_data:
     result += "data ";
     break;
+  case ACCD_enter_data:
+    result += "enter data ";
+    break;
+  case ACCD_exit_data:
+    result += "exit data ";
+    break;
   case ACCD_loop:
     result += "loop ";
     break;
@@ -99,11 +105,20 @@ std::string OpenACCClause::toString() {
   case ACCC_copy:
     result += "copy ";
     break;
+  case ACCC_delete:
+    result += "delete ";
+    break;
+  case ACCC_detach:
+    result += "detach ";
+    break;
   case ACCC_device_type:
     result += "device_type ";
     break;
   case ACCC_deviceptr:
     result += "deviceptr ";
+    break;
+  case ACCC_finalize:
+    result += "finalize ";
     break;
   case ACCC_firstprivate:
     result += "firstprivate ";

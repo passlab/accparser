@@ -100,6 +100,8 @@ acc
 
 openacc_directive
    : data_directive
+   | enter_data_directive
+   | exit_data_directive
    | loop_directive
    | parallel_directive
    | parallel_loop_directive
@@ -124,6 +126,41 @@ data_clauses
    | if_clause
    | no_create_clause
    | present_clause
+   ;
+   
+enter_data_directive
+   : ENTER DATA enter_data_clause_list
+   ;
+
+enter_data_clause_list
+   : enter_data_clauses+
+   ;
+
+enter_data_clauses
+   : async_clause
+   | attach_clause
+   | copyin_no_modifier_clause
+   | create_clause
+   | if_clause
+   | wait_clause
+   ;
+   
+exit_data_directive
+   : EXIT DATA exit_data_clause_list
+   ;
+
+exit_data_clause_list
+   : exit_data_clauses+
+   ;
+
+exit_data_clauses
+   : async_clause
+   | copyout_no_modifier_clause
+   | delete_clause
+   | detach_clause
+   | finalize_clause
+   | if_clause
+   | wait_clause
    ;
 
 loop_directive
@@ -241,6 +278,14 @@ copyout_clause_modifier
    : ZERO
    ;
 
+copyin_no_modifier_clause
+   : COPYIN LEFT_PAREN var_list RIGHT_PAREN
+   ;
+      
+copyout_no_modifier_clause
+   : COPYOUT LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
 create_clause
    : CREATE LEFT_PAREN var_list RIGHT_PAREN
    | CREATE LEFT_PAREN create_clause_modifier COLON var_list RIGHT_PAREN
@@ -259,6 +304,14 @@ default_kind
    | PRESENT
    ;
 
+delete_clause
+   : DELETE LEFT_PAREN var_list RIGHT_PAREN
+   ;
+   
+detach_clause
+   : DETACH LEFT_PAREN var_list RIGHT_PAREN
+   ;
+   
 device_type_clause
    : DEVICE_TYPE LEFT_PAREN device_type_list RIGHT_PAREN
    ;
@@ -269,6 +322,10 @@ device_type_list
 
 deviceptr_clause
    : DEVICEPTR LEFT_PAREN var_list RIGHT_PAREN
+   ;
+   
+finalize_clause
+   : FINALIZE
    ;
 
 firstprivate_clause

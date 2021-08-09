@@ -1,5 +1,3 @@
-#include "OpenACCASTConstructor.h"
-#include "OpenMPIR.h"
 #include "OpenMPTranslator.h"
 #include "acclexer.h"
 #include "accparser.h"

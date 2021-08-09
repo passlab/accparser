@@ -31,6 +31,15 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
       omp_clause->addLangExpr(num_threads);
       break;
     }
+    case ACCC_collapse: {
+      omp_clause = omp_directive->addOpenMPClause(OMPC_collapse);
+      std::string collapse = (*clause_iter)->expressionToString();
+      char *omp_collapse = (char *)malloc(collapse.size() * sizeof(char) + 1);
+      strcpy(omp_collapse, collapse.c_str());
+      omp_collapse[collapse.size()] = '\0';
+      omp_clause->addLangExpr(omp_collapse);
+      break;
+    }
     default:;
     }
   }

@@ -127,7 +127,7 @@ data_clauses
    | no_create_clause
    | present_clause
    ;
-   
+
 enter_data_directive
    : ENTER DATA enter_data_clause_list
    ;
@@ -144,7 +144,7 @@ enter_data_clauses
    | if_clause
    | wait_clause
    ;
-   
+
 exit_data_directive
    : EXIT DATA exit_data_clause_list
    ;
@@ -269,6 +269,10 @@ copyin_clause_modifier
    : READONLY
    ;
 
+copyin_no_modifier_clause
+   : COPYIN LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
 copyout_clause
    : COPYOUT LEFT_PAREN var_list RIGHT_PAREN
    | COPYOUT LEFT_PAREN copyout_clause_modifier COLON var_list RIGHT_PAREN
@@ -278,10 +282,6 @@ copyout_clause_modifier
    : ZERO
    ;
 
-copyin_no_modifier_clause
-   : COPYIN LEFT_PAREN var_list RIGHT_PAREN
-   ;
-      
 copyout_no_modifier_clause
    : COPYOUT LEFT_PAREN var_list RIGHT_PAREN
    ;
@@ -307,11 +307,11 @@ default_kind
 delete_clause
    : DELETE LEFT_PAREN var_list RIGHT_PAREN
    ;
-   
+
 detach_clause
    : DETACH LEFT_PAREN var_list RIGHT_PAREN
    ;
-   
+
 device_type_clause
    : DEVICE_TYPE LEFT_PAREN device_type_list RIGHT_PAREN
    ;
@@ -323,7 +323,7 @@ device_type_list
 deviceptr_clause
    : DEVICEPTR LEFT_PAREN var_list RIGHT_PAREN
    ;
-   
+
 finalize_clause
    : FINALIZE
    ;

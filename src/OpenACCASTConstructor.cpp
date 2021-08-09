@@ -126,7 +126,8 @@ void OpenACCIRConstructor::exitCopyout_clause(
 void OpenACCIRConstructor::enterCopyout_no_modifier_clause(
     accparser::Copyout_no_modifier_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_copyout);
-  ((OpenACCCopyoutClause *)current_clause)->setModifier(ACCC_COPYOUT_unspecified);
+  ((OpenACCCopyoutClause *)current_clause)
+      ->setModifier(ACCC_COPYOUT_unspecified);
 }
 
 void OpenACCIRConstructor::exitCopyout_no_modifier_clause(

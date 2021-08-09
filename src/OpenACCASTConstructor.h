@@ -7,10 +7,10 @@ public:
       accparser::Parallel_directiveContext * /*ctx*/) override;
   virtual void
   enterData_directive(accparser::Data_directiveContext * /*ctx*/) override;
-  virtual void
-  enterEnter_data_directive(accparser::Enter_data_directiveContext * /*ctx*/) override;
-  virtual void
-  enterExit_data_directive(accparser::Exit_data_directiveContext * /*ctx*/) override;
+  virtual void enterEnter_data_directive(
+      accparser::Enter_data_directiveContext * /*ctx*/) override;
+  virtual void enterExit_data_directive(
+      accparser::Exit_data_directiveContext * /*ctx*/) override;
   virtual void
   enterLoop_directive(accparser::Loop_directiveContext * /*ctx*/) override;
   virtual void enterParallel_loop_directive(
@@ -32,25 +32,24 @@ public:
   enterCopy_clause(accparser::Copy_clauseContext * /*ctx*/) override;
   virtual void
   enterCopyin_clause(accparser::Copyin_clauseContext * /*ctx*/) override;
-  virtual void
-  exitCopyin_clause_modifier(
+  virtual void exitCopyin_clause_modifier(
       accparser::Copyin_clause_modifierContext * /*ctx*/) override;
   virtual void
   exitCopyin_clause(accparser::Copyin_clauseContext * /*ctx*/) override;
-  virtual void
-  enterCopyin_no_modifier_clause(accparser::Copyin_no_modifier_clauseContext * /*ctx*/) override;
-  virtual void
-  exitCopyin_no_modifier_clause(accparser::Copyin_no_modifier_clauseContext * /*ctx*/) override;
+  virtual void enterCopyin_no_modifier_clause(
+      accparser::Copyin_no_modifier_clauseContext * /*ctx*/) override;
+  virtual void exitCopyin_no_modifier_clause(
+      accparser::Copyin_no_modifier_clauseContext * /*ctx*/) override;
   virtual void
   enterCopyout_clause(accparser::Copyout_clauseContext * /*ctx*/) override;
   virtual void exitCopyout_clause_modifier(
       accparser::Copyout_clause_modifierContext * /*ctx*/) override;
   virtual void
   exitCopyout_clause(accparser::Copyout_clauseContext * /*ctx*/) override;
-  virtual void
-  enterCopyout_no_modifier_clause(accparser::Copyout_no_modifier_clauseContext * /*ctx*/) override;
-  virtual void
-  exitCopyout_no_modifier_clause(accparser::Copyout_no_modifier_clauseContext * /*ctx*/) override;
+  virtual void enterCopyout_no_modifier_clause(
+      accparser::Copyout_no_modifier_clauseContext * /*ctx*/) override;
+  virtual void exitCopyout_no_modifier_clause(
+      accparser::Copyout_no_modifier_clauseContext * /*ctx*/) override;
   virtual void
   enterCreate_clause(accparser::Create_clauseContext * /*ctx*/) override;
   virtual void exitCreate_clause_modifier(

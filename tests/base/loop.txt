@@ -45,13 +45,13 @@
 
 #pragma acc loop vector(c) vector(c)
 
-#pragma acc loop worker(length : a)
+#pragma acc loop worker(num : a)
 
-#pragma acc loop worker(length : a) worker(length : b)
+#pragma acc loop worker(num : a) worker(num : b)
 
-#pragma acc loop worker(length : a) worker(length : a)
+#pragma acc loop worker(num : a) worker(num : a)
 
-#pragma acc loop worker(c) worker(length : c)
+#pragma acc loop worker(c) worker(num: c)
 
 #pragma acc loop worker(c) worker(b)
 
@@ -63,7 +63,7 @@
 
 #pragma acc loop tile(1) tile(1) tile(2)
 
-#pragma acc loop tile(1) tile(1) tile(2) worker(length: a) worker(length : 5) independent collapse(1)
+#pragma acc loop tile(1) tile(1) tile(2) worker(num: a) worker(num : 5) independent collapse(1)
 
 #pragma acc loop reduction( + : x, y, z) reduction( + : x, y, a) reduction( + : a, b, c)
 

@@ -382,8 +382,17 @@ public:
 // Wait Clause
 class OpenACCWaitClause : public OpenACCClause {
 
+protected:
+  std::string devnum = "";
+  bool queues = false;
+
 public:
   OpenACCWaitClause() : OpenACCClause(ACCC_wait){};
+
+  void setDevnum(std::string _devnum) { devnum = _devnum; };
+  std::string getDevnum() { return devnum; };
+  void setQueues(bool _queues) { queues = _queues; };
+  bool getQueues() { return queues; };
 
   static OpenACCClause *addClause(OpenACCDirective *);
   std::string toString();

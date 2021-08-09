@@ -142,7 +142,7 @@ enter_data_clauses
    | copyin_no_modifier_clause
    | create_clause
    | if_clause
-   | wait_clause
+   | wait_argument_clause
    ;
 
 exit_data_directive
@@ -160,7 +160,7 @@ exit_data_clauses
    | detach_clause
    | finalize_clause
    | if_clause
-   | wait_clause
+   | wait_argument_clause
    ;
 
 loop_directive
@@ -427,6 +427,26 @@ vector_length_clause
 wait_clause
    : WAIT
    | WAIT LEFT_PAREN int_expr_list RIGHT_PAREN
+   ;
+
+wait_argument_clause
+   : WAIT
+   | WAIT LEFT_PAREN wait_argument RIGHT_PAREN
+   ;
+
+wait_argument
+   : DEVNUM COLON wait_argument_int_expr COLON wait_argument_queues COLON int_expr_list
+   | DEVNUM COLON wait_argument_int_expr COLON int_expr_list
+   | wait_argument_queues COLON int_expr_list
+   | int_expr_list
+   ;
+
+wait_argument_queues
+   : QUEUES
+   ;
+
+wait_argument_int_expr
+   : EXPR
    ;
 
 worker_clause

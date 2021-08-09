@@ -2,11 +2,11 @@ enable_testing()
 add_custom_target(acc_test)
 
 set(TEST_FILES
+    data.txt
     enter_data.txt
     exit_data.txt
-    data.txt
-    parallel.txt
     loop.txt
+    parallel.txt
     parallel_loop.txt
     )
 

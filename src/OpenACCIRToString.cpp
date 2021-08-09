@@ -330,6 +330,28 @@ std::string OpenACCVectorClause::toString() {
   return result;
 };
 
+std::string OpenACCWaitClause::toString() {
+
+  std::string result = "wait (";
+  std::string parameter_string = "";
+  std::string devnum = this->getDevnum();
+  if (devnum != "") {
+    parameter_string += "devnum: " + devnum + ": ";
+  };
+  if (this->getQueues() == true) {
+    parameter_string += "queues: ";
+  };
+
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
+  }
+
+  return result;
+};
+
 std::string OpenACCWorkerClause::toString() {
 
   std::string result = "worker (";

@@ -7,8 +7,27 @@ OpenMPDirective *convertParallelLoop(OpenACCDirective *openacc_directive) {
   OpenMPDirective *result =
       new OpenMPDirective(OMPD_target_parallel_for);
 
+  //convertClauses(openacc_directive, result);
+
   return result;
 }
+
+/*
+void *convertClauses(OpenACCDirective *openacc_directive, OpenMPDirective *openmp_directive) {
+
+  OpenMPDirective *result =
+      new OpenMPDirective(OMPD_target_parallel_for);
+  std::vector<OpenMPClause*>* all_clauses = current_OpenMPIR_to_SageIII.second->getClausesInOriginalOrder();
+  std::vector<OpenMPClause*>::iterator clause_iter;
+  for (clause_iter = all_clauses->begin(); clause_iter != all_clauses->end(); clause_iter++) {
+      clause_kind = (*clause_iter)->getKind();
+      switch (clause_kind) {
+          case ACCC_num_workers:
+
+
+  return result;
+}
+*/
 
 OpenMPDirective * generateOpenMP(OpenACCDirective *openacc_directive) {
 

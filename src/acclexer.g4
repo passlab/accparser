@@ -44,7 +44,7 @@ lexer grammar acclexer;
 @ lexer :: declarations
 { /* private lexer declarations/members section */
   int parenthesis_local_count, parenthesis_global_count, bracket_count;
-  int brace_count;
+  int brace_count, colon_count;
 }
 // Appears in line with the other class member definitions in the cpp file.
 
@@ -65,15 +65,15 @@ ACC
 DATA
    : 'data'
    ;
-   
+
 ENTER
    : 'enter'
    ;
-   
+
 EXIT
    : 'exit'
    ;
-   
+
 PARALLEL
    : 'parallel'
    ;
@@ -144,7 +144,7 @@ DEFAULT
 DELETE
    : 'delete' -> pushMode (expr_clause)
    ;
-   
+
 DETACH
    : 'detach' -> pushMode (expr_clause)
    ;
@@ -156,11 +156,11 @@ DEVICE_TYPE
 DEVICEPTR
    : 'deviceptr' -> pushMode (expr_clause)
    ;
-   
+
 FINALIZE
    : 'finalize'
    ;
-   
+
 FIRSTPRIVATE
    : 'firstprivate' -> pushMode (expr_clause)
    ;
@@ -237,7 +237,7 @@ VECTOR_LENGTH
 WAIT
    : 'wait' [ ]*
    {
-  if (_input->LA(1) == '(') pushMode(expr_clause);
+  if (_input->LA(1) == '(') pushMode(wait_clause);
 }
    ;
 
@@ -257,6 +257,7 @@ COPYIN_LEFT_PAREN
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
   if (lookAhead("readonly") == false) {
+    colon_count = 0;
     pushMode(expression_mode);
   }
 }
@@ -270,6 +271,7 @@ READONLY
    : 'readonly' [ ]*
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -282,6 +284,7 @@ COPYIN_COLON
   if (_input->LA(1) == ':')
     more();
   else {
+    colon_count = 0;
     setType(COLON);
     pushMode(expression_mode);
   }
@@ -295,6 +298,7 @@ COPYIN_COMMA
   pushMode(expression_mode);
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
+  colon_count = 0;
 }
    ;
 
@@ -314,6 +318,7 @@ COPYOUT_LEFT_PAREN
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
   if (lookAhead("zero") == false) {
+    colon_count = 0;
     pushMode(expression_mode);
   }
 }
@@ -327,6 +332,7 @@ ZERO
    : 'zero' [ ]*
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -339,6 +345,7 @@ COPYOUT_COLON
   if (_input->LA(1) == ':')
     more();
   else {
+    colon_count = 0;
     setType(COLON);
     pushMode(expression_mode);
   }
@@ -352,6 +359,7 @@ COPYOUT_COMMA
   pushMode(expression_mode);
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
+  colon_count = 0;
 }
    ;
 
@@ -384,6 +392,7 @@ CREATE_ZERO
    : 'zero' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -397,6 +406,7 @@ CREATE_COLON
   if (_input->LA(1) == ':')
     more();
   else {
+    colon_count = 0;
     setType(COLON);
     pushMode(expression_mode);
   }
@@ -454,6 +464,7 @@ VECTOR_LEFT_PAREN
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
   if (lookAhead("length") == false) {
+    colon_count = 0;
     pushMode(expression_mode);
   }
 }
@@ -467,6 +478,7 @@ LENGTH
    : 'length' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -479,6 +491,7 @@ VECTOR_COLON
   if (_input->LA(1) == ':')
     more();
   else {
+    colon_count = 0;
     setType(COLON);
     pushMode(expression_mode);
   }
@@ -511,6 +524,7 @@ ADD
    : '+' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -521,6 +535,7 @@ MUL
    : '*' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -531,6 +546,7 @@ MAX
    : 'max' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -541,6 +557,7 @@ MIN
    : 'min' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -551,6 +568,7 @@ BITAND
    : '&' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -561,6 +579,7 @@ BITOR
    : '|' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -571,6 +590,7 @@ BITXOR
    : '^' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -581,6 +601,7 @@ LOGAND
    : '&&' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -591,6 +612,7 @@ LOGOR
    : '||' [ ]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
     more();
     pushMode(expression_mode);
   }
@@ -603,6 +625,7 @@ REDUCTION_COLON
   if (_input->LA(1) == ':')
     more();
   else {
+    colon_count = 0;
     setType(COLON);
     pushMode(expression_mode);
   }
@@ -624,6 +647,78 @@ REDUCTION_BLANK
    ;
 
 REDUCTION_LINE_END
+   : [\n\r] -> skip
+   ;
+
+mode wait_clause;
+WAIT_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  if (lookAhead("devnum") == false && lookAhead("queues") == false) {
+    colon_count = 0;
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+WAIT_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+DEVNUM
+   : 'devnum' [ ]*
+   {
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    colon_count = 1;
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+QUEUES
+   : 'queues' [ ]*
+   {
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    more();
+    colon_count = 1;
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+WAIT_COLON
+   : ':' [ ]*
+   {
+  if (lookAhead("queues") == false) {
+    colon_count = 0;
+    pushMode(expression_mode);
+  } else {
+    more();
+  }
+  setType(COLON);
+}
+   ;
+
+WAIT_COMMA
+   : ',' [ ]*
+   {
+  skip();
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  colon_count = 0;
+}
+   ;
+
+WAIT_BLANK
+   : [ ]+ -> skip
+   ;
+
+WAIT_LINE_END
    : [\n\r] -> skip
    ;
 
@@ -662,6 +757,7 @@ WORKER_COLON
   if (_input->LA(1) == ':')
     more();
   else {
+    colon_count = 0;
     setType(COLON);
     pushMode(expression_mode);
   }
@@ -750,6 +846,21 @@ EXPRESSION_CHAR
       setType(EXPR);
       popMode();
     } else {
+      more();
+    };
+    break;
+  }
+  case ':': {
+    if (_input->LA(2) != ':' && colon_count == 0) {
+      colon_count = 0;
+      setType(EXPR);
+      popMode();
+    } else {
+      if (colon_count == 0) {
+        colon_count += 1;
+      } else {
+        colon_count = 0;
+      }
       more();
     };
     break;

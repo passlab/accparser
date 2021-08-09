@@ -76,8 +76,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_num_gangs:
   case ACCC_num_workers:
   case ACCC_self:
-  case ACCC_vector_length:
-  case ACCC_wait: {
+  case ACCC_vector_length: {
     if (current_clauses->size() == 0) {
       new_clause = new OpenACCClause(kind);
       current_clauses = new std::vector<OpenACCClause *>();
@@ -111,6 +110,10 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   }
   case ACCC_vector: {
     new_clause = OpenACCVectorClause::addClause(this);
+    break;
+  }
+  case ACCC_wait: {
+    new_clause = OpenACCWaitClause::addClause(this);
     break;
   }
   case ACCC_worker: {
@@ -630,6 +633,24 @@ void OpenACCVectorLengthClause::mergeClause(OpenACCDirective *directive,
       break;
     }
   }
+};
+
+OpenACCClause *OpenACCWaitClause::addClause(OpenACCDirective *directive) {
+
+  std::map<OpenACCClauseKind, std::vector<OpenACCClause *> *> *all_clauses =
+      directive->getAllClauses();
+  std::vector<OpenACCClause *> *current_clauses =
+      directive->getClauses(ACCC_wait);
+  OpenACCClause *new_clause = NULL;
+
+  if (current_clauses->size() == 0) {
+    current_clauses = new std::vector<OpenACCClause *>();
+    (*all_clauses)[ACCC_wait] = current_clauses;
+  };
+  new_clause = new OpenACCWaitClause();
+  current_clauses->push_back(new_clause);
+
+  return new_clause;
 };
 
 void OpenACCWaitClause::mergeClause(OpenACCDirective *directive,

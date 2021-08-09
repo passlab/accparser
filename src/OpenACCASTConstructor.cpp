@@ -357,13 +357,28 @@ void OpenACCIRConstructor::exitVector_length_clause(
 
 void OpenACCIRConstructor::enterWait_clause(
     accparser::Wait_clauseContext *ctx) {
-  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_wait);
 };
 
 void OpenACCIRConstructor::exitWait_clause(accparser::Wait_clauseContext *ctx) {
   ((OpenACCWaitClause *)current_clause)
       ->mergeClause(current_directive, current_clause);
+};
+
+void OpenACCIRConstructor::enterWait_argument_clause(
+    accparser::Wait_argument_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_wait);
+};
+
+void OpenACCIRConstructor::enterWait_argument_queues(
+    accparser::Wait_argument_queuesContext *ctx) {
+  ((OpenACCWaitClause *)current_clause)->setQueues(true);
+};
+
+void OpenACCIRConstructor::exitWait_argument_int_expr(
+    accparser::Wait_argument_int_exprContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  ((OpenACCWaitClause *)current_clause)->setDevnum(expression);
 };
 
 void OpenACCIRConstructor::enterWorker_clause(

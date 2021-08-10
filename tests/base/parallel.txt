@@ -7,7 +7,7 @@
 
 #pragma acc parallel copy(a, b, c)
 
-#pragma acc parallel copyin( x, y )
+#pragma acc parallel copyin( x[0 : N], y[0:M] )
 
 #pragma acc parallel copyin( readonly :m , n)
 

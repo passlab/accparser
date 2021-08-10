@@ -105,7 +105,9 @@ LINE_END
 ASYNC
    : 'async' [ ]*
    {
-  if (_input->LA(1) == '(') pushMode(expr_clause);
+  if (_input->LA(1) == '(') {
+    pushMode(expr_clause);
+  }
 }
    ;
 
@@ -655,6 +657,7 @@ WAIT_LEFT_PAREN
    : '(' [ ]*
    {
   setType(LEFT_PAREN);
+  bracket_count = 0;
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
   if (lookAhead("devnum") == false && lookAhead("queues") == false) {
@@ -673,6 +676,7 @@ DEVNUM
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     more();
+    bracket_count = 0;
     colon_count = 1;
     pushMode(expression_mode);
   }
@@ -684,6 +688,7 @@ QUEUES
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     more();
+    bracket_count = 0;
     colon_count = 1;
     pushMode(expression_mode);
   }
@@ -694,6 +699,7 @@ WAIT_COLON
    : ':' [ ]*
    {
   if (lookAhead("queues") == false) {
+    bracket_count = 0;
     colon_count = 0;
     pushMode(expression_mode);
   } else {
@@ -710,6 +716,7 @@ WAIT_COMMA
   pushMode(expression_mode);
   parenthesis_global_count = 1;
   parenthesis_local_count = 0;
+  bracket_count = 0;
   colon_count = 0;
 }
    ;
@@ -841,6 +848,16 @@ EXPRESSION_CHAR
     };
     break;
   }
+  case '[': {
+    bracket_count += 1;
+    more();
+    break;
+  }
+  case ']': {
+    bracket_count -= 1;
+    more();
+    break;
+  }
   case ',': {
     if (parenthesis_local_count == 0) {
       setType(EXPR);
@@ -851,16 +868,18 @@ EXPRESSION_CHAR
     break;
   }
   case ':': {
-    if (_input->LA(2) != ':' && colon_count == 0) {
+    if (_input->LA(2) != ':' && colon_count == 0 && bracket_count == 0) {
       colon_count = 0;
       setType(EXPR);
       popMode();
     } else {
-      if (colon_count == 0) {
-        colon_count += 1;
-      } else {
-        colon_count = 0;
-      }
+      if (bracket_count == 0) {
+        if (colon_count == 0) {
+          colon_count += 1;
+        } else {
+          colon_count = 0;
+        }
+      };
       more();
     };
     break;

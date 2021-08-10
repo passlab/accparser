@@ -22,15 +22,6 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
        clause_iter++) {
     clause_kind = (*clause_iter)->getKind();
     switch (clause_kind) {
-    case ACCC_num_workers: {
-      omp_clause = omp_directive->addOpenMPClause(OMPC_num_threads);
-      std::string num_workers = (*clause_iter)->expressionToString();
-      char *num_threads = (char *)malloc(num_workers.size() * sizeof(char) + 1);
-      strcpy(num_threads, num_workers.c_str());
-      num_threads[num_workers.size()] = '\0';
-      omp_clause->addLangExpr(num_threads);
-      break;
-    }
     case ACCC_collapse: {
       omp_clause = omp_directive->addOpenMPClause(OMPC_collapse);
       std::string collapse = (*clause_iter)->expressionToString();
@@ -38,6 +29,47 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
       strcpy(omp_collapse, collapse.c_str());
       omp_collapse[collapse.size()] = '\0';
       omp_clause->addLangExpr(omp_collapse);
+      break;
+    }
+    case ACCC_copyin: {
+      omp_clause = omp_directive->addOpenMPClause(
+          OMPC_map, OMPC_MAP_MODIFIER_unspecified,
+          OMPC_MAP_MODIFIER_unspecified, OMPC_MAP_MODIFIER_unspecified,
+          OMPC_MAP_TYPE_to, "");
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
+    case ACCC_copyout: {
+      omp_clause = omp_directive->addOpenMPClause(
+          OMPC_map, OMPC_MAP_MODIFIER_unspecified,
+          OMPC_MAP_MODIFIER_unspecified, OMPC_MAP_MODIFIER_unspecified,
+          OMPC_MAP_TYPE_from, "");
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
+    case ACCC_num_workers: {
+      omp_clause = omp_directive->addOpenMPClause(OMPC_num_threads);
+      std::string num_workers = (*clause_iter)->expressionToString();
+      char *num_threads = (char *)malloc(num_workers.size() * sizeof(char) + 1);
+      strcpy(num_threads, num_workers.c_str());
+      num_threads[num_workers.size()] = '\0';
+      omp_clause->addLangExpr(num_threads);
       break;
     }
     default:;

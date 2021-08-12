@@ -73,17 +73,29 @@ ENTER
 EXIT
    : 'exit'
    ;
-
-PARALLEL
-   : 'parallel'
+   
+HOST_DATA
+   : 'host_data'
    ;
 
+KERNELS
+   : 'kernels'
+   ;
+   
 LOOP
    : 'loop'
    ;
 
 LEFT_PAREN
    : '('
+   ;
+   
+PARALLEL
+   : 'parallel'
+   ;
+   
+SERIAL
+   : 'serial'
    ;
 
 RIGHT_PAREN
@@ -177,6 +189,10 @@ GANG
 IF
    : 'if' -> pushMode (expr_clause)
    ;
+   
+IF_PRESENT
+   : 'if_present'
+   ;
 
 INDEPENDENT
    : 'independent'
@@ -223,6 +239,10 @@ SEQ
 
 TILE
    : 'tile' -> pushMode (expr_clause)
+   ;
+   
+USE_DEVICE
+   : 'use_device' -> pushMode (expr_clause)
    ;
 
 VECTOR

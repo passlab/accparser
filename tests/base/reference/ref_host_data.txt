@@ -1,0 +1,6 @@
+#pragma acc host_data if (5)
+#pragma acc host_data if (x==3)
+#pragma acc host_data if (5) if_present
+#pragma acc host_data use_device vector_length (a, b, c)
+#pragma acc host_data use_device vector_length (a, b, c) if (5) if_present
+#pragma acc host_data use_device vector_length (a, b, c, d) if (5) if_present

@@ -47,12 +47,14 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_finalize:
   case ACCC_firstprivate:
   case ACCC_if:
+  case ACCC_if_present:
   case ACCC_independent:
   case ACCC_no_create:
   case ACCC_present:
   case ACCC_private:
   case ACCC_seq:
-  case ACCC_tile: {
+  case ACCC_tile:
+  case ACCC_use_device: {
     if (current_clauses->size() == 0) {
       new_clause = new OpenACCClause(kind);
       current_clauses = new std::vector<OpenACCClause *>();

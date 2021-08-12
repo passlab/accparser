@@ -1,0 +1,150 @@
+
+#pragma acc serial async(5)
+
+#pragma acc serial attach(a, b, c)
+
+#pragma acc serial copy(a, b, c)
+
+#pragma acc serial copyin( x[0 : N], y[0:M] )
+
+#pragma acc serial copyin( readonly :m , n)
+
+#pragma acc serial copyin( readonly :m , n , readonly)
+
+#pragma acc serial copyin( readonly : readonly::m , n , readonly)
+
+#pragma acc serial default(present)
+
+#pragma acc serial deviceptr(a, b, c)
+
+#pragma acc serial firstprivate(a, b, c)
+
+#pragma acc serial no_create(a, b, c)
+
+#pragma acc serial present(a, b, c)
+
+#pragma acc serial wait(12, 23, 34)
+
+#pragma acc serial copyout(12, 23, 34)
+
+#pragma acc serial copyout(zero: 12, 23, 34)
+
+#pragma acc serial copyout(zero: 12, 23, 34, zero)
+
+#pragma acc serial copyout(zero: zero::12, 23, 34)
+
+#pragma acc serial create(12, 23, 34)
+
+#pragma acc serial create(zero: 12, 23, 34)
+
+#pragma acc serial create(zero: 12, 23, 34, zero)
+
+#pragma acc serial create(zero: zero::12, 23, 34)
+
+#pragma acc serial if(5)
+
+#pragma acc serial if(x==3)
+
+#pragma acc serial self(5)
+
+#pragma acc serial self(x==3)
+
+#pragma acc serial device_type(x, y, z)
+
+#pragma acc serial reduction( +: x, y, z)
+
+#pragma acc serial reduction( * : x, y, z)
+
+#pragma acc serial reduction( max : x, y, z)
+
+#pragma acc serial reduction( max : x, y, max)
+
+#pragma acc serial reduction( max : max, y, z)
+
+#pragma acc serial reduction( max : max::x, y, max)
+
+#pragma acc serial reduction( max : max::x, max, max::y)
+
+#pragma acc serial reduction( min : x, y, z)
+
+#pragma acc serial reduction( min : x, y, min)
+
+#pragma acc serial reduction( min : min, y, z)
+
+#pragma acc serial reduction( min : min::x, y, min)
+
+#pragma acc serial reduction( min : min::x, min, min::y)
+
+#pragma acc serial reduction( & : x[5], y, z)
+
+#pragma acc serial reduction( | : x, y, z)
+
+#pragma acc serial reduction( ^ : x, y, z)
+
+#pragma acc serial reduction( && : x, y, z)
+
+#pragma acc serial reduction( || : x, y, z)
+
+#pragma acc serial copyin( readonly : x, y, z) copyin( readonly : x, y, a) copyin( readonly : a, b, c)
+
+#pragma acc serial copyin( readonly : x, y, z) copyin( readonly : a, b, c) copyin( readonly : 1, 2, 3)
+
+#pragma acc serial copyin( x, y, z) copyin( readonly : a, b, c)
+
+#pragma acc serial copyin( readonly : x, y, z) copyin( a, b, c)
+
+#pragma acc serial copyin( x, y, z) copyin( a, b, c)
+
+#pragma acc serial copyout( zero : x, y, z) copyout( zero : x, y, a) copyout( zero : a, b, c)
+
+#pragma acc serial copyout( zero : x, y, z) copyout( zero : a, b, c) copyout( zero : 1, 2, 3)
+
+#pragma acc serial copyout( x, y, z) copyout( zero : a, b, c)
+
+#pragma acc serial copyout( zero : x, y, z) copyout( a, b, c)
+
+#pragma acc serial copyout( x, y, z) copyout( a, b, c)
+
+#pragma acc serial create( zero : x, y, z) create( zero : x, y, a) create( zero : a, b, c)
+
+#pragma acc serial create( zero : x, y, z) create( zero : a, b, c) create( zero : 1, 2, 3)
+
+#pragma acc serial create( x, y, z) create( zero : a, b, c)
+
+#pragma acc serial create( zero : x, y, z) create( a, b, c)
+
+#pragma acc serial create( x, y, z) create( a, b, c)
+
+#pragma acc serial reduction( + : x, y, z) reduction( + : x, y, a) reduction( + : a, b, c)
+
+#pragma acc serial reduction( + : x, y, z) reduction( * : a, b, c)
+
+#pragma acc serial reduction( max : x, y, z) reduction( min : a, b, c)
+
+#pragma acc serial reduction( min : x, y, z) reduction( min : a, b, c)
+
+#pragma acc serial reduction( min : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial reduction( || : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial reduction( && : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial reduction( max : x, y, max) reduction( max : x, y, min)
+
+#pragma acc serial copyin( readonly : x, y, z) copyout( zero : x, y, z) create( zero : x, y, z) reduction( + : x, y, z)
+
+#pragma acc serial async( expression1) async( expression2) async( expression3)
+
+#pragma acc serial async( expression1) async( expression2) async( expression1)
+
+#pragma acc serial async(expression1) async
+
+#pragma acc serial async async(expression1) async
+
+#pragma acc serial self( expression1) self( expression2) self( expression3)
+
+#pragma acc serial self( expression1) self( expression2) self( expression1)
+
+#pragma acc serial self(expression1) self
+
+#pragma acc serial self self(expression1) self

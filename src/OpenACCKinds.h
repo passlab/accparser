@@ -13,9 +13,12 @@ enum OpenACCDirectiveKind {
     OPENACC_DIRECTIVE(data)
     OPENACC_DIRECTIVE(enter_data)
     OPENACC_DIRECTIVE(exit_data)
+    OPENACC_DIRECTIVE(host_data)
+    OPENACC_DIRECTIVE(kernels)
     OPENACC_DIRECTIVE(loop)
     OPENACC_DIRECTIVE(parallel)
     OPENACC_DIRECTIVE(parallel_loop)
+    OPENACC_DIRECTIVE(serial)
 
     OPENACC_DIRECTIVE(unknown)
 #undef OPENACC_DIRECTIVE
@@ -41,6 +44,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(firstprivate)
     OPENACC_CLAUSE(gang)
     OPENACC_CLAUSE(if)
+    OPENACC_CLAUSE(if_present)
     OPENACC_CLAUSE(independent)
     OPENACC_CLAUSE(no_create)
     OPENACC_CLAUSE(num_gangs)
@@ -51,6 +55,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(self)
     OPENACC_CLAUSE(seq)
     OPENACC_CLAUSE(tile)
+    OPENACC_CLAUSE(use_device)
     OPENACC_CLAUSE(vector)
     OPENACC_CLAUSE(vector_length)
     OPENACC_CLAUSE(wait)

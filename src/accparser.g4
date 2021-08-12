@@ -102,9 +102,12 @@ openacc_directive
    : data_directive
    | enter_data_directive
    | exit_data_directive
+   | host_data_directive
+   | kernels_directive
    | loop_directive
    | parallel_directive
    | parallel_loop_directive
+   | serial_directive
    ;
 
 data_directive
@@ -161,6 +164,48 @@ exit_data_clauses
    | finalize_clause
    | if_clause
    | wait_argument_clause
+   ;
+
+host_data_directive
+   : HOST_DATA host_data_clause_list
+   ;
+
+host_data_clause_list
+   : host_data_clauses+
+   ;
+
+host_data_clauses
+   : if_clause
+   | if_present_clause
+   | use_device_clause
+   ;
+
+kernels_directive
+   : KERNELS kernels_clause_list
+   ;
+
+kernels_clause_list
+   : kernels_clauses*
+   ;
+
+kernels_clauses
+   : async_clause
+   | attach_clause
+   | copy_clause
+   | copyin_clause
+   | copyout_clause
+   | create_clause
+   | default_clause
+   | device_type_clause
+   | deviceptr_clause
+   | if_clause
+   | no_create_clause
+   | num_gangs_clause
+   | num_workers_clause
+   | present_clause
+   | self_clause
+   | vector_length_clause
+   | wait_clause
    ;
 
 loop_directive
@@ -237,6 +282,34 @@ parallel_loop_clauses
    | private_clause
    | wait_clause
    | worker_clause
+   ;
+
+serial_directive
+   : SERIAL serial_clause_list
+   ;
+
+serial_clause_list
+   : serial_clauses*
+   ;
+
+serial_clauses
+   : async_clause
+   | attach_clause
+   | copy_clause
+   | copyin_clause
+   | copyout_clause
+   | create_clause
+   | default_clause
+   | device_type_clause
+   | deviceptr_clause
+   | firstprivate_clause
+   | if_clause
+   | no_create_clause
+   | present_clause
+   | private_clause
+   | reduction_clause
+   | self_clause
+   | wait_clause
    ;
 
 async_clause
@@ -345,6 +418,10 @@ if_clause
    : IF LEFT_PAREN condition RIGHT_PAREN
    ;
 
+if_present_clause
+   : IF_PRESENT
+   ;
+
 independent_clause
    : INDEPENDENT
    ;
@@ -404,6 +481,10 @@ tile_clause
 
 size_expr_list
    : (var COMMA | var)+
+   ;
+
+use_device_clause
+   : USE_DEVICE LEFT_PAREN var_list RIGHT_PAREN
    ;
 
 vector_clause

@@ -21,9 +21,14 @@ void OpenACCIRConstructor::enterExit_data_directive(
   current_directive = new OpenACCDirective(ACCD_exit_data);
 }
 
-void OpenACCIRConstructor::enterParallel_directive(
-    accparser::Parallel_directiveContext *ctx) {
-  current_directive = new OpenACCDirective(ACCD_parallel);
+void OpenACCIRConstructor::enterHost_data_directive(
+    accparser::Host_data_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_host_data);
+}
+
+void OpenACCIRConstructor::enterKernels_directive(
+    accparser::Kernels_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_kernels);
 }
 
 void OpenACCIRConstructor::enterLoop_directive(
@@ -31,9 +36,19 @@ void OpenACCIRConstructor::enterLoop_directive(
   current_directive = new OpenACCDirective(ACCD_loop);
 }
 
+void OpenACCIRConstructor::enterParallel_directive(
+    accparser::Parallel_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_parallel);
+}
+
 void OpenACCIRConstructor::enterParallel_loop_directive(
     accparser::Parallel_loop_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_parallel_loop);
+}
+
+void OpenACCIRConstructor::enterSerial_directive(
+    accparser::Serial_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_serial);
 }
 
 void OpenACCIRConstructor::enterAsync_clause(
@@ -216,6 +231,12 @@ void OpenACCIRConstructor::enterIf_clause(accparser::If_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_if);
 }
 
+void OpenACCIRConstructor::enterIf_present_clause(
+    accparser::If_present_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_if_present);
+}
+
 void OpenACCIRConstructor::enterIndependent_clause(
     accparser::Independent_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
@@ -324,6 +345,11 @@ void OpenACCIRConstructor::enterSeq_clause(accparser::Seq_clauseContext *ctx) {
 void OpenACCIRConstructor::enterTile_clause(
     accparser::Tile_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_tile);
+}
+
+void OpenACCIRConstructor::enterUse_device_clause(
+    accparser::Use_device_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_use_device);
 }
 
 void OpenACCIRConstructor::enterVector_clause(

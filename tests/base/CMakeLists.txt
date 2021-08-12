@@ -5,9 +5,12 @@ set(TEST_FILES
     data.txt
     enter_data.txt
     exit_data.txt
+    host_data.txt
     loop.txt
+    kernels.txt
     parallel.txt
     parallel_loop.txt
+    serial.txt
     )
 
 add_dependencies(acc_test acc_tester.out)

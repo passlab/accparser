@@ -53,6 +53,12 @@ std::string OpenACCDirective::toString() {
   case ACCD_exit_data:
     result += "exit data ";
     break;
+  case ACCD_host_data:
+    result += "host_data ";
+    break;
+  case ACCD_kernels:
+    result += "kernels ";
+    break;
   case ACCD_loop:
     result += "loop ";
     break;
@@ -61,6 +67,9 @@ std::string OpenACCDirective::toString() {
     break;
   case ACCD_parallel_loop:
     result += "parallel loop ";
+    break;
+  case ACCD_serial:
+    result += "serial ";
     break;
   default:
     printf("The directive enum is not supported yet.\n");
@@ -129,6 +138,9 @@ std::string OpenACCClause::toString() {
   case ACCC_if:
     result += "if ";
     break;
+  case ACCC_if_present:
+    result += "if_present ";
+    break;
   case ACCC_independent:
     result += "independent ";
     break;
@@ -156,6 +168,8 @@ std::string OpenACCClause::toString() {
   case ACCC_tile:
     result += "tile ";
     break;
+  case ACCC_use_device:
+    result += "use_device ";
   case ACCC_vector_length:
     result += "vector_length ";
     break;

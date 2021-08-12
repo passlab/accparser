@@ -3,6 +3,9 @@
 
 class OpenACCIRConstructor : public accparserBaseListener {
 public:
+  virtual void enterHost_data_directive(
+      accparser::Host_data_directiveContext * /*ctx*/) override;
+
   virtual void enterParallel_directive(
       accparser::Parallel_directiveContext * /*ctx*/) override;
   virtual void
@@ -11,10 +14,14 @@ public:
       accparser::Enter_data_directiveContext * /*ctx*/) override;
   virtual void enterExit_data_directive(
       accparser::Exit_data_directiveContext * /*ctx*/) override;
+  virtual void enterKernels_directive(
+      accparser::Kernels_directiveContext * /*ctx*/) override;
   virtual void
   enterLoop_directive(accparser::Loop_directiveContext * /*ctx*/) override;
   virtual void enterParallel_loop_directive(
       accparser::Parallel_loop_directiveContext * /*ctx*/) override;
+  virtual void
+  enterSerial_directive(accparser::Serial_directiveContext * /*ctx*/) override;
 
   virtual void
   enterAsync_clause(accparser::Async_clauseContext * /*ctx*/) override;
@@ -77,6 +84,8 @@ public:
   virtual void
   exitGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
   virtual void enterIf_clause(accparser::If_clauseContext * /*ctx*/) override;
+  virtual void enterIf_present_clause(
+      accparser::If_present_clauseContext * /*ctx*/) override;
   virtual void enterIndependent_clause(
       accparser::Independent_clauseContext * /*ctx*/) override;
   virtual void
@@ -106,6 +115,8 @@ public:
   virtual void enterSeq_clause(accparser::Seq_clauseContext * /*ctx*/) override;
   virtual void
   enterTile_clause(accparser::Tile_clauseContext * /*ctx*/) override;
+  virtual void enterUse_device_clause(
+      accparser::Use_device_clauseContext * /*ctx*/) override;
   virtual void
   enterVector_clause(accparser::Vector_clauseContext * /*ctx*/) override;
   virtual void exitVector_clause_modifier(
@@ -120,12 +131,12 @@ public:
   enterWait_clause(accparser::Wait_clauseContext * /*ctx*/) override;
   virtual void
   exitWait_clause(accparser::Wait_clauseContext * /*ctx*/) override;
-  virtual void
-  enterWait_argument_clause(accparser::Wait_argument_clauseContext * /*ctx*/) override;
-  virtual void
-  enterWait_argument_queues(accparser::Wait_argument_queuesContext * /*ctx*/) override;
-  virtual void
-  exitWait_argument_int_expr(accparser::Wait_argument_int_exprContext * /*ctx*/) override;
+  virtual void enterWait_argument_clause(
+      accparser::Wait_argument_clauseContext * /*ctx*/) override;
+  virtual void enterWait_argument_queues(
+      accparser::Wait_argument_queuesContext * /*ctx*/) override;
+  virtual void exitWait_argument_int_expr(
+      accparser::Wait_argument_int_exprContext * /*ctx*/) override;
   virtual void
   enterWorker_clause(accparser::Worker_clauseContext * /*ctx*/) override;
   virtual void exitWorker_clause_modifier(

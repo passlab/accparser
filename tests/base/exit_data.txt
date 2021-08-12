@@ -29,12 +29,12 @@
 
 #pragma acc exit data finalize
 
-#pragma acc enter data wait(queues::a, devnum::b, devnum::queues::c)
+#pragma acc exit data wait(queues::a, devnum::b, devnum::queues::c)
 
-#pragma acc enter data wait(queues :12, 23, 34)
+#pragma acc exit data wait(queues :12, 23, 34)
 
-#pragma acc enter data wait(devnum:12: queues : 23, 34)
+#pragma acc exit data wait(devnum:12: queues : 23, 34)
 
-#pragma acc enter data wait(devnum : devnum::devnum::z : 23, 34)
+#pragma acc exit data wait(devnum : devnum::devnum::z : 23, 34)
 
-#pragma acc enter data wait(queues: devnum::b, devnum::queues::c)
+#pragma acc exit data wait(queues: devnum::b, devnum::queues::c)

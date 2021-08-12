@@ -1,0 +1,12 @@
+
+#pragma acc set default_async(3)
+
+#pragma acc set default_async(3) default_async(3) default_async(4)
+
+#pragma acc set device_type(a, b, c)
+
+#pragma acc set if(5)
+
+#pragma acc set if(x==3)
+
+#pragma acc set device_num(3) device_num(3) device_num(4)

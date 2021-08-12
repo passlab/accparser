@@ -47,6 +47,9 @@ std::string OpenACCDirective::toString() {
   case ACCD_data:
     result += "data ";
     break;
+  case ACCD_declare:
+    result += "declare ";
+    break;
   case ACCD_enter_data:
     result += "enter data ";
     break;
@@ -55,6 +58,9 @@ std::string OpenACCDirective::toString() {
     break;
   case ACCD_host_data:
     result += "host_data ";
+    break;
+  case ACCD_init:
+    result += "init ";
     break;
   case ACCD_kernels:
     result += "kernels ";
@@ -70,6 +76,15 @@ std::string OpenACCDirective::toString() {
     break;
   case ACCD_serial:
     result += "serial ";
+    break;
+  case ACCD_set:
+    result += "set ";
+    break;
+  case ACCD_shutdown:
+    result += "shutdown ";
+    break;
+  case ACCD_update:
+    result += "update ";
     break;
   default:
     printf("The directive enum is not supported yet.\n");
@@ -114,11 +129,23 @@ std::string OpenACCClause::toString() {
   case ACCC_copy:
     result += "copy ";
     break;
+  case ACCC_default_async:
+    result += "default_async ";
+    break;
   case ACCC_delete:
     result += "delete ";
     break;
   case ACCC_detach:
     result += "detach ";
+    break;
+  case ACCC_device:
+    result += "device ";
+    break;
+  case ACCC_device_num:
+    result += "device_num ";
+    break;
+  case ACCC_device_resident:
+    result += "device_resident ";
     break;
   case ACCC_device_type:
     result += "device_type ";
@@ -135,6 +162,9 @@ std::string OpenACCClause::toString() {
   case ACCC_gang:
     result += "gang ";
     break;
+  case ACCC_host:
+    result += "host ";
+    break;
   case ACCC_if:
     result += "if ";
     break;
@@ -143,6 +173,9 @@ std::string OpenACCClause::toString() {
     break;
   case ACCC_independent:
     result += "independent ";
+    break;
+  case ACCC_link:
+    result += "link ";
     break;
   case ACCC_no_create:
     result += "no_create ";

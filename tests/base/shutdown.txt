@@ -1,0 +1,8 @@
+
+#pragma acc shutdown device_type(a, b, c)
+
+#pragma acc shutdown if(5)
+
+#pragma acc shutdown if(x==3)
+
+#pragma acc shutdown device_num(3)

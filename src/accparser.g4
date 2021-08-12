@@ -100,14 +100,19 @@ acc
 
 openacc_directive
    : data_directive
+   | declare_directive
    | enter_data_directive
    | exit_data_directive
    | host_data_directive
+   | init_directive
    | kernels_directive
    | loop_directive
    | parallel_directive
    | parallel_loop_directive
    | serial_directive
+   | set_directive
+   | shutdown_directive
+   | update_directive
    ;
 
 data_directive
@@ -128,6 +133,25 @@ data_clauses
    | deviceptr_clause
    | if_clause
    | no_create_clause
+   | present_clause
+   ;
+
+declare_directive
+   : DECLARE declare_clause_list
+   ;
+
+declare_clause_list
+   : declare_clauses+
+   ;
+
+declare_clauses
+   : copy_clause
+   | copyin_clause
+   | copyout_no_modifier_clause
+   | create_no_modifier_clause
+   | device_resident_clause
+   | deviceptr_clause
+   | link_clause
    | present_clause
    ;
 
@@ -178,6 +202,20 @@ host_data_clauses
    : if_clause
    | if_present_clause
    | use_device_clause
+   ;
+
+init_directive
+   : INIT init_clause_list
+   ;
+
+init_clause_list
+   : init_clauses*
+   ;
+
+init_clauses
+   : device_type_clause
+   | device_num_clause
+   | if_clause
    ;
 
 kernels_directive
@@ -312,6 +350,54 @@ serial_clauses
    | wait_clause
    ;
 
+set_directive
+   : SET set_clause_list
+   ;
+
+set_clause_list
+   : set_clauses*
+   ;
+
+set_clauses
+   : default_async_clause
+   | device_type_clause
+   | device_num_clause
+   | if_clause
+   ;
+
+shutdown_directive
+   : SHUTDOWN shutdown_clause_list
+   ;
+
+shutdown_clause_list
+   : shutdown_clauses*
+   ;
+
+shutdown_clauses
+   : device_type_clause
+   | device_num_clause
+   | if_clause
+   ;
+
+update_directive
+   : UPDATE update_clause_list
+   ;
+
+update_clause_list
+   : update_clauses+
+   ;
+
+update_clauses
+   : async_clause
+   | device_clause
+   | device_type_clause
+   | host_clause
+   | if_clause
+   | if_present_clause
+   | self_list_clause
+   | wait_argument_clause
+   ;
+
 async_clause
    : ASYNC
    | ASYNC LEFT_PAREN int_expr RIGHT_PAREN
@@ -368,6 +454,10 @@ create_clause_modifier
    : ZERO
    ;
 
+create_no_modifier_clause
+   : CREATE LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
 default_clause
    : DEFAULT LEFT_PAREN default_kind RIGHT_PAREN
    ;
@@ -377,12 +467,28 @@ default_kind
    | PRESENT
    ;
 
+default_async_clause
+   : DEFAULT_ASYNC LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
 delete_clause
    : DELETE LEFT_PAREN var_list RIGHT_PAREN
    ;
 
 detach_clause
    : DETACH LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+device_clause
+   : DEVICE LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
+device_num_clause
+   : DEVICE_NUM LEFT_PAREN int_expr RIGHT_PAREN
+   ;
+
+device_resident_clause
+   : DEVICE_RESIDENT LEFT_PAREN var_list RIGHT_PAREN
    ;
 
 device_type_clause
@@ -414,6 +520,10 @@ gang_arg_list
    : (var COMMA | var)+
    ;
 
+host_clause
+   : HOST LEFT_PAREN var_list RIGHT_PAREN
+   ;
+
 if_clause
    : IF LEFT_PAREN condition RIGHT_PAREN
    ;
@@ -424,6 +534,10 @@ if_present_clause
 
 independent_clause
    : INDEPENDENT
+   ;
+
+link_clause
+   : LINK LEFT_PAREN var_list RIGHT_PAREN
    ;
 
 no_create_clause
@@ -465,6 +579,10 @@ reduction_operator
 self_clause
    : SELF
    | SELF LEFT_PAREN condition RIGHT_PAREN
+   ;
+
+self_list_clause
+   : SELF LEFT_PAREN var_list RIGHT_PAREN
    ;
 
 condition

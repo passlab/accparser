@@ -11,6 +11,11 @@ void OpenACCIRConstructor::enterData_directive(
   current_directive = new OpenACCDirective(ACCD_data);
 }
 
+void OpenACCIRConstructor::enterDeclare_directive(
+    accparser::Declare_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_declare);
+}
+
 void OpenACCIRConstructor::enterEnter_data_directive(
     accparser::Enter_data_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_enter_data);
@@ -24,6 +29,11 @@ void OpenACCIRConstructor::enterExit_data_directive(
 void OpenACCIRConstructor::enterHost_data_directive(
     accparser::Host_data_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_host_data);
+}
+
+void OpenACCIRConstructor::enterInit_directive(
+    accparser::Init_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_init);
 }
 
 void OpenACCIRConstructor::enterKernels_directive(
@@ -49,6 +59,21 @@ void OpenACCIRConstructor::enterParallel_loop_directive(
 void OpenACCIRConstructor::enterSerial_directive(
     accparser::Serial_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_serial);
+}
+
+void OpenACCIRConstructor::enterSet_directive(
+    accparser::Set_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_set);
+}
+
+void OpenACCIRConstructor::enterShutdown_directive(
+    accparser::Shutdown_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_shutdown);
+}
+
+void OpenACCIRConstructor::enterUpdate_directive(
+    accparser::Update_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_update);
 }
 
 void OpenACCIRConstructor::enterAsync_clause(
@@ -168,6 +193,18 @@ void OpenACCIRConstructor::exitCreate_clause_modifier(
   ((OpenACCCreateClause *)current_clause)->setModifier(ACCC_CREATE_zero);
 }
 
+void OpenACCIRConstructor::enterCreate_no_modifier_clause(
+    accparser::Create_no_modifier_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_create);
+  ((OpenACCCreateClause *)current_clause)->setModifier(ACCC_CREATE_unspecified);
+}
+
+void OpenACCIRConstructor::exitCreate_no_modifier_clause(
+    accparser::Create_no_modifier_clauseContext *ctx) {
+  ((OpenACCCreateClause *)current_clause)
+      ->mergeClause(current_directive, current_clause);
+}
+
 void OpenACCIRConstructor::enterDefault_clause(
     accparser::Default_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_default);
@@ -184,6 +221,18 @@ void OpenACCIRConstructor::exitDefault_kind(
   ((OpenACCDefaultClause *)current_clause)->setKind(kind);
 };
 
+void OpenACCIRConstructor::enterDefault_async_clause(
+    accparser::Default_async_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_default_async);
+};
+
+void OpenACCIRConstructor::exitDefault_async_clause(
+    accparser::Default_async_clauseContext *ctx) {
+  ((OpenACCDefaultAsyncClause *)current_clause)
+      ->mergeClause(current_directive, current_clause);
+};
+
 void OpenACCIRConstructor::enterDelete_clause(
     accparser::Delete_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_delete);
@@ -192,6 +241,28 @@ void OpenACCIRConstructor::enterDelete_clause(
 void OpenACCIRConstructor::enterDetach_clause(
     accparser::Detach_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_detach);
+}
+
+void OpenACCIRConstructor::enterDevice_clause(
+    accparser::Device_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_device);
+}
+
+void OpenACCIRConstructor::enterDevice_num_clause(
+    accparser::Device_num_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_device_num);
+};
+
+void OpenACCIRConstructor::exitDevice_num_clause(
+    accparser::Device_num_clauseContext *ctx) {
+  ((OpenACCDeviceNumClause *)current_clause)
+      ->mergeClause(current_directive, current_clause);
+};
+
+void OpenACCIRConstructor::enterDevice_resident_clause(
+    accparser::Device_resident_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_device_resident);
 }
 
 void OpenACCIRConstructor::enterDevice_type_clause(
@@ -226,6 +297,11 @@ void OpenACCIRConstructor::exitGang_clause(accparser::Gang_clauseContext *ctx) {
       ->mergeClause(current_directive, current_clause);
 };
 
+void OpenACCIRConstructor::enterHost_clause(
+    accparser::Host_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_host);
+}
+
 void OpenACCIRConstructor::enterIf_clause(accparser::If_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_if);
@@ -241,6 +317,11 @@ void OpenACCIRConstructor::enterIndependent_clause(
     accparser::Independent_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_independent);
+}
+
+void OpenACCIRConstructor::enterLink_clause(
+    accparser::Link_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_link);
 }
 
 void OpenACCIRConstructor::enterNo_create_clause(
@@ -330,6 +411,12 @@ void OpenACCIRConstructor::enterSelf_clause(
 void OpenACCIRConstructor::exitSelf_clause(accparser::Self_clauseContext *ctx) {
   ((OpenACCSelfClause *)current_clause)
       ->mergeClause(current_directive, current_clause);
+}
+
+void OpenACCIRConstructor::enterSelf_list_clause(
+    accparser::Self_list_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_self);
 }
 
 void OpenACCIRConstructor::exitCondition(accparser::ConditionContext *ctx) {

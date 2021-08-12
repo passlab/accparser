@@ -1,0 +1,33 @@
+
+#pragma acc declare copy(a, b, c)
+
+#pragma acc declare copyin( x, y )
+
+#pragma acc declare copyin( readonly :m , n)
+
+#pragma acc declare copyin( readonly :m , n , readonly)
+
+#pragma acc declare copyin( readonly : readonly::m , n , readonly)
+
+#pragma acc declare copyin( readonly : x, y, z) copyin( readonly : x, y, a) copyin( readonly : a, b, c)
+
+#pragma acc declare copyin( readonly : x, y, z) copyin( readonly : a, b, c) copyin( readonly : 1, 2, 3)
+
+#pragma acc declare copyin( x, y, z) copyin( readonly : a, b, c)
+
+#pragma acc declare copyin( readonly : x, y, z) copyin( a, b, c)
+
+#pragma acc declare copyin( x, y, z) copyin( a, b, c)
+
+#pragma acc declare copyout(12, 23, 34)
+
+#pragma acc declare create(12, 23, 34)
+
+#pragma acc declare present(a, b, c)
+
+#pragma acc declare deviceptr(a, b, c)
+
+#pragma acc declare device_resident(a, b, c)
+
+#pragma acc declare link(a, b, c)
+

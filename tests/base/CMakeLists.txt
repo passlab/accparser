@@ -3,14 +3,19 @@ add_custom_target(acc_test)
 
 set(TEST_FILES
     data.txt
+    declare.txt
     enter_data.txt
     exit_data.txt
     host_data.txt
+    init.txt
     loop.txt
     kernels.txt
     parallel.txt
     parallel_loop.txt
     serial.txt
+    set.txt
+    shutdown.txt
+    update.txt
     )
 
 add_dependencies(acc_test acc_tester.out)

@@ -1,0 +1,4 @@
+#pragma acc init device_type (a, b, c)
+#pragma acc init if (5)
+#pragma acc init if (x==3)
+#pragma acc init device_num (3)

@@ -283,6 +283,28 @@ public:
   std::string toString();
 };
 
+// Default_async Clause
+class OpenACCDefaultAsyncClause : public OpenACCClause {
+
+public:
+  OpenACCDefaultAsyncClause() : OpenACCClause(ACCC_default_async){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
+// Device_num Clause
+class OpenACCDeviceNumClause : public OpenACCClause {
+
+public:
+  OpenACCDeviceNumClause() : OpenACCClause(ACCC_device_num){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
 // Gang Clause
 class OpenACCGangClause : public OpenACCClause {
 

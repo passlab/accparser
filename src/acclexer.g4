@@ -65,6 +65,10 @@ ACC
 DATA
    : 'data'
    ;
+   
+DECLARE
+   : 'declare'
+   ;
 
 ENTER
    : 'enter'
@@ -77,6 +81,10 @@ EXIT
 HOST_DATA
    : 'host_data'
    ;
+   
+INIT
+   : 'init'
+   ;
 
 KERNELS
    : 'kernels'
@@ -85,10 +93,6 @@ KERNELS
 LOOP
    : 'loop'
    ;
-
-LEFT_PAREN
-   : '('
-   ;
    
 PARALLEL
    : 'parallel'
@@ -96,6 +100,23 @@ PARALLEL
    
 SERIAL
    : 'serial'
+   ;
+ 
+SET
+   : 'set'
+   ;
+
+SHUTDOWN
+   : 'shutdown'
+   ;
+
+UPDATE
+   : 'update'
+   ;
+
+
+LEFT_PAREN
+   : '('
    ;
 
 RIGHT_PAREN
@@ -155,6 +176,10 @@ DEFAULT
    : 'default' -> pushMode (default_clause)
    ;
 
+DEFAULT_ASYNC
+   : 'default_async' -> pushMode (expr_clause)
+   ;
+   
 DELETE
    : 'delete' -> pushMode (expr_clause)
    ;
@@ -163,6 +188,18 @@ DETACH
    : 'detach' -> pushMode (expr_clause)
    ;
 
+DEVICE
+   : 'device' -> pushMode (expr_clause)
+   ;
+   
+DEVICE_NUM
+   : 'device_num' -> pushMode (expr_clause)
+   ;
+   
+DEVICE_RESIDENT
+   : 'device_resident' -> pushMode (expr_clause)
+   ;
+   
 DEVICE_TYPE
    : 'device_type' -> pushMode (expr_clause)
    ;
@@ -185,6 +222,10 @@ GANG
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
    ;
+   
+HOST
+   : 'host' -> pushMode (expr_clause)
+   ;
 
 IF
    : 'if' -> pushMode (expr_clause)
@@ -196,6 +237,10 @@ IF_PRESENT
 
 INDEPENDENT
    : 'independent'
+   ;
+   
+LINK
+   : 'link' -> pushMode (expr_clause)
    ;
 
 NO_CREATE

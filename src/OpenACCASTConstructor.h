@@ -3,25 +3,34 @@
 
 class OpenACCIRConstructor : public accparserBaseListener {
 public:
-  virtual void enterHost_data_directive(
-      accparser::Host_data_directiveContext * /*ctx*/) override;
-
-  virtual void enterParallel_directive(
-      accparser::Parallel_directiveContext * /*ctx*/) override;
   virtual void
   enterData_directive(accparser::Data_directiveContext * /*ctx*/) override;
+  virtual void enterDeclare_directive(
+      accparser::Declare_directiveContext * /*ctx*/) override;
   virtual void enterEnter_data_directive(
       accparser::Enter_data_directiveContext * /*ctx*/) override;
   virtual void enterExit_data_directive(
       accparser::Exit_data_directiveContext * /*ctx*/) override;
+  virtual void enterHost_data_directive(
+      accparser::Host_data_directiveContext * /*ctx*/) override;
+  virtual void
+  enterInit_directive(accparser::Init_directiveContext * /*ctx*/) override;
   virtual void enterKernels_directive(
       accparser::Kernels_directiveContext * /*ctx*/) override;
   virtual void
   enterLoop_directive(accparser::Loop_directiveContext * /*ctx*/) override;
   virtual void enterParallel_loop_directive(
       accparser::Parallel_loop_directiveContext * /*ctx*/) override;
+  virtual void enterParallel_directive(
+      accparser::Parallel_directiveContext * /*ctx*/) override;
   virtual void
   enterSerial_directive(accparser::Serial_directiveContext * /*ctx*/) override;
+  virtual void
+  enterSet_directive(accparser::Set_directiveContext * /*ctx*/) override;
+  virtual void enterShutdown_directive(
+      accparser::Shutdown_directiveContext * /*ctx*/) override;
+  virtual void
+  enterUpdate_directive(accparser::Update_directiveContext * /*ctx*/) override;
 
   virtual void
   enterAsync_clause(accparser::Async_clauseContext * /*ctx*/) override;
@@ -63,14 +72,30 @@ public:
       accparser::Create_clause_modifierContext * /*ctx*/) override;
   virtual void
   exitCreate_clause(accparser::Create_clauseContext * /*ctx*/) override;
+  virtual void enterCreate_no_modifier_clause(
+      accparser::Create_no_modifier_clauseContext * /*ctx*/) override;
+  virtual void exitCreate_no_modifier_clause(
+      accparser::Create_no_modifier_clauseContext * /*ctx*/) override;
   virtual void
   enterDefault_clause(accparser::Default_clauseContext * /*ctx*/) override;
   virtual void
   exitDefault_kind(accparser::Default_kindContext * /*ctx*/) override;
+  virtual void enterDefault_async_clause(
+      accparser::Default_async_clauseContext * /*ctx*/) override;
+  virtual void exitDefault_async_clause(
+      accparser::Default_async_clauseContext * /*ctx*/) override;
   virtual void
   enterDelete_clause(accparser::Delete_clauseContext * /*ctx*/) override;
   virtual void
   enterDetach_clause(accparser::Detach_clauseContext * /*ctx*/) override;
+  virtual void
+  enterDevice_clause(accparser::Device_clauseContext * /*ctx*/) override;
+  virtual void enterDevice_num_clause(
+      accparser::Device_num_clauseContext * /*ctx*/) override;
+  virtual void
+  exitDevice_num_clause(accparser::Device_num_clauseContext * /*ctx*/) override;
+  virtual void enterDevice_resident_clause(
+      accparser::Device_resident_clauseContext * /*ctx*/) override;
   virtual void enterDevice_type_clause(
       accparser::Device_type_clauseContext * /*ctx*/) override;
   virtual void
@@ -83,11 +108,15 @@ public:
   enterGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
   virtual void
   exitGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
+  virtual void
+  enterHost_clause(accparser::Host_clauseContext * /*ctx*/) override;
   virtual void enterIf_clause(accparser::If_clauseContext * /*ctx*/) override;
   virtual void enterIf_present_clause(
       accparser::If_present_clauseContext * /*ctx*/) override;
   virtual void enterIndependent_clause(
       accparser::Independent_clauseContext * /*ctx*/) override;
+  virtual void
+  enterLink_clause(accparser::Link_clauseContext * /*ctx*/) override;
   virtual void
   enterNo_create_clause(accparser::No_create_clauseContext * /*ctx*/) override;
   virtual void
@@ -112,6 +141,8 @@ public:
   enterSelf_clause(accparser::Self_clauseContext * /*ctx*/) override;
   virtual void
   exitSelf_clause(accparser::Self_clauseContext * /*ctx*/) override;
+  virtual void
+  enterSelf_list_clause(accparser::Self_list_clauseContext * /*ctx*/) override;
   virtual void enterSeq_clause(accparser::Seq_clauseContext * /*ctx*/) override;
   virtual void
   enterTile_clause(accparser::Tile_clauseContext * /*ctx*/) override;

@@ -2,6 +2,7 @@ enable_testing()
 add_custom_target(acc_test)
 
 set(TEST_FILES
+    atomic.txt
     data.txt
     declare.txt
     enter_data.txt

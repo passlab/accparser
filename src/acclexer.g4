@@ -61,7 +61,11 @@ ACC
    : 'acc'
    | [!c] '$acc'
    ;
-
+   
+ATOMIC
+   : 'atomic'
+   ;
+   
 DATA
    : 'data'
    ;
@@ -151,7 +155,11 @@ ATTACH
 AUTO
    : 'auto'
    ;
-
+   
+CAPTURE
+   : 'capture'
+   ;
+   
 COLLAPSE
    : 'collapse' -> pushMode (expr_clause)
    ;
@@ -267,6 +275,10 @@ PRIVATE
    : 'private' -> pushMode (expr_clause)
    ;
 
+READ
+   : 'read'
+   ;
+   
 REDUCTION
    : 'reduction' -> pushMode (reduction_clause)
    ;
@@ -314,6 +326,10 @@ WORKER
   if (_input->LA(1) == '(')
     pushMode(worker_clause);
 }
+   ;
+   
+WRITE
+   : 'write'
    ;
 
 mode copyin_clause;

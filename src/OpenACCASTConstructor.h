@@ -4,6 +4,8 @@
 class OpenACCIRConstructor : public accparserBaseListener {
 public:
   virtual void
+  enterAtomic_directive(accparser::Atomic_directiveContext * /*ctx*/) override;
+  virtual void
   enterData_directive(accparser::Data_directiveContext * /*ctx*/) override;
   virtual void enterDeclare_directive(
       accparser::Declare_directiveContext * /*ctx*/) override;
@@ -40,6 +42,8 @@ public:
   enterAttach_clause(accparser::Attach_clauseContext * /*ctx*/) override;
   virtual void
   enterAuto_clause(accparser::Auto_clauseContext * /*ctx*/) override;
+  virtual void
+  enterCapture_clause(accparser::Capture_clauseContext * /*ctx*/) override;
   virtual void
   enterCollapse_clause(accparser::Collapse_clauseContext * /*ctx*/) override;
   virtual void
@@ -132,6 +136,8 @@ public:
   virtual void
   enterPrivate_clause(accparser::Private_clauseContext * /*ctx*/) override;
   virtual void
+  enterRead_clause(accparser::Read_clauseContext * /*ctx*/) override;
+  virtual void
   enterReduction_clause(accparser::Reduction_clauseContext * /*ctx*/) override;
   virtual void exitReduction_operator(
       accparser::Reduction_operatorContext * /*ctx*/) override;
@@ -146,6 +152,8 @@ public:
   virtual void enterSeq_clause(accparser::Seq_clauseContext * /*ctx*/) override;
   virtual void
   enterTile_clause(accparser::Tile_clauseContext * /*ctx*/) override;
+  virtual void
+  enterUpdate_clause(accparser::Update_clauseContext * /*ctx*/) override;
   virtual void enterUse_device_clause(
       accparser::Use_device_clauseContext * /*ctx*/) override;
   virtual void
@@ -174,6 +182,8 @@ public:
       accparser::Worker_clause_modifierContext * /*ctx*/) override;
   virtual void
   exitWorker_clause(accparser::Worker_clauseContext * /*ctx*/) override;
+  virtual void
+  enterWrite_clause(accparser::Write_clauseContext * /*ctx*/) override;
 
   virtual void exitConst_int(accparser::Const_intContext * /*ctx*/) override;
   virtual void exitInt_expr(accparser::Int_exprContext * /*ctx*/) override;

@@ -99,7 +99,8 @@ acc
    ;
 
 openacc_directive
-   : data_directive
+   : atomic_directive
+   | data_directive
    | declare_directive
    | enter_data_directive
    | exit_data_directive
@@ -113,6 +114,18 @@ openacc_directive
    | set_directive
    | shutdown_directive
    | update_directive
+   ;
+   
+atomic_directive
+   : ATOMIC
+   | ATOMIC atomic_clause
+   ;
+
+atomic_clause
+   : capture_clause
+   | read_clause
+   | update_clause
+   | write_clause
    ;
 
 data_directive
@@ -410,6 +423,10 @@ attach_clause
 auto_clause
    : AUTO
    ;
+   
+capture_clause
+   : CAPTURE
+   ;
 
 collapse_clause
    : COLLAPSE LEFT_PAREN const_int RIGHT_PAREN
@@ -560,6 +577,10 @@ private_clause
    : PRIVATE LEFT_PAREN var_list RIGHT_PAREN
    ;
 
+read_clause
+   : READ
+   ;
+   
 reduction_clause
    : REDUCTION LEFT_PAREN reduction_operator COLON var_list RIGHT_PAREN
    ;
@@ -597,6 +618,10 @@ tile_clause
    : TILE LEFT_PAREN size_expr_list RIGHT_PAREN
    ;
 
+update_clause
+   : UPDATE
+   ;
+   
 size_expr_list
    : (var COMMA | var)+
    ;
@@ -660,6 +685,10 @@ worker_clause_args
 
 worker_clause_modifier
    : NUM
+   ;
+   
+write_clause
+   : WRITE
    ;
 
 const_int

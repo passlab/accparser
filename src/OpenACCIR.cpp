@@ -39,6 +39,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   switch (kind) {
   case ACCC_attach:
   case ACCC_auto:
+  case ACCC_capture:
   case ACCC_copy:
   case ACCC_delete:
   case ACCC_detach:
@@ -56,9 +57,12 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_no_create:
   case ACCC_present:
   case ACCC_private:
+  case ACCC_read:
   case ACCC_seq:
   case ACCC_tile:
-  case ACCC_use_device: {
+  case ACCC_update:
+  case ACCC_use_device:
+  case ACCC_write: {
     if (current_clauses->size() == 0) {
       new_clause = new OpenACCClause(kind);
       current_clauses = new std::vector<OpenACCClause *>();

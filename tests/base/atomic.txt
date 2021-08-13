@@ -1,0 +1,10 @@
+
+#pragma acc atomic
+
+#pragma acc atomic read
+
+#pragma acc atomic update
+
+#pragma acc atomic write
+
+#pragma acc atomic capture

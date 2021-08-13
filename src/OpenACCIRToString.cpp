@@ -44,6 +44,9 @@ std::string OpenACCDirective::toString() {
   std::string result;
 
   switch (this->getKind()) {
+  case ACCD_atomic:
+    result += "atomic ";
+    break;
   case ACCD_data:
     result += "data ";
     break;
@@ -123,6 +126,9 @@ std::string OpenACCClause::toString() {
   case ACCC_auto:
     result += "auto ";
     break;
+  case ACCC_capture:
+    result += "capture ";
+    break;
   case ACCC_collapse:
     result += "collapse ";
     break;
@@ -192,6 +198,9 @@ std::string OpenACCClause::toString() {
   case ACCC_private:
     result += "private ";
     break;
+  case ACCC_read:
+    result += "read ";
+    break;
   case ACCC_self:
     result += "self ";
     break;
@@ -201,6 +210,9 @@ std::string OpenACCClause::toString() {
   case ACCC_tile:
     result += "tile ";
     break;
+  case ACCC_update:
+    result += "update ";
+    break;
   case ACCC_use_device:
     result += "use_device ";
   case ACCC_vector_length:
@@ -208,6 +220,9 @@ std::string OpenACCClause::toString() {
     break;
   case ACCC_wait:
     result += "wait ";
+    break;
+  case ACCC_write:
+    result += "write ";
     break;
   default:
     printf("The clause enum is not supported yet.\n");

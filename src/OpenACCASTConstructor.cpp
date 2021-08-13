@@ -6,6 +6,11 @@
 OpenACCDirective *current_directive = NULL;
 OpenACCClause *current_clause = NULL;
 
+void OpenACCIRConstructor::enterAtomic_directive(
+    accparser::Atomic_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_atomic);
+}
+
 void OpenACCIRConstructor::enterData_directive(
     accparser::Data_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_data);
@@ -93,6 +98,13 @@ void OpenACCIRConstructor::enterAuto_clause(
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_auto);
 }
+
+void OpenACCIRConstructor::enterCapture_clause(
+    accparser::Capture_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_capture);
+}
+
 
 void OpenACCIRConstructor::enterCollapse_clause(
     accparser::Collapse_clauseContext *ctx) {
@@ -363,6 +375,11 @@ void OpenACCIRConstructor::enterPrivate_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_private);
 }
 
+void OpenACCIRConstructor::enterRead_clause(
+    accparser::Read_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_read);
+}
+
 void OpenACCIRConstructor::enterReduction_clause(
     accparser::Reduction_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_reduction);
@@ -432,6 +449,11 @@ void OpenACCIRConstructor::enterSeq_clause(accparser::Seq_clauseContext *ctx) {
 void OpenACCIRConstructor::enterTile_clause(
     accparser::Tile_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_tile);
+}
+
+void OpenACCIRConstructor::enterUpdate_clause(
+    accparser::Update_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_update);
 }
 
 void OpenACCIRConstructor::enterUse_device_clause(
@@ -511,6 +533,11 @@ void OpenACCIRConstructor::exitWorker_clause(
   ((OpenACCWorkerClause *)current_clause)
       ->mergeClause(current_directive, current_clause);
 }
+
+void OpenACCIRConstructor::enterWrite_clause(
+    accparser::Write_clauseContext *ctx) {
+  current_clause = current_directive->addOpenACCClause(ACCC_write);
+};
 
 void OpenACCIRConstructor::exitConst_int(accparser::Const_intContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());

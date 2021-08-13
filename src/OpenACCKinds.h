@@ -10,6 +10,7 @@
 // OpenACC directives.
 enum OpenACCDirectiveKind {
 #define OPENACC_DIRECTIVE(Name) ACCD_##Name,
+    OPENACC_DIRECTIVE(atomic)
     OPENACC_DIRECTIVE(data)
     OPENACC_DIRECTIVE(declare)
     OPENACC_DIRECTIVE(enter_data)
@@ -35,6 +36,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(async)
     OPENACC_CLAUSE(attach)
     OPENACC_CLAUSE(auto)
+    OPENACC_CLAUSE(capture)
     OPENACC_CLAUSE(collapse)
     OPENACC_CLAUSE(copy)
     OPENACC_CLAUSE(copyin)
@@ -63,14 +65,17 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(present)
     OPENACC_CLAUSE(private)
     OPENACC_CLAUSE(reduction)
+    OPENACC_CLAUSE(read)
     OPENACC_CLAUSE(self)
     OPENACC_CLAUSE(seq)
     OPENACC_CLAUSE(tile)
+    OPENACC_CLAUSE(update)
     OPENACC_CLAUSE(use_device)
     OPENACC_CLAUSE(vector)
     OPENACC_CLAUSE(vector_length)
     OPENACC_CLAUSE(wait)
     OPENACC_CLAUSE(worker)
+    OPENACC_CLAUSE(write)
 
     OPENACC_CLAUSE(unknown)
 #undef OPENACC_CLAUSE

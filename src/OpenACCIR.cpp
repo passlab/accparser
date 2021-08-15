@@ -226,6 +226,7 @@ void OpenACCAsyncClause::mergeClause(OpenACCDirective *directive,
                ((((OpenACCClause *)(*it))->getExpressions())->size() == 0)) {
       current_clauses->pop_back();
       directive->getClausesInOriginalOrder()->pop_back();
+      break;
     }
   }
 };
@@ -281,6 +282,7 @@ void OpenACCCollapseClause::mergeClause(OpenACCDirective *directive,
                ((((OpenACCClause *)(*it))->getExpressions())->size() == 0)) {
       current_clauses->pop_back();
       directive->getClausesInOriginalOrder()->pop_back();
+      break;
     }
   }
 };
@@ -536,6 +538,7 @@ void OpenACCGangClause::mergeClause(OpenACCDirective *directive,
         ((((OpenACCClause *)(*it))->getExpressions())->size() == 0)) {
       current_clauses->pop_back();
       directive->getClausesInOriginalOrder()->pop_back();
+      break;
     } else if (((((OpenACCClause *)(current_clause))->getExpressions())
                     ->size() != 0) &&
                ((((OpenACCClause *)(*it))->getExpressions())->size() != 0)) {
@@ -698,6 +701,7 @@ void OpenACCSelfClause::mergeClause(OpenACCDirective *directive,
                ((((OpenACCClause *)(*it))->getExpressions())->size() == 0)) {
       current_clauses->pop_back();
       directive->getClausesInOriginalOrder()->pop_back();
+      break;
     }
   }
 };
@@ -810,14 +814,13 @@ void OpenACCWaitClause::mergeClause(OpenACCDirective *directive,
 
   for (std::vector<OpenACCClause *>::iterator it = current_clauses->begin();
        it != current_clauses->end() - 1; it++) {
-    if (((((OpenACCClause *)(current_clause))->getExpressions())->size() ==
+    if (((((OpenACCClause *)(current_clause))->getExpressions())->size() !=
          0) &&
-        ((((OpenACCClause *)(*it))->getExpressions())->size() == 0)) {
-      current_clauses->pop_back();
-      directive->getClausesInOriginalOrder()->pop_back();
-    } else if (((((OpenACCClause *)(current_clause))->getExpressions())
-                    ->size() != 0) &&
-               ((((OpenACCClause *)(*it))->getExpressions())->size() != 0)) {
+        ((((OpenACCClause *)(*it))->getExpressions())->size() != 0) &&
+        ((OpenACCWaitClause *)current_clause)->getDevnum() ==
+            ((OpenACCWaitClause *)(*it))->getDevnum() &&
+        ((OpenACCWaitClause *)current_clause)->getQueues() ==
+            ((OpenACCWaitClause *)(*it))->getQueues()) {
       std::vector<std::string> *expressions_previous_clause =
           ((OpenACCClause *)(*it))->getExpressions();
       std::vector<std::string> *expressions_current_clause =
@@ -838,6 +841,12 @@ void OpenACCWaitClause::mergeClause(OpenACCDirective *directive,
         if (para_merge == true)
           expressions_previous_clause->push_back(*it_expr_current);
       }
+      current_clauses->pop_back();
+      directive->getClausesInOriginalOrder()->pop_back();
+      break;
+    } else if (((((OpenACCClause *)(current_clause))->getExpressions())
+                    ->size() == 0) &&
+               ((((OpenACCClause *)(*it))->getExpressions())->size() == 0)) {
       current_clauses->pop_back();
       directive->getClausesInOriginalOrder()->pop_back();
       break;

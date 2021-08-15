@@ -29,6 +29,10 @@
 
 #pragma acc update wait(devnum : devnum::devnum::z : 23, 34)
 
+#pragma acc update wait(23, 34) wait(23, 34, 35)
+
+#pragma acc update wait wait
+
 #pragma acc update if(5)
 
 #pragma acc update if(x==3)

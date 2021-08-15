@@ -201,6 +201,8 @@ public:
       accparser::Wait_argument_queuesContext * /*ctx*/) override;
   virtual void exitWait_argument_int_expr(
       accparser::Wait_argument_int_exprContext * /*ctx*/) override;
+  virtual void exitWait_argument_clause(
+      accparser::Wait_argument_clauseContext * /*ctx*/) override;
   virtual void
   enterWorker_clause(accparser::Worker_clauseContext * /*ctx*/) override;
   virtual void exitWorker_clause_modifier(

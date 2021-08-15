@@ -606,6 +606,12 @@ void OpenACCIRConstructor::exitWait_int_expr(
   }
 };
 
+void OpenACCIRConstructor::exitWait_argument_clause(
+    accparser::Wait_argument_clauseContext *ctx) {
+  ((OpenACCWaitClause *)current_clause)
+      ->mergeClause(current_directive, current_clause);
+};
+
 void OpenACCIRConstructor::enterWorker_clause(
     accparser::Worker_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_worker);

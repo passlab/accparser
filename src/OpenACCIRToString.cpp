@@ -493,21 +493,24 @@ std::string OpenACCVectorClause::toString() {
 
 std::string OpenACCWaitClause::toString() {
 
-  std::string result = "wait (";
+  std::string result = "wait ";
   std::string parameter_string = "";
-  std::string devnum = this->getDevnum();
-  if (devnum != "") {
-    parameter_string += "devnum: " + devnum + ": ";
-  };
-  if (this->getQueues() == true) {
-    parameter_string += "queues: ";
-  };
+  if (this->getExpressions()->size() != 0) {
+    parameter_string += "(";
+    std::string devnum = this->getDevnum();
+    if (devnum != "") {
+      parameter_string += "devnum: " + devnum + ": ";
+    };
+    if (this->getQueues() == true) {
+      parameter_string += "queues: ";
+    };
 
-  parameter_string += this->expressionToString();
-  if (parameter_string.size() > 0) {
-    result += parameter_string + ") ";
-  } else {
-    result = result.substr(0, result.size() - 1);
+    parameter_string += this->expressionToString();
+    if (parameter_string.size() > 0) {
+      result += parameter_string + ") ";
+    } else {
+      result = result.substr(0, result.size() - 1);
+    }
   }
 
   return result;

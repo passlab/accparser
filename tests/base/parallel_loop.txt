@@ -207,8 +207,6 @@
 
 #pragma acc parallel loop independent independent
 
-#pragma acc parallel loop private(a, b, c)
-
 #pragma acc parallel loop seq
 
 #pragma acc parallel loop vector(length : a)
@@ -243,52 +241,3 @@
 
 #pragma acc parallel loop tile(1) tile(1) tile(2) worker(num: a) worker(num : 5) independent collapse(1)
 
-#pragma acc parallel loop reduction( + : x, y, z) reduction( + : x, y, a) reduction( + : a, b, c)
-
-#pragma acc parallel loop reduction( + : x, y, z) reduction( * : a, b, c)
-
-#pragma acc parallel loop reduction( max : x, y, z) reduction( min : a, b, c)
-
-#pragma acc parallel loop reduction( min : x, y, z) reduction( min : a, b, c)
-
-#pragma acc parallel loop reduction( min : x, y, z) reduction( && : a, b, c)
-
-#pragma acc parallel loop reduction( || : x, y, z) reduction( && : a, b, c)
-
-#pragma acc parallel loop reduction( && : x, y, z) reduction( && : a, b, c)
-
-#pragma acc parallel loop reduction( max : x, y, max) reduction( max : x, y, min)
-
-#pragma acc parallel loop device_type(x, y, z)
-
-#pragma acc parallel loop reduction( +: x, y, z)
-
-#pragma acc parallel loop reduction( * : x, y, z)
-
-#pragma acc parallel loop reduction( max : x, y, z)
-
-#pragma acc parallel loop reduction( max : x, y, max)
-
-#pragma acc parallel loop reduction( max : max, y, z)
-
-#pragma acc parallel loop reduction( max : max::x, y, max)
-
-#pragma acc parallel loop reduction( max : max::x, max, max::y)
-
-#pragma acc parallel loop reduction( min : x, y, z)
-
-#pragma acc parallel loop reduction( min : x, y, min)
-
-#pragma acc parallel loop reduction( min : min, y, z)
-
-#pragma acc parallel loop reduction( min : min::x, y, min)
-
-#pragma acc parallel loop reduction( min : min::x, min, min::y)
-
-#pragma acc parallel loop reduction( & : x[5], y, z)
-
-#pragma acc parallel loop reduction( | : x, y, z)
-
-#pragma acc parallel loop reduction( ^ : x, y, z)
-
-#pragma acc parallel loop reduction( && : x, y, z)

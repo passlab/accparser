@@ -29,8 +29,6 @@
 
 #pragma acc loop independent independent
 
-#pragma acc loop private(a, b, c)
-
 #pragma acc loop seq
 
 #pragma acc loop vector(length : a)

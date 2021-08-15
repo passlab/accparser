@@ -59,21 +59,21 @@ PRAGMA
 
 ACC
    : 'acc'
-   | [!c] '$acc'
+   | [!c*] '$acc'
    ;
-   
+
 ATOMIC
    : 'atomic'
    ;
-   
+
 CACHE
    : 'cache' -> pushMode (cache_directive)
    ;
-   
+
 DATA
    : 'data'
    ;
-   
+
 DECLARE
    : 'declare'
    ;
@@ -85,11 +85,11 @@ ENTER
 EXIT
    : 'exit'
    ;
-   
+
 HOST_DATA
    : 'host_data'
    ;
-   
+
 INIT
    : 'init'
    ;
@@ -97,27 +97,28 @@ INIT
 KERNELS
    : 'kernels'
    ;
-   
+
 LOOP
    : 'loop'
    ;
-   
+
 PARALLEL
    : 'parallel'
    ;
-   
+
 ROUTINE
-   : 'routine' [ ]*{
+   : 'routine' [ ]*
+   {
   if (_input->LA(1) == '(') {
     pushMode(routine_directive);
   }
   }
    ;
-   
+
 SERIAL
    : 'serial'
    ;
- 
+
 SET
    : 'set'
    ;
@@ -129,7 +130,6 @@ SHUTDOWN
 UPDATE
    : 'update'
    ;
-
 
 LEFT_PAREN
    : '('
@@ -176,11 +176,11 @@ BIND
   }
 }
    ;
-   
+
 CAPTURE
    : 'capture'
    ;
-   
+
 COLLAPSE
    : 'collapse' -> pushMode (expr_clause)
    ;
@@ -208,7 +208,7 @@ DEFAULT
 DEFAULT_ASYNC
    : 'default_async' -> pushMode (expr_clause)
    ;
-   
+
 DELETE
    : 'delete' -> pushMode (expr_clause)
    ;
@@ -220,15 +220,15 @@ DETACH
 DEVICE
    : 'device' -> pushMode (expr_clause)
    ;
-   
+
 DEVICE_NUM
    : 'device_num' -> pushMode (expr_clause)
    ;
-   
+
 DEVICE_RESIDENT
    : 'device_resident' -> pushMode (expr_clause)
    ;
-   
+
 DEVICE_TYPE
    : 'device_type' -> pushMode (expr_clause)
    ;
@@ -251,7 +251,7 @@ GANG
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
    ;
-   
+
 HOST
    : 'host' -> pushMode (expr_clause)
    ;
@@ -259,7 +259,7 @@ HOST
 IF
    : 'if' [ ]* -> pushMode (expr_clause)
    ;
-   
+
 IF_PRESENT
    : 'if_present'
    ;
@@ -267,15 +267,15 @@ IF_PRESENT
 INDEPENDENT
    : 'independent'
    ;
-   
+
 LINK
    : 'link' -> pushMode (expr_clause)
    ;
-   
+
 NOHOST
    : 'nohost'
    ;
-   
+
 NO_CREATE
    : 'no_create' -> pushMode (expr_clause)
    ;
@@ -303,7 +303,7 @@ PRIVATE
 READ
    : 'read'
    ;
-   
+
 REDUCTION
    : 'reduction' -> pushMode (reduction_clause)
    ;
@@ -322,7 +322,7 @@ SEQ
 TILE
    : 'tile' -> pushMode (expr_clause)
    ;
-   
+
 USE_DEVICE
    : 'use_device' -> pushMode (expr_clause)
    ;
@@ -352,11 +352,11 @@ WORKER
     pushMode(worker_clause);
 }
    ;
-   
+
 WRITE
    : 'write'
    ;
-   
+
 mode cache_directive;
 CACHE_LEFT_PAREN
    : '(' [ ]*
@@ -441,7 +441,7 @@ ROUTINE_BLANK
 ROUTINE_LINE_END
    : [\n\r] -> skip
    ;
-   
+
 mode copyin_clause;
 COPYIN_LEFT_PAREN
    : '(' [ ]*

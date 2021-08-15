@@ -143,8 +143,6 @@
 
 #pragma acc kernels loop independent independent
 
-#pragma acc kernels loop private(a, b, c)
-
 #pragma acc kernels loop seq
 
 #pragma acc kernels loop vector(length : a)
@@ -194,8 +192,6 @@
 #pragma acc kernels loop reduction( && : x, y, z) reduction( && : a, b, c)
 
 #pragma acc kernels loop reduction( max : x, y, max) reduction( max : x, y, min)
-
-#pragma acc kernels loop device_type(x, y, z)
 
 #pragma acc kernels loop reduction( +: x, y, z)
 

@@ -1,5 +1,5 @@
 enable_testing()
-add_custom_target(acc_test)
+add_custom_target(acc_base_test)
 
 set(TEST_FILES
     atomic.txt
@@ -24,7 +24,7 @@ set(TEST_FILES
     wait.txt
     )
 
-add_dependencies(acc_test acc_tester.out)
+add_dependencies(acc_base_test acc_tester.out)
 
 foreach(file_to_test ${TEST_FILES})
     add_test(

@@ -57,11 +57,11 @@ void doAfter() {}
 @ parser :: listenerpostinclude
 {/* listener postinclude section */}
 @ parser :: listenerdeclarations
-{/* listener public declarations/members section */}
+{/* listener public declarations/members section */ bool isFortran; }
 @ parser :: listenermembers
 {/* listener private declarations/members section */}
 @ parser :: listenerdefinitions
-{/* listener definitions section */}
+{/* listener definitions section */ isFortran = false; }
 @ parser :: baselistenerpreinclude
 {/* base listener preinclude section */}
 @ parser :: baselistenerpostinclude
@@ -95,7 +95,20 @@ void doAfter() {}
 // Actual grammar start.
 
 acc
-   : ACC openacc_directive EOF
+   : prefix ACC openacc_directive EOF
+   ;
+
+prefix
+   : c_prefix
+   | fortran_prefix
+   ;
+
+c_prefix
+   : C_PREFIX
+   ;
+
+fortran_prefix
+   : FORTRAN_PREFIX
    ;
 
 openacc_directive

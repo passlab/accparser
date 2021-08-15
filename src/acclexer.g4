@@ -53,13 +53,16 @@ lexer grammar acclexer;
 }
 channels { CommentsChannel , DirectiveChannel }
 tokens { EXPR }
-PRAGMA
-   : '#' [\p{White_Space}]* 'pragma' -> skip
+C_PREFIX
+   : [\p{White_Space}]* '#' [\p{White_Space}]* 'pragma'
+   ;
+
+FORTRAN_PREFIX
+   : [\p{White_Space}]* [!c*] '$'
    ;
 
 ACC
    : 'acc'
-   | [!c*] '$acc'
    ;
 
 ATOMIC

@@ -3,6 +3,9 @@
 
 class OpenACCIRConstructor : public accparserBaseListener {
 public:
+  virtual void enterC_prefix(accparser::C_prefixContext * /*ctx*/) override;
+  virtual void
+  enterFortran_prefix(accparser::Fortran_prefixContext * /*ctx*/) override;
   virtual void
   enterAtomic_directive(accparser::Atomic_directiveContext * /*ctx*/) override;
   virtual void

@@ -2,7 +2,7 @@ enable_testing()
 add_custom_target(acc_nas_test)
 
 set(TEST_FILES
-    add.c
+    add_bt.c
     )
 
 add_dependencies(acc_nas_test acc_tester.out)

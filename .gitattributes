@@ -1,3 +1,4 @@
 
 # Exclude the website files from the GitHub language stats
 website/** linguist-documentation
+tests/openacc-users-group/** linguist-vendored

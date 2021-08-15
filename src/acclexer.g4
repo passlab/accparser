@@ -54,7 +54,7 @@ lexer grammar acclexer;
 channels { CommentsChannel , DirectiveChannel }
 tokens { EXPR }
 PRAGMA
-   : '#' [ ]* 'pragma' -> skip
+   : '#' [\p{White_Space}]* 'pragma' -> skip
    ;
 
 ACC
@@ -107,7 +107,7 @@ PARALLEL
    ;
 
 ROUTINE
-   : 'routine' [ ]*
+   : 'routine' [\p{White_Space}]*
    {
   if (_input->LA(1) == '(') {
     pushMode(routine_directive);
@@ -140,7 +140,7 @@ RIGHT_PAREN
    ;
 
 D_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 COLON
@@ -152,7 +152,7 @@ LINE_END
    ;
 
 ASYNC
-   : 'async' [ ]*
+   : 'async' [\p{White_Space}]*
    {
   if (_input->LA(1) == '(') {
     pushMode(expr_clause);
@@ -169,7 +169,7 @@ AUTO
    ;
 
 BIND
-   : 'bind' [ ]*
+   : 'bind' [\p{White_Space}]*
    {
   if (_input->LA(1) == '(') {
     pushMode(expr_clause);
@@ -189,12 +189,36 @@ COPY
    : 'copy' -> pushMode (expr_clause)
    ;
 
+PCOPY
+   : 'pcopy' -> type (COPY) , pushMode (expr_clause)
+   ;
+
+PRESENT_OR_COPY
+   : 'present_or_copy' -> type (COPY) , pushMode (expr_clause)
+   ;
+
 COPYIN
    : 'copyin' -> pushMode (copyin_clause)
    ;
 
+PCOPYIN
+   : 'pcopyin' -> type (COPYIN) , pushMode (copyin_clause)
+   ;
+
+PRESENT_OR_COPYIN
+   : 'present_or_copyin' -> type (COPYIN) , pushMode (copyin_clause)
+   ;
+
 COPYOUT
    : 'copyout' -> pushMode (copyout_clause)
+   ;
+
+PCOPYOUT
+   : 'pcopyout' -> type (COPYOUT) , pushMode (copyout_clause)
+   ;
+
+PRESENT_OR_COPYOUT
+   : 'present_or_copyout' -> type (COPYOUT) , pushMode (copyout_clause)
    ;
 
 CREATE
@@ -246,7 +270,7 @@ FIRSTPRIVATE
    ;
 
 GANG
-   : 'gang' [ ]*
+   : 'gang' [\p{White_Space}]*
    {
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
@@ -257,7 +281,7 @@ HOST
    ;
 
 IF
-   : 'if' [ ]* -> pushMode (expr_clause)
+   : 'if' [\p{White_Space}]* -> pushMode (expr_clause)
    ;
 
 IF_PRESENT
@@ -309,7 +333,7 @@ REDUCTION
    ;
 
 SELF
-   : 'self' [ ]*
+   : 'self' [\p{White_Space}]*
    {
   if (_input->LA(1) == '(') pushMode(expr_clause);
 }
@@ -328,7 +352,7 @@ USE_DEVICE
    ;
 
 VECTOR
-   : 'vector' [ ]*
+   : 'vector' [\p{White_Space}]*
    {
   if (_input->LA(1) == '(') pushMode(vector_clause);
 }
@@ -339,14 +363,14 @@ VECTOR_LENGTH
    ;
 
 WAIT
-   : 'wait' [ ]*
+   : 'wait' [\p{White_Space}]*
    {
   if (_input->LA(1) == '(') pushMode(wait_clause);
 }
    ;
 
 WORKER
-   : 'worker' [ ]*
+   : 'worker' [\p{White_Space}]*
    {
   if (_input->LA(1) == '(')
     pushMode(worker_clause);
@@ -359,7 +383,7 @@ WRITE
 
 mode cache_directive;
 CACHE_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
@@ -376,7 +400,7 @@ CACHE_RIGHT_PAREN
    ;
 
 CACHE_READONLY
-   : 'readonly' [ ]*
+   : 'readonly' [\p{White_Space}]*
    {
    setType(READONLY);
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
@@ -388,7 +412,7 @@ CACHE_READONLY
    ;
 
 CACHE_COLON
-   : ':' [ ]*
+   : ':' [\p{White_Space}]*
    {
   if (_input->LA(1) == ':')
     more();
@@ -401,7 +425,7 @@ CACHE_COLON
    ;
 
 CACHE_COMMA
-   : ',' [ ]*
+   : ',' [\p{White_Space}]*
    {
   skip();
   pushMode(expression_mode);
@@ -412,7 +436,7 @@ CACHE_COMMA
    ;
 
 CACHE_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 CACHE_LINE_END
@@ -421,7 +445,7 @@ CACHE_LINE_END
 
 mode routine_directive;
 ROUTINE_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
@@ -435,7 +459,7 @@ ROUTINE_RIGHT_PAREN
    ;
 
 ROUTINE_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 ROUTINE_LINE_END
@@ -444,7 +468,7 @@ ROUTINE_LINE_END
 
 mode copyin_clause;
 COPYIN_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
@@ -461,7 +485,7 @@ COPYIN_RIGHT_PAREN
    ;
 
 READONLY
-   : 'readonly' [ ]*
+   : 'readonly' [\p{White_Space}]*
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -472,7 +496,7 @@ READONLY
    ;
 
 COPYIN_COLON
-   : ':' [ ]*
+   : ':' [\p{White_Space}]*
    {
   if (_input->LA(1) == ':')
     more();
@@ -485,7 +509,7 @@ COPYIN_COLON
    ;
 
 COPYIN_COMMA
-   : ',' [ ]*
+   : ',' [\p{White_Space}]*
    {
   skip();
   pushMode(expression_mode);
@@ -496,7 +520,7 @@ COPYIN_COMMA
    ;
 
 COPYIN_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 COPYIN_LINE_END
@@ -505,7 +529,7 @@ COPYIN_LINE_END
 
 mode copyout_clause;
 COPYOUT_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
@@ -522,7 +546,7 @@ COPYOUT_RIGHT_PAREN
    ;
 
 ZERO
-   : 'zero' [ ]*
+   : 'zero' [\p{White_Space}]*
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -533,7 +557,7 @@ ZERO
    ;
 
 COPYOUT_COLON
-   : ':' [ ]*
+   : ':' [\p{White_Space}]*
    {
   if (_input->LA(1) == ':')
     more();
@@ -546,7 +570,7 @@ COPYOUT_COLON
    ;
 
 COPYOUT_COMMA
-   : ',' [ ]*
+   : ',' [\p{White_Space}]*
    {
   skip();
   pushMode(expression_mode);
@@ -557,7 +581,7 @@ COPYOUT_COMMA
    ;
 
 COPYOUT_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 COPYOUT_LINE_END
@@ -566,7 +590,7 @@ COPYOUT_LINE_END
 
 mode create_clause;
 CREATE_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
@@ -582,7 +606,7 @@ CREATE_RIGHT_PAREN
    ;
 
 CREATE_ZERO
-   : 'zero' [ ]*
+   : 'zero' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -594,7 +618,7 @@ CREATE_ZERO
    ;
 
 CREATE_COLON
-   : ':' [ ]*
+   : ':' [\p{White_Space}]*
    {
   if (_input->LA(1) == ':')
     more();
@@ -607,7 +631,7 @@ CREATE_COLON
    ;
 
 CREATE_COMMA
-   : ',' [ ]*
+   : ',' [\p{White_Space}]*
    {
   skip();
   pushMode(expression_mode);
@@ -617,7 +641,7 @@ CREATE_COMMA
    ;
 
 CREATE_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 CREATE_LINE_END
@@ -642,7 +666,7 @@ DEFAULT_RIGHT_PAREN
    ;
 
 BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 EXPR_LINE_END
@@ -651,7 +675,7 @@ EXPR_LINE_END
 
 mode vector_clause;
 VECTOR_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
@@ -668,7 +692,7 @@ VECTOR_RIGHT_PAREN
    ;
 
 LENGTH
-   : 'length' [ ]*
+   : 'length' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -679,7 +703,7 @@ LENGTH
    ;
 
 VECTOR_COLON
-   : ':' [ ]*
+   : ':' [\p{White_Space}]*
    {
   if (_input->LA(1) == ':')
     more();
@@ -692,7 +716,7 @@ VECTOR_COLON
    ;
 
 VECTOR_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 VECTOR_LINE_END
@@ -701,7 +725,7 @@ VECTOR_LINE_END
 
 mode reduction_clause;
 REDUCTION_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
@@ -714,7 +738,7 @@ REDUCTION_RIGHT_PAREN
    ;
 
 ADD
-   : '+' [ ]*
+   : '+' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -725,7 +749,7 @@ ADD
    ;
 
 MUL
-   : '*' [ ]*
+   : '*' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -736,7 +760,7 @@ MUL
    ;
 
 MAX
-   : 'max' [ ]*
+   : 'max' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -747,7 +771,7 @@ MAX
    ;
 
 MIN
-   : 'min' [ ]*
+   : 'min' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -758,7 +782,7 @@ MIN
    ;
 
 BITAND
-   : '&' [ ]*
+   : '&' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -769,7 +793,7 @@ BITAND
    ;
 
 BITOR
-   : '|' [ ]*
+   : '|' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -780,7 +804,7 @@ BITOR
    ;
 
 BITXOR
-   : '^' [ ]*
+   : '^' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -791,7 +815,7 @@ BITXOR
    ;
 
 LOGAND
-   : '&&' [ ]*
+   : '&&' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -802,7 +826,7 @@ LOGAND
    ;
 
 LOGOR
-   : '||' [ ]*
+   : '||' [\p{White_Space}]*
    { 
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     colon_count = 1;
@@ -813,7 +837,7 @@ LOGOR
    ;
 
 REDUCTION_COLON
-   : ':' [ ]*
+   : ':' [\p{White_Space}]*
    {
   if (_input->LA(1) == ':')
     more();
@@ -826,7 +850,7 @@ REDUCTION_COLON
    ;
 
 REDUCTION_COMMA
-   : ',' [ ]*
+   : ',' [\p{White_Space}]*
    {
   skip();
   pushMode(expression_mode);
@@ -836,7 +860,7 @@ REDUCTION_COMMA
    ;
 
 REDUCTION_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 REDUCTION_LINE_END
@@ -845,7 +869,7 @@ REDUCTION_LINE_END
 
 mode wait_clause;
 WAIT_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   bracket_count = 0;
@@ -863,7 +887,7 @@ WAIT_RIGHT_PAREN
    ;
 
 DEVNUM
-   : 'devnum' [ ]*
+   : 'devnum' [\p{White_Space}]*
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     more();
@@ -875,7 +899,7 @@ DEVNUM
    ;
 
 QUEUES
-   : 'queues' [ ]*
+   : 'queues' [\p{White_Space}]*
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     more();
@@ -887,7 +911,7 @@ QUEUES
    ;
 
 WAIT_COLON
-   : ':' [ ]*
+   : ':' [\p{White_Space}]*
    {
   if (lookAhead("queues") == false) {
     bracket_count = 0;
@@ -901,7 +925,7 @@ WAIT_COLON
    ;
 
 WAIT_COMMA
-   : ',' [ ]*
+   : ',' [\p{White_Space}]*
    {
   skip();
   pushMode(expression_mode);
@@ -913,7 +937,7 @@ WAIT_COMMA
    ;
 
 WAIT_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 WAIT_LINE_END
@@ -922,7 +946,7 @@ WAIT_LINE_END
 
 mode worker_clause;
 WORKER_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   parenthesis_global_count = 1;
@@ -938,7 +962,7 @@ WORKER_RIGHT_PAREN
    ;
 
 WORKER_NUM
-   : 'num' [ ]*
+   : 'num' [\p{White_Space}]*
    {
   if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
     more();
@@ -950,7 +974,7 @@ WORKER_NUM
    ;
 
 WORKER_COLON
-   : ':' [ ]*
+   : ':' [\p{White_Space}]*
    {
   if (_input->LA(1) == ':')
     more();
@@ -963,7 +987,7 @@ WORKER_COLON
    ;
 
 WORKER_BLANK
-   : [ ]+ -> skip
+   : [\p{White_Space}]+ -> skip
    ;
 
 WORKER_LINE_END
@@ -972,7 +996,7 @@ WORKER_LINE_END
 
 mode expr_clause;
 EXPR_LEFT_PAREN
-   : '(' [ ]*
+   : '(' [\p{White_Space}]*
    {
   setType(LEFT_PAREN);
   pushMode(expression_mode);
@@ -986,7 +1010,7 @@ EXPR_RIGHT_PAREN
    ;
 
 COMMA
-   : ',' [ ]*
+   : ',' [\p{White_Space}]*
    {
   skip();
   pushMode(expression_mode);
@@ -1023,7 +1047,7 @@ EXPRESSION_RIGHT_PAREN
    ;
 
 EXPRESSION_CHAR
-   : . [ ]*
+   : . [\p{White_Space}]*
    {
   switch (_input->LA(1)) {
   case ')': {

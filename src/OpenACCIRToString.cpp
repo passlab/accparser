@@ -188,6 +188,9 @@ std::string OpenACCClause::toString() {
   case ACCC_link:
     result += "link ";
     break;
+  case ACCC_nohost:
+    result += "nohost ";
+    break;
   case ACCC_no_create:
     result += "no_create ";
     break;

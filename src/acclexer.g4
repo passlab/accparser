@@ -258,7 +258,11 @@ INDEPENDENT
 LINK
    : 'link' -> pushMode (expr_clause)
    ;
-
+   
+NOHOST
+   : 'nohost'
+   ;
+   
 NO_CREATE
    : 'no_create' -> pushMode (expr_clause)
    ;

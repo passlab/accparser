@@ -54,6 +54,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_if_present:
   case ACCC_independent:
   case ACCC_link:
+  case ACCC_nohost:
   case ACCC_no_create:
   case ACCC_present:
   case ACCC_private:

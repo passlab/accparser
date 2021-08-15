@@ -115,6 +115,8 @@ public:
   enterGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
   virtual void
   exitGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
+  virtual void
+  enterNohost_clause(accparser::Nohost_clauseContext * /*ctx*/) override;
   virtual void enterGang_no_list_clause(
       accparser::Gang_no_list_clauseContext * /*ctx*/) override;
   virtual void

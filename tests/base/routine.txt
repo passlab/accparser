@@ -9,8 +9,6 @@
 
 #pragma acc routine device_type( a, b, c )
 
-#pragma acc routine device_type( a, b, c ) device_type( x, y, z ) 
-
 #pragma acc routine (expression) gang
 
 #pragma acc routine (expression) worker
@@ -21,4 +19,4 @@
 
 #pragma acc routine (expression) device_type( a, b, c )
 
-#pragma acc routine (expression) device_type( a, b, c ) device_type( x, y, z ) 
+#pragma acc routine nohost

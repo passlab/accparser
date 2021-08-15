@@ -60,6 +60,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(if_present)
     OPENACC_CLAUSE(independent)
     OPENACC_CLAUSE(link)
+    OPENACC_CLAUSE(nohost)
     OPENACC_CLAUSE(no_create)
     OPENACC_CLAUSE(num_gangs)
     OPENACC_CLAUSE(num_workers)

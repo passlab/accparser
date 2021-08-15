@@ -348,6 +348,7 @@ routine_clause_list
 routine_clauses
    : device_type_clause
    | gang_no_list_clause
+   | nohost_clause
    | seq_clause
    | vector_no_modifier_clause
    | worker_no_modifier_clause
@@ -582,7 +583,11 @@ independent_clause
 link_clause
    : LINK LEFT_PAREN var_list RIGHT_PAREN
    ;
-
+   
+nohost_clause
+   : NOHOST
+   ;
+   
 no_create_clause
    : NO_CREATE LEFT_PAREN var_list RIGHT_PAREN
    ;

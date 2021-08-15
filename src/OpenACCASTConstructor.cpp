@@ -318,6 +318,12 @@ void OpenACCIRConstructor::exitGang_clause(accparser::Gang_clauseContext *ctx) {
       ->mergeClause(current_directive, current_clause);
 };
 
+void OpenACCIRConstructor::enterNohost_clause(
+    accparser::Nohost_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_nohost);
+}
+
 void OpenACCIRConstructor::enterGang_no_list_clause(
     accparser::Gang_no_list_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());

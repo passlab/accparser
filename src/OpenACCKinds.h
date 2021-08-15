@@ -25,6 +25,7 @@ enum OpenACCDirectiveKind {
     OPENACC_DIRECTIVE(parallel_loop)
     OPENACC_DIRECTIVE(routine)
     OPENACC_DIRECTIVE(serial)
+    OPENACC_DIRECTIVE(serial_loop)
     OPENACC_DIRECTIVE(set)
     OPENACC_DIRECTIVE(shutdown)
     OPENACC_DIRECTIVE(update)

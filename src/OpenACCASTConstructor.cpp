@@ -94,6 +94,11 @@ void OpenACCIRConstructor::enterSerial_directive(
   current_directive = new OpenACCDirective(ACCD_serial);
 }
 
+void OpenACCIRConstructor::enterSerial_loop_directive(
+    accparser::Serial_loop_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_serial_loop);
+}
+
 void OpenACCIRConstructor::enterSet_directive(
     accparser::Set_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_set);

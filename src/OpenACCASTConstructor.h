@@ -36,6 +36,8 @@ public:
   virtual void exitName(accparser::NameContext * /*ctx*/) override;
   virtual void
   enterSerial_directive(accparser::Serial_directiveContext * /*ctx*/) override;
+  virtual void enterSerial_loop_directive(
+      accparser::Serial_loop_directiveContext * /*ctx*/) override;
   virtual void
   enterSet_directive(accparser::Set_directiveContext * /*ctx*/) override;
   virtual void enterShutdown_directive(

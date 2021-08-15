@@ -1,0 +1,266 @@
+
+#pragma acc serial loop async(5)
+
+#pragma acc serial loop attach(a, b, c)
+
+#pragma acc serial loop copy(a, b, c)
+
+#pragma acc serial loop copyin( x[0 : N], y[0:M] )
+
+#pragma acc serial loop copyin( readonly :m , n)
+
+#pragma acc serial loop copyin( readonly :m , n , readonly)
+
+#pragma acc serial loop copyin( readonly : readonly::m , n , readonly)
+
+#pragma acc serial loop default(present)
+
+#pragma acc serial loop deviceptr(a, b, c)
+
+#pragma acc serial loop firstprivate(a, b, c)
+
+#pragma acc serial loop no_create(a, b, c)
+
+#pragma acc serial loop present(a, b, c)
+
+#pragma acc serial loop wait(12, 23, 34)
+
+#pragma acc serial loop copyout(12, 23, 34)
+
+#pragma acc serial loop copyout(zero: 12, 23, 34)
+
+#pragma acc serial loop copyout(zero: 12, 23, 34, zero)
+
+#pragma acc serial loop copyout(zero: zero::12, 23, 34)
+
+#pragma acc serial loop create(12, 23, 34)
+
+#pragma acc serial loop create(zero: 12, 23, 34)
+
+#pragma acc serial loop create(zero: 12, 23, 34, zero)
+
+#pragma acc serial loop create(zero: zero::12, 23, 34)
+
+#pragma acc serial loop if(5)
+
+#pragma acc serial loop if(x==3)
+
+#pragma acc serial loop self(5)
+
+#pragma acc serial loop self(x==3)
+
+#pragma acc serial loop device_type(x, y, z)
+
+#pragma acc serial loop reduction( +: x, y, z)
+
+#pragma acc serial loop reduction( * : x, y, z)
+
+#pragma acc serial loop reduction( max : x, y, z)
+
+#pragma acc serial loop reduction( max : x, y, max)
+
+#pragma acc serial loop reduction( max : max, y, z)
+
+#pragma acc serial loop reduction( max : max::x, y, max)
+
+#pragma acc serial loop reduction( max : max::x, max, max::y)
+
+#pragma acc serial loop reduction( min : x, y, z)
+
+#pragma acc serial loop reduction( min : x, y, min)
+
+#pragma acc serial loop reduction( min : min, y, z)
+
+#pragma acc serial loop reduction( min : min::x, y, min)
+
+#pragma acc serial loop reduction( min : min::x, min, min::y)
+
+#pragma acc serial loop reduction( & : x[5], y, z)
+
+#pragma acc serial loop reduction( | : x, y, z)
+
+#pragma acc serial loop reduction( ^ : x, y, z)
+
+#pragma acc serial loop reduction( && : x, y, z)
+
+#pragma acc serial loop reduction( || : x, y, z)
+
+#pragma acc serial loop copyin( readonly : x, y, z) copyin( readonly : x, y, a) copyin( readonly : a, b, c)
+
+#pragma acc serial loop copyin( readonly : x, y, z) copyin( readonly : a, b, c) copyin( readonly : 1, 2, 3)
+
+#pragma acc serial loop copyin( x, y, z) copyin( readonly : a, b, c)
+
+#pragma acc serial loop copyin( readonly : x, y, z) copyin( a, b, c)
+
+#pragma acc serial loop copyin( x, y, z) copyin( a, b, c)
+
+#pragma acc serial loop copyout( zero : x, y, z) copyout( zero : x, y, a) copyout( zero : a, b, c)
+
+#pragma acc serial loop copyout( zero : x, y, z) copyout( zero : a, b, c) copyout( zero : 1, 2, 3)
+
+#pragma acc serial loop copyout( x, y, z) copyout( zero : a, b, c)
+
+#pragma acc serial loop copyout( zero : x, y, z) copyout( a, b, c)
+
+#pragma acc serial loop copyout( x, y, z) copyout( a, b, c)
+
+#pragma acc serial loop create( zero : x, y, z) create( zero : x, y, a) create( zero : a, b, c)
+
+#pragma acc serial loop create( zero : x, y, z) create( zero : a, b, c) create( zero : 1, 2, 3)
+
+#pragma acc serial loop create( x, y, z) create( zero : a, b, c)
+
+#pragma acc serial loop create( zero : x, y, z) create( a, b, c)
+
+#pragma acc serial loop create( x, y, z) create( a, b, c)
+
+#pragma acc serial loop reduction( + : x, y, z) reduction( + : x, y, a) reduction( + : a, b, c)
+
+#pragma acc serial loop reduction( + : x, y, z) reduction( * : a, b, c)
+
+#pragma acc serial loop reduction( max : x, y, z) reduction( min : a, b, c)
+
+#pragma acc serial loop reduction( min : x, y, z) reduction( min : a, b, c)
+
+#pragma acc serial loop reduction( min : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial loop reduction( || : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial loop reduction( && : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial loop reduction( max : x, y, max) reduction( max : x, y, min)
+
+#pragma acc serial loop copyin( readonly : x, y, z) copyout( zero : x, y, z) create( zero : x, y, z) reduction( + : x, y, z)
+
+#pragma acc serial loop async( expression1) async( expression2) async( expression3)
+
+#pragma acc serial loop async( expression1) async( expression2) async( expression1)
+
+#pragma acc serial loop async(expression1) async
+
+#pragma acc serial loop async async(expression1) async
+
+#pragma acc serial loop self( expression1) self( expression2) self( expression3)
+
+#pragma acc serial loop self( expression1) self( expression2) self( expression1)
+
+#pragma acc serial loop self(expression1) self
+
+#pragma acc serial loop self self(expression1) self
+
+#pragma acc serial loop
+
+#pragma acc serial loop private(a, b, c)
+
+#pragma acc serial loop auto
+
+#pragma acc serial loop auto auto
+
+#pragma acc serial loop collapse(1)
+
+#pragma acc serial loop collapse(1) collapse(2)
+
+#pragma acc serial loop collapse(1) collapse(1) collapse(2)
+
+#pragma acc serial loop device_type(a, b, c)
+
+#pragma acc serial loop gang
+
+#pragma acc serial loop gang(a, b, c)
+
+#pragma acc serial loop gang(a, b, c) gang(c) gang(d)
+
+#pragma acc serial loop gang(a, b, c) gang
+
+#pragma acc serial loop gang gang(a, b, c) gang gang(d) gang gang(d) gang(a, c, d)
+
+#pragma acc serial loop independent
+
+#pragma acc serial loop independent independent
+
+#pragma acc serial loop private(a, b, c)
+
+#pragma acc serial loop seq
+
+#pragma acc serial loop vector(length : a)
+
+#pragma acc serial loop vector(length : a) vector(length : b)
+
+#pragma acc serial loop vector(length : a) vector(length : a)
+
+#pragma acc serial loop vector(c) vector(length : c)
+
+#pragma acc serial loop vector(c) vector(b)
+
+#pragma acc serial loop vector(c) vector(c)
+
+#pragma acc serial loop worker(num : a)
+
+#pragma acc serial loop worker(num : a) worker(num : b)
+
+#pragma acc serial loop worker(num : a) worker(num : a)
+
+#pragma acc serial loop worker(c) worker(num: c)
+
+#pragma acc serial loop worker(c) worker(b)
+
+#pragma acc serial loop worker(c) worker(c)
+
+#pragma acc serial loop tile(1)
+
+#pragma acc serial loop tile(1) tile(2)
+
+#pragma acc serial loop tile(1) tile(1) tile(2)
+
+#pragma acc serial loop tile(1) tile(1) tile(2) worker(num: a) worker(num : 5) independent collapse(1)
+
+#pragma acc serial loop reduction( + : x, y, z) reduction( + : x, y, a) reduction( + : a, b, c)
+
+#pragma acc serial loop reduction( + : x, y, z) reduction( * : a, b, c)
+
+#pragma acc serial loop reduction( max : x, y, z) reduction( min : a, b, c)
+
+#pragma acc serial loop reduction( min : x, y, z) reduction( min : a, b, c)
+
+#pragma acc serial loop reduction( min : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial loop reduction( || : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial loop reduction( && : x, y, z) reduction( && : a, b, c)
+
+#pragma acc serial loop reduction( max : x, y, max) reduction( max : x, y, min)
+
+#pragma acc serial loop device_type(x, y, z)
+
+#pragma acc serial loop reduction( +: x, y, z)
+
+#pragma acc serial loop reduction( * : x, y, z)
+
+#pragma acc serial loop reduction( max : x, y, z)
+
+#pragma acc serial loop reduction( max : x, y, max)
+
+#pragma acc serial loop reduction( max : max, y, z)
+
+#pragma acc serial loop reduction( max : max::x, y, max)
+
+#pragma acc serial loop reduction( max : max::x, max, max::y)
+
+#pragma acc serial loop reduction( min : x, y, z)
+
+#pragma acc serial loop reduction( min : x, y, min)
+
+#pragma acc serial loop reduction( min : min, y, z)
+
+#pragma acc serial loop reduction( min : min::x, y, min)
+
+#pragma acc serial loop reduction( min : min::x, min, min::y)
+
+#pragma acc serial loop reduction( & : x[5], y, z)
+
+#pragma acc serial loop reduction( | : x, y, z)
+
+#pragma acc serial loop reduction( ^ : x, y, z)
+
+#pragma acc serial loop reduction( && : x, y, z)

@@ -17,6 +17,7 @@ set(TEST_FILES
     parallel_loop.txt
     routine.txt
     serial.txt
+    serial_loop.txt
     set.txt
     shutdown.txt
     update.txt

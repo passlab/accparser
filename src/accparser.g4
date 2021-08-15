@@ -114,6 +114,7 @@ openacc_directive
    | parallel_loop_directive
    | routine_directive
    | serial_directive
+   | serial_loop_directive
    | set_directive
    | shutdown_directive
    | update_directive
@@ -451,6 +452,42 @@ serial_clauses
    | reduction_clause
    | self_clause
    | wait_clause
+   ;
+
+serial_loop_directive
+   : SERIAL LOOP serial_loop_clause_list
+   ;
+
+serial_loop_clause_list
+   : serial_loop_clauses*
+   ;
+
+serial_loop_clauses
+   : async_clause
+   | attach_clause
+   | auto_clause
+   | collapse_clause
+   | copy_clause
+   | copyin_clause
+   | copyout_clause
+   | create_clause
+   | default_clause
+   | device_type_clause
+   | deviceptr_clause
+   | firstprivate_clause
+   | gang_clause
+   | if_clause
+   | independent_clause
+   | no_create_clause
+   | present_clause
+   | private_clause
+   | reduction_clause
+   | self_clause
+   | seq_clause
+   | tile_clause
+   | vector_clause
+   | wait_clause
+   | worker_clause
    ;
 
 set_directive

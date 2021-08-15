@@ -89,6 +89,9 @@ std::string OpenACCDirective::toString() {
   case ACCD_serial:
     result += "serial ";
     break;
+  case ACCD_serial_loop:
+    result += "serial loop ";
+    break;
   case ACCD_set:
     result += "set ";
     break;

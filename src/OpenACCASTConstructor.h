@@ -6,6 +6,10 @@ public:
   virtual void
   enterAtomic_directive(accparser::Atomic_directiveContext * /*ctx*/) override;
   virtual void
+  enterCache_directive(accparser::Cache_directiveContext * /*ctx*/) override;
+  virtual void exitCache_directive_modifier(
+      accparser::accparser::Cache_directive_modifierContext * /*ctx*/) override;
+  virtual void
   enterData_directive(accparser::Data_directiveContext * /*ctx*/) override;
   virtual void enterDeclare_directive(
       accparser::Declare_directiveContext * /*ctx*/) override;

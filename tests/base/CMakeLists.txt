@@ -3,6 +3,7 @@ add_custom_target(acc_test)
 
 set(TEST_FILES
     atomic.txt
+    cache.txt
     data.txt
     declare.txt
     enter_data.txt

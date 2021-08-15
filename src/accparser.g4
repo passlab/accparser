@@ -100,6 +100,7 @@ acc
 
 openacc_directive
    : atomic_directive
+   | cache_directive
    | data_directive
    | declare_directive
    | enter_data_directive
@@ -127,6 +128,15 @@ atomic_clause
    | read_clause
    | update_clause
    | write_clause
+   ;
+
+cache_directive
+   : CACHE LEFT_PAREN var_list RIGHT_PAREN
+   | CACHE LEFT_PAREN cache_directive_modifier COLON var_list RIGHT_PAREN
+   ;
+
+cache_directive_modifier
+   : READONLY
    ;
 
 data_directive

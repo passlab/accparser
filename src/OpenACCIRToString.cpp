@@ -256,6 +256,42 @@ std::string OpenACCClause::toString() {
   return result;
 };
 
+std::string OpenACCCacheDirective::expressionToString() {
+
+  std::string result;
+  std::vector<std::string> *expr = this->getExpressions();
+  if (expr != NULL) {
+    std::vector<std::string>::iterator it;
+    for (it = expr->begin(); it != expr->end(); it++) {
+      result += *it + ", ";
+    };
+    result = result.substr(0, result.size() - 2);
+  }
+
+  return result;
+};
+
+std::string OpenACCCacheDirective::toString() {
+
+  std::string result = "cache (";
+  std::string parameter_string = "";
+  OpenACCCacheDirectiveModifier modifier = this->getModifier();
+  switch (modifier) {
+  case ACCC_CACHE_readonly:
+    parameter_string = "readonly: ";
+    break;
+  default:;
+  };
+  parameter_string += this->expressionToString();
+  if (parameter_string.size() > 0) {
+    result += parameter_string + ") ";
+  } else {
+    result = result.substr(0, result.size() - 1);
+  }
+
+  return result;
+};
+
 std::string OpenACCCopyinClause::toString() {
 
   std::string result = "copyin (";

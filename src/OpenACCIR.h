@@ -171,7 +171,7 @@ public:
     return clauses_in_original_order;
   };
 
-  std::string toString();
+  virtual std::string toString();
 
   std::string generatePragmaString(std::string _prefix = "#pragma acc ",
                                    std::string _beginning_symbol = "",
@@ -180,6 +180,24 @@ public:
   OpenACCClause *addOpenACCClause(int, ...);
   void setBaseLang(OpenACCBaseLang _lang) { lang = _lang; };
   OpenACCBaseLang getBaseLang() { return lang; };
+};
+
+// Cache directive
+class OpenACCCacheDirective : public OpenACCDirective {
+protected:
+  OpenACCCacheDirectiveModifier modifier = ACCC_CACHE_unspecified;
+  std::vector<std::string> expressions;
+
+public:
+  OpenACCCacheDirective() : OpenACCDirective(ACCD_cache){};
+  OpenACCCacheDirectiveModifier getModifier() { return modifier; };
+  void setModifier(OpenACCCacheDirectiveModifier _modifier) {
+    modifier = _modifier;
+  };
+  std::vector<std::string> *getExpressions() { return &expressions; };
+  void addVar(std::string _string) { expressions.push_back(_string); };
+  std::string toString();
+  std::string expressionToString();
 };
 
 // Routine directive

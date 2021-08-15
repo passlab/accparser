@@ -11,6 +11,7 @@
 enum OpenACCDirectiveKind {
 #define OPENACC_DIRECTIVE(Name) ACCD_##Name,
     OPENACC_DIRECTIVE(atomic)
+    OPENACC_DIRECTIVE(cache)
     OPENACC_DIRECTIVE(data)
     OPENACC_DIRECTIVE(declare)
     OPENACC_DIRECTIVE(enter_data)
@@ -84,6 +85,14 @@ enum OpenACCClauseKind {
 #undef OPENACC_CLAUSE
 };
 
+// OpenACC attributes for 'cache' directive.
+enum OpenACCCacheDirectiveModifier {
+#define OPENACC_CACHE_MODIFIER(Name) ACCC_CACHE_##Name,
+    OPENACC_CACHE_MODIFIER(unspecified)
+    OPENACC_CACHE_MODIFIER(readonly)
+    OPENACC_CACHE_MODIFIER(unknown)
+#undef OPENACC_CACHE_MODIFIER
+};
 
 // OpenACC attributes for 'copyin' clause.
 enum OpenACCCopyinClauseModifier {

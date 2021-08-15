@@ -1,0 +1,4 @@
+
+#pragma acc cache ( a, b, c)
+
+#pragma acc cache ( readonly : a, b, c)

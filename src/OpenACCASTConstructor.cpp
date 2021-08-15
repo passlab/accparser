@@ -11,6 +11,19 @@ void OpenACCIRConstructor::enterAtomic_directive(
   current_directive = new OpenACCDirective(ACCD_atomic);
 }
 
+void OpenACCIRConstructor::enterCache_directive(
+    accparser::Cache_directiveContext *ctx) {
+  current_directive = new OpenACCCacheDirective();
+  ((OpenACCCacheDirective *)current_directive)
+      ->setModifier(ACCC_CACHE_unspecified);
+}
+
+void OpenACCIRConstructor::exitCache_directive_modifier(
+    accparser::Cache_directive_modifierContext *ctx) {
+  ((OpenACCCacheDirective *)current_directive)
+      ->setModifier(ACCC_CACHE_readonly);
+}
+
 void OpenACCIRConstructor::enterData_directive(
     accparser::Data_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_data);
@@ -601,7 +614,11 @@ void OpenACCIRConstructor::exitInt_expr(accparser::Int_exprContext *ctx) {
 
 void OpenACCIRConstructor::exitVar(accparser::VarContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
-  current_clause->addLangExpr(expression);
+  if (current_directive->getKind() != ACCD_cache) {
+    current_clause->addLangExpr(expression);
+  } else {
+    ((OpenACCCacheDirective *)current_directive)->addVar(expression);
+  }
 };
 
 std::string trimEnclosingWhiteSpace(std::string expression) {

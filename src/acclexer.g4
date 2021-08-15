@@ -66,6 +66,10 @@ ATOMIC
    : 'atomic'
    ;
    
+CACHE
+   : 'cache' -> pushMode (cache_directive)
+   ;
+   
 DATA
    : 'data'
    ;
@@ -351,6 +355,68 @@ WORKER
    
 WRITE
    : 'write'
+   ;
+   
+mode cache_directive;
+CACHE_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  if (lookAhead("readonly") == false) {
+    colon_count = 0;
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+CACHE_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+CACHE_READONLY
+   : 'readonly' [ ]*
+   {
+   setType(READONLY);
+  if ((_input->LA(1) == ':' && _input->LA(2) == ':') || (_input->LA(1) != ':')) {
+    colon_count = 1;
+    more();
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+CACHE_COLON
+   : ':' [ ]*
+   {
+  if (_input->LA(1) == ':')
+    more();
+  else {
+    colon_count = 0;
+    setType(COLON);
+    pushMode(expression_mode);
+  }
+}
+   ;
+
+CACHE_COMMA
+   : ',' [ ]*
+   {
+  skip();
+  pushMode(expression_mode);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  colon_count = 0;
+}
+   ;
+
+CACHE_BLANK
+   : [ ]+ -> skip
+   ;
+
+CACHE_LINE_END
+   : [\n\r] -> skip
    ;
 
 mode routine_directive;

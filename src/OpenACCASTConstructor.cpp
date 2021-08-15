@@ -61,6 +61,16 @@ void OpenACCIRConstructor::enterParallel_loop_directive(
   current_directive = new OpenACCDirective(ACCD_parallel_loop);
 }
 
+void OpenACCIRConstructor::enterRoutine_directive(
+    accparser::Routine_directiveContext *ctx) {
+  current_directive = new OpenACCRoutineDirective();
+}
+
+void OpenACCIRConstructor::exitName(accparser::NameContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  ((OpenACCRoutineDirective *)current_directive)->setName(expression);
+}
+
 void OpenACCIRConstructor::enterSerial_directive(
     accparser::Serial_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_serial);
@@ -104,7 +114,6 @@ void OpenACCIRConstructor::enterCapture_clause(
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
   current_clause = current_directive->addOpenACCClause(ACCC_capture);
 }
-
 
 void OpenACCIRConstructor::enterCollapse_clause(
     accparser::Collapse_clauseContext *ctx) {
@@ -309,6 +318,12 @@ void OpenACCIRConstructor::exitGang_clause(accparser::Gang_clauseContext *ctx) {
       ->mergeClause(current_directive, current_clause);
 };
 
+void OpenACCIRConstructor::enterGang_no_list_clause(
+    accparser::Gang_no_list_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_gang);
+}
+
 void OpenACCIRConstructor::enterHost_clause(
     accparser::Host_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_host);
@@ -490,6 +505,12 @@ void OpenACCIRConstructor::exitVector_length_clause(
       ->mergeClause(current_directive, current_clause);
 };
 
+void OpenACCIRConstructor::enterVector_no_modifier_clause(
+    accparser::Vector_no_modifier_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_vector);
+}
+
 void OpenACCIRConstructor::enterWait_clause(
     accparser::Wait_clauseContext *ctx) {
   current_clause = current_directive->addOpenACCClause(ACCC_wait);
@@ -532,6 +553,12 @@ void OpenACCIRConstructor::exitWorker_clause(
     accparser::Worker_clauseContext *ctx) {
   ((OpenACCWorkerClause *)current_clause)
       ->mergeClause(current_directive, current_clause);
+}
+
+void OpenACCIRConstructor::enterWorker_no_modifier_clause(
+    accparser::Worker_no_modifier_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_worker);
 }
 
 void OpenACCIRConstructor::enterWrite_clause(

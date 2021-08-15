@@ -13,6 +13,7 @@ set(TEST_FILES
     kernels.txt
     parallel.txt
     parallel_loop.txt
+    routine.txt
     serial.txt
     set.txt
     shutdown.txt

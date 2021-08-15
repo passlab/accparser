@@ -102,6 +102,14 @@ PARALLEL
    : 'parallel'
    ;
    
+ROUTINE
+   : 'routine' [ ]*{
+  if (_input->LA(1) == '(') {
+    pushMode(routine_directive);
+  }
+  }
+   ;
+   
 SERIAL
    : 'serial'
    ;
@@ -332,6 +340,29 @@ WRITE
    : 'write'
    ;
 
+mode routine_directive;
+ROUTINE_LEFT_PAREN
+   : '(' [ ]*
+   {
+  setType(LEFT_PAREN);
+  parenthesis_global_count = 1;
+  parenthesis_local_count = 0;
+  pushMode(expression_mode);
+}
+   ;
+
+ROUTINE_RIGHT_PAREN
+   : ')' -> type (RIGHT_PAREN) , popMode
+   ;
+
+ROUTINE_BLANK
+   : [ ]+ -> skip
+   ;
+
+ROUTINE_LINE_END
+   : [\n\r] -> skip
+   ;
+   
 mode copyin_clause;
 COPYIN_LEFT_PAREN
    : '(' [ ]*

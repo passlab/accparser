@@ -182,6 +182,17 @@ public:
   OpenACCBaseLang getBaseLang() { return lang; };
 };
 
+// Routine directive
+class OpenACCRoutineDirective : public OpenACCDirective {
+protected:
+  std::string name = "";
+
+public:
+  OpenACCRoutineDirective() : OpenACCDirective(ACCD_routine){};
+  void setName(std::string _name) { name = _name; };
+  std::string getName() { return name; };
+};
+
 // Async Clause
 class OpenACCAsyncClause : public OpenACCClause {
 

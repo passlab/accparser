@@ -110,12 +110,13 @@ openacc_directive
    | loop_directive
    | parallel_directive
    | parallel_loop_directive
+   | routine_directive
    | serial_directive
    | set_directive
    | shutdown_directive
    | update_directive
    ;
-   
+
 atomic_directive
    : ATOMIC
    | ATOMIC atomic_clause
@@ -335,6 +336,27 @@ parallel_loop_clauses
    | worker_clause
    ;
 
+routine_directive
+   : ROUTINE routine_clause_list
+   | ROUTINE LEFT_PAREN name RIGHT_PAREN routine_clause_list
+   ;
+
+routine_clause_list
+   : routine_clauses+
+   ;
+
+routine_clauses
+   : device_type_clause
+   | gang_no_list_clause
+   | seq_clause
+   | vector_no_modifier_clause
+   | worker_no_modifier_clause
+   ;
+
+name
+   : EXPR
+   ;
+
 serial_directive
    : SERIAL serial_clause_list
    ;
@@ -423,7 +445,7 @@ attach_clause
 auto_clause
    : AUTO
    ;
-   
+
 capture_clause
    : CAPTURE
    ;
@@ -537,6 +559,10 @@ gang_arg_list
    : (var COMMA | var)+
    ;
 
+gang_no_list_clause
+   : GANG
+   ;
+
 host_clause
    : HOST LEFT_PAREN var_list RIGHT_PAREN
    ;
@@ -580,7 +606,7 @@ private_clause
 read_clause
    : READ
    ;
-   
+
 reduction_clause
    : REDUCTION LEFT_PAREN reduction_operator COLON var_list RIGHT_PAREN
    ;
@@ -621,7 +647,7 @@ tile_clause
 update_clause
    : UPDATE
    ;
-   
+
 size_expr_list
    : (var COMMA | var)+
    ;
@@ -642,6 +668,10 @@ vector_clause_args
 
 vector_clause_modifier
    : LENGTH
+   ;
+
+vector_no_modifier_clause
+   : VECTOR
    ;
 
 vector_length_clause
@@ -686,7 +716,11 @@ worker_clause_args
 worker_clause_modifier
    : NUM
    ;
-   
+
+worker_no_modifier_clause
+   : WORKER
+   ;
+
 write_clause
    : WRITE
    ;

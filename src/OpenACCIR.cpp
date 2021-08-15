@@ -80,6 +80,33 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
     }
     break;
   }
+  case ACCC_gang: {
+    if (this->getKind() == ACCD_routine) {
+      if (current_clauses->size() == 0) {
+        new_clause = new OpenACCClause(kind);
+        current_clauses = new std::vector<OpenACCClause *>();
+        current_clauses->push_back(new_clause);
+        clauses[kind] = current_clauses;
+      } else {
+        /* we can have multiple clause and we merge them together now, thus we
+         * return the object that is already created */
+        new_clause = current_clauses->at(0);
+      }
+      break;
+    } else {
+      if (current_clauses->size() == 0) {
+        new_clause = new OpenACCClause(kind);
+        current_clauses = new std::vector<OpenACCClause *>();
+        current_clauses->push_back(new_clause);
+        clauses[kind] = current_clauses;
+      } else {
+        new_clause = new OpenACCClause(kind);
+        current_clauses->push_back(new_clause);
+      }
+      break;
+    }
+  }
+
   case ACCC_self: {
     if (this->getKind() == ACCD_update) {
       if (current_clauses->size() == 0) {
@@ -110,7 +137,6 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
   case ACCC_collapse:
   case ACCC_default_async:
   case ACCC_device_num:
-  case ACCC_gang:
   case ACCC_num_gangs:
   case ACCC_num_workers:
   case ACCC_vector_length: {
@@ -656,16 +682,26 @@ OpenACCClause *OpenACCVectorClause::addClause(OpenACCDirective *directive) {
   std::vector<OpenACCClause *> *current_clauses =
       directive->getClauses(ACCC_vector);
   OpenACCClause *new_clause = NULL;
-
-  if (current_clauses->size() == 0) {
-    new_clause = new OpenACCVectorClause();
-    current_clauses = new std::vector<OpenACCClause *>();
-    current_clauses->push_back(new_clause);
-    (*all_clauses)[ACCC_vector] = current_clauses;
+  if (directive->getKind() == ACCD_routine) {
+    if (current_clauses->size() == 0) {
+      new_clause = new OpenACCClause(ACCC_vector);
+      current_clauses = new std::vector<OpenACCClause *>();
+      current_clauses->push_back(new_clause);
+      (*all_clauses)[ACCC_vector] = current_clauses;
+    } else {
+      new_clause = current_clauses->at(0);
+    }
   } else {
-    new_clause = new OpenACCVectorClause();
-    current_clauses->push_back(new_clause);
-  };
+    if (current_clauses->size() == 0) {
+      new_clause = new OpenACCVectorClause();
+      current_clauses = new std::vector<OpenACCClause *>();
+      current_clauses->push_back(new_clause);
+      (*all_clauses)[ACCC_vector] = current_clauses;
+    } else {
+      new_clause = new OpenACCVectorClause();
+      current_clauses->push_back(new_clause);
+    };
+  }
 
   return new_clause;
 };
@@ -789,16 +825,26 @@ OpenACCClause *OpenACCWorkerClause::addClause(OpenACCDirective *directive) {
   std::vector<OpenACCClause *> *current_clauses =
       directive->getClauses(ACCC_worker);
   OpenACCClause *new_clause = NULL;
-
-  if (current_clauses->size() == 0) {
-    new_clause = new OpenACCWorkerClause();
-    current_clauses = new std::vector<OpenACCClause *>();
-    current_clauses->push_back(new_clause);
-    (*all_clauses)[ACCC_worker] = current_clauses;
+  if (directive->getKind() == ACCD_routine) {
+    if (current_clauses->size() == 0) {
+      new_clause = new OpenACCClause(ACCC_worker);
+      current_clauses = new std::vector<OpenACCClause *>();
+      current_clauses->push_back(new_clause);
+      (*all_clauses)[ACCC_worker] = current_clauses;
+    } else {
+      new_clause = current_clauses->at(0);
+    }
   } else {
-    new_clause = new OpenACCWorkerClause();
-    current_clauses->push_back(new_clause);
-  };
+    if (current_clauses->size() == 0) {
+      new_clause = new OpenACCWorkerClause();
+      current_clauses = new std::vector<OpenACCClause *>();
+      current_clauses->push_back(new_clause);
+      (*all_clauses)[ACCC_worker] = current_clauses;
+    } else {
+      new_clause = new OpenACCWorkerClause();
+      current_clauses->push_back(new_clause);
+    };
+  }
 
   return new_clause;
 };

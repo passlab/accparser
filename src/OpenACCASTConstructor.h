@@ -25,6 +25,9 @@ public:
       accparser::Parallel_loop_directiveContext * /*ctx*/) override;
   virtual void enterParallel_directive(
       accparser::Parallel_directiveContext * /*ctx*/) override;
+  virtual void enterRoutine_directive(
+      accparser::Routine_directiveContext * /*ctx*/) override;
+  virtual void exitName(accparser::NameContext * /*ctx*/) override;
   virtual void
   enterSerial_directive(accparser::Serial_directiveContext * /*ctx*/) override;
   virtual void
@@ -112,6 +115,8 @@ public:
   enterGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
   virtual void
   exitGang_clause(accparser::Gang_clauseContext * /*ctx*/) override;
+  virtual void enterGang_no_list_clause(
+      accparser::Gang_no_list_clauseContext * /*ctx*/) override;
   virtual void
   enterHost_clause(accparser::Host_clauseContext * /*ctx*/) override;
   virtual void enterIf_clause(accparser::If_clauseContext * /*ctx*/) override;
@@ -166,6 +171,8 @@ public:
       accparser::Vector_length_clauseContext * /*ctx*/) override;
   virtual void exitVector_length_clause(
       accparser::Vector_length_clauseContext * /*ctx*/) override;
+  virtual void enterVector_no_modifier_clause(
+      accparser::Vector_no_modifier_clauseContext * /*ctx*/) override;
   virtual void
   enterWait_clause(accparser::Wait_clauseContext * /*ctx*/) override;
   virtual void
@@ -182,6 +189,8 @@ public:
       accparser::Worker_clause_modifierContext * /*ctx*/) override;
   virtual void
   exitWorker_clause(accparser::Worker_clauseContext * /*ctx*/) override;
+  virtual void enterWorker_no_modifier_clause(
+      accparser::Worker_no_modifier_clauseContext * /*ctx*/) override;
   virtual void
   enterWrite_clause(accparser::Write_clauseContext * /*ctx*/) override;
 

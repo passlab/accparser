@@ -77,6 +77,11 @@ std::string OpenACCDirective::toString() {
   case ACCD_parallel_loop:
     result += "parallel loop ";
     break;
+  case ACCD_routine:
+    result += "routine ";
+    if(((OpenACCRoutineDirective *)this)->getName()!="") result += "(" +
+     ((OpenACCRoutineDirective *) this)->getName() + ") ";;
+    break;
   case ACCD_serial:
     result += "serial ";
     break;
@@ -223,6 +228,12 @@ std::string OpenACCClause::toString() {
     break;
   case ACCC_write:
     result += "write ";
+    break;
+  case ACCC_vector:
+    result += "vector ";
+    break;
+  case ACCC_worker:
+    result += "worker ";
     break;
   default:
     printf("The clause enum is not supported yet.\n");

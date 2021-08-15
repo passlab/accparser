@@ -1,4 +1,5 @@
 
-# Exclude the website files from the GitHub language stats
-website/** linguist-documentation
+# Exclude the external source code and website files from the GitHub language stats
+tests/gpubootcamp/** linguist-vendored
 tests/openacc-users-group/** linguist-vendored
+website/** linguist-documentation

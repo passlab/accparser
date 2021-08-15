@@ -346,7 +346,8 @@ routine_clause_list
    ;
 
 routine_clauses
-   : device_type_clause
+   : bind_clause
+   | device_type_clause
    | gang_no_list_clause
    | nohost_clause
    | seq_clause
@@ -445,6 +446,14 @@ attach_clause
 
 auto_clause
    : AUTO
+   ;
+
+bind_clause
+   : BIND LEFT_PAREN name_or_string RIGHT_PAREN
+   ;
+
+name_or_string
+   : EXPR
    ;
 
 capture_clause
@@ -583,11 +592,11 @@ independent_clause
 link_clause
    : LINK LEFT_PAREN var_list RIGHT_PAREN
    ;
-   
+
 nohost_clause
    : NOHOST
    ;
-   
+
 no_create_clause
    : NO_CREATE LEFT_PAREN var_list RIGHT_PAREN
    ;

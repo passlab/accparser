@@ -163,6 +163,15 @@ ATTACH
 AUTO
    : 'auto'
    ;
+
+BIND
+   : 'bind' [ ]*
+   {
+  if (_input->LA(1) == '(') {
+    pushMode(expr_clause);
+  }
+}
+   ;
    
 CAPTURE
    : 'capture'

@@ -204,6 +204,17 @@ public:
   void mergeClause(OpenACCDirective *, OpenACCClause *);
 };
 
+// Bind Clause
+class OpenACCBindClause : public OpenACCClause {
+
+public:
+  OpenACCBindClause() : OpenACCClause(ACCC_bind){};
+
+  static OpenACCClause *addClause(OpenACCDirective *);
+  std::string toString();
+  void mergeClause(OpenACCDirective *, OpenACCClause *);
+};
+
 // Collapse Clause
 class OpenACCCollapseClause : public OpenACCClause {
 

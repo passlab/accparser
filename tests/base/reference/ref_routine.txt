@@ -9,3 +9,6 @@
 #pragma acc routine (expression) seq
 #pragma acc routine (expression) device_type (a, b, c)
 #pragma acc routine nohost
+#pragma acc routine bind (expression1)
+#pragma acc routine bind (expression1) bind (expression2)
+#pragma acc routine bind (expression1)

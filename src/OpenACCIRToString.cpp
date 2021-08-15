@@ -79,8 +79,9 @@ std::string OpenACCDirective::toString() {
     break;
   case ACCD_routine:
     result += "routine ";
-    if(((OpenACCRoutineDirective *)this)->getName()!="") result += "(" +
-     ((OpenACCRoutineDirective *) this)->getName() + ") ";;
+    if (((OpenACCRoutineDirective *)this)->getName() != "")
+      result += "(" + ((OpenACCRoutineDirective *)this)->getName() + ") ";
+    ;
     break;
   case ACCD_serial:
     result += "serial ";
@@ -130,6 +131,9 @@ std::string OpenACCClause::toString() {
     break;
   case ACCC_auto:
     result += "auto ";
+    break;
+  case ACCC_bind:
+    result += "bind ";
     break;
   case ACCC_capture:
     result += "capture ";

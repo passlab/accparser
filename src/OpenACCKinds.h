@@ -37,6 +37,7 @@ enum OpenACCClauseKind {
     OPENACC_CLAUSE(async)
     OPENACC_CLAUSE(attach)
     OPENACC_CLAUSE(auto)
+    OPENACC_CLAUSE(bind)
     OPENACC_CLAUSE(capture)
     OPENACC_CLAUSE(collapse)
     OPENACC_CLAUSE(copy)

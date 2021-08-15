@@ -135,6 +135,7 @@ OpenACCClause *OpenACCDirective::addOpenACCClause(int k, ...) {
     }
   }
   case ACCC_async:
+  case ACCC_bind:
   case ACCC_collapse:
   case ACCC_default_async:
   case ACCC_device_num:
@@ -225,6 +226,31 @@ void OpenACCAsyncClause::mergeClause(OpenACCDirective *directive,
                ((((OpenACCClause *)(*it))->getExpressions())->size() == 0)) {
       current_clauses->pop_back();
       directive->getClausesInOriginalOrder()->pop_back();
+    }
+  }
+};
+
+void OpenACCBindClause::mergeClause(OpenACCDirective *directive,
+                                    OpenACCClause *current_clause) {
+  std::vector<OpenACCClause *> *current_clauses =
+      directive->getClauses(ACCC_bind);
+
+  for (std::vector<OpenACCClause *>::iterator it = current_clauses->begin();
+       it != current_clauses->end() - 1; it++) {
+    if (((((OpenACCClause *)(current_clause))->getExpressions())->size() !=
+         0) &&
+        ((((OpenACCClause *)(*it))->getExpressions())->size() != 0)) {
+      std::vector<std::string> *expressions_previous_clause =
+          ((OpenACCClause *)(*it))->getExpressions();
+      std::vector<std::string> *expressions_current_clause =
+          ((OpenACCClause *)(current_clause))->getExpressions();
+      std::string new_expression = expressions_current_clause->at(0);
+      std::string old_expression = expressions_previous_clause->at(0);
+      if (new_expression == old_expression) {
+        current_clauses->pop_back();
+        directive->getClausesInOriginalOrder()->pop_back();
+      }
+      break;
     }
   }
 };

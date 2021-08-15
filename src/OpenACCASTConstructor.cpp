@@ -109,6 +109,23 @@ void OpenACCIRConstructor::enterAuto_clause(
   current_clause = current_directive->addOpenACCClause(ACCC_auto);
 }
 
+void OpenACCIRConstructor::enterBind_clause(
+    accparser::Bind_clauseContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause = current_directive->addOpenACCClause(ACCC_bind);
+}
+
+void OpenACCIRConstructor::exitName_or_string(
+    accparser::Name_or_stringContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  current_clause->addLangExpr(expression);
+}
+
+void OpenACCIRConstructor::exitBind_clause(accparser::Bind_clauseContext *ctx) {
+  ((OpenACCBindClause *)current_clause)
+      ->mergeClause(current_directive, current_clause);
+}
+
 void OpenACCIRConstructor::enterCapture_clause(
     accparser::Capture_clauseContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());

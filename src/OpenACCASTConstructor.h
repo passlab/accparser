@@ -46,6 +46,12 @@ public:
   virtual void
   enterAuto_clause(accparser::Auto_clauseContext * /*ctx*/) override;
   virtual void
+  enterBind_clause(accparser::Bind_clauseContext * /*ctx*/) override;
+  virtual void
+  exitName_or_string(accparser::Name_or_stringContext * /*ctx*/) override;
+  virtual void
+  exitBind_clause(accparser::Bind_clauseContext * /*ctx*/) override;
+  virtual void
   enterCapture_clause(accparser::Capture_clauseContext * /*ctx*/) override;
   virtual void
   enterCollapse_clause(accparser::Collapse_clauseContext * /*ctx*/) override;

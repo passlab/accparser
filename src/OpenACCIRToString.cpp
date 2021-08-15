@@ -68,6 +68,9 @@ std::string OpenACCDirective::toString() {
   case ACCD_kernels:
     result += "kernels ";
     break;
+  case ACCD_kernels_loop:
+    result += "kernels loop ";
+    break;
   case ACCD_loop:
     result += "loop ";
     break;
@@ -289,6 +292,45 @@ std::string OpenACCCacheDirective::toString() {
     result = result.substr(0, result.size() - 1);
   }
 
+  return result;
+};
+
+std::string OpenACCWaitDirective::expressionToString() {
+
+  std::string result;
+  std::vector<std::string> *expr = this->getExpressions();
+  if (expr != NULL) {
+    std::vector<std::string>::iterator it;
+    for (it = expr->begin(); it != expr->end(); it++) {
+      result += *it + ", ";
+    };
+    result = result.substr(0, result.size() - 2);
+  }
+
+  return result;
+};
+
+std::string OpenACCWaitDirective::toString() {
+
+  std::string result = "wait ";
+  std::string parameter_string = "";
+  if (this->getExpressions()->size() != 0) {
+    parameter_string += "( ";
+    std::string devnum = this->getDevnum();
+    if (devnum != "") {
+      parameter_string += "devnum: " + devnum + ": ";
+    };
+    if (this->getQueues() == true) {
+      parameter_string += "queues: ";
+    };
+
+    parameter_string += this->expressionToString();
+    if (parameter_string.size() > 0) {
+      result += parameter_string + ") ";
+    } else {
+      result = result.substr(0, result.size() - 1);
+    }
+  }
   return result;
 };
 

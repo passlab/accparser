@@ -257,7 +257,7 @@ HOST
    ;
 
 IF
-   : 'if' -> pushMode (expr_clause)
+   : 'if' [ ]* -> pushMode (expr_clause)
    ;
    
 IF_PRESENT

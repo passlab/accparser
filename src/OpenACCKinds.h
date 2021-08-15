@@ -19,6 +19,7 @@ enum OpenACCDirectiveKind {
     OPENACC_DIRECTIVE(host_data)
     OPENACC_DIRECTIVE(init)
     OPENACC_DIRECTIVE(kernels)
+    OPENACC_DIRECTIVE(kernels_loop)
     OPENACC_DIRECTIVE(loop)
     OPENACC_DIRECTIVE(parallel)
     OPENACC_DIRECTIVE(parallel_loop)
@@ -27,6 +28,7 @@ enum OpenACCDirectiveKind {
     OPENACC_DIRECTIVE(set)
     OPENACC_DIRECTIVE(shutdown)
     OPENACC_DIRECTIVE(update)
+    OPENACC_DIRECTIVE(wait)
 
     OPENACC_DIRECTIVE(unknown)
 #undef OPENACC_DIRECTIVE

@@ -23,6 +23,8 @@ public:
   enterInit_directive(accparser::Init_directiveContext * /*ctx*/) override;
   virtual void enterKernels_directive(
       accparser::Kernels_directiveContext * /*ctx*/) override;
+  virtual void enterKernels_loop_directive(
+      accparser::Kernels_loop_directiveContext * /*ctx*/) override;
   virtual void
   enterLoop_directive(accparser::Loop_directiveContext * /*ctx*/) override;
   virtual void enterParallel_loop_directive(
@@ -40,6 +42,8 @@ public:
       accparser::Shutdown_directiveContext * /*ctx*/) override;
   virtual void
   enterUpdate_directive(accparser::Update_directiveContext * /*ctx*/) override;
+  virtual void
+  enterWait_directive(accparser::Wait_directiveContext * /*ctx*/) override;
 
   virtual void
   enterAsync_clause(accparser::Async_clauseContext * /*ctx*/) override;
@@ -208,6 +212,8 @@ public:
 
   virtual void exitConst_int(accparser::Const_intContext * /*ctx*/) override;
   virtual void exitInt_expr(accparser::Int_exprContext * /*ctx*/) override;
+  virtual void
+  exitWait_int_expr(accparser::Wait_int_exprContext * /*ctx*/) override;
   virtual void exitCondition(accparser::ConditionContext * /*ctx*/) override;
   virtual void exitVar(accparser::VarContext * /*ctx*/) override;
 };

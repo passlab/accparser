@@ -59,6 +59,11 @@ void OpenACCIRConstructor::enterKernels_directive(
   current_directive = new OpenACCDirective(ACCD_kernels);
 }
 
+void OpenACCIRConstructor::enterKernels_loop_directive(
+    accparser::Kernels_loop_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_kernels_loop);
+}
+
 void OpenACCIRConstructor::enterLoop_directive(
     accparser::Loop_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_loop);
@@ -102,6 +107,11 @@ void OpenACCIRConstructor::enterShutdown_directive(
 void OpenACCIRConstructor::enterUpdate_directive(
     accparser::Update_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_update);
+}
+
+void OpenACCIRConstructor::enterWait_directive(
+    accparser::Wait_directiveContext *ctx) {
+  current_directive = new OpenACCWaitDirective();
 }
 
 void OpenACCIRConstructor::enterAsync_clause(
@@ -564,13 +574,31 @@ void OpenACCIRConstructor::enterWait_argument_clause(
 
 void OpenACCIRConstructor::enterWait_argument_queues(
     accparser::Wait_argument_queuesContext *ctx) {
-  ((OpenACCWaitClause *)current_clause)->setQueues(true);
+  if (current_directive->getKind() == ACCD_wait) {
+    ((OpenACCWaitDirective *)current_directive)->setQueues(true);
+  } else {
+    ((OpenACCWaitClause *)current_clause)->setQueues(true);
+  }
 };
 
 void OpenACCIRConstructor::exitWait_argument_int_expr(
     accparser::Wait_argument_int_exprContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
-  ((OpenACCWaitClause *)current_clause)->setDevnum(expression);
+  if (current_directive->getKind() == ACCD_wait) {
+    ((OpenACCWaitDirective *)current_directive)->setDevnum(expression);
+  } else {
+    ((OpenACCWaitClause *)current_clause)->setDevnum(expression);
+  }
+};
+
+void OpenACCIRConstructor::exitWait_int_expr(
+    accparser::Wait_int_exprContext *ctx) {
+  std::string expression = trimEnclosingWhiteSpace(ctx->getText());
+  if (current_directive->getKind() == ACCD_wait) {
+    ((OpenACCWaitDirective *)current_directive)->addVar(expression);
+  } else {
+    current_clause->addLangExpr(expression);
+  }
 };
 
 void OpenACCIRConstructor::enterWorker_clause(
@@ -614,10 +642,10 @@ void OpenACCIRConstructor::exitInt_expr(accparser::Int_exprContext *ctx) {
 
 void OpenACCIRConstructor::exitVar(accparser::VarContext *ctx) {
   std::string expression = trimEnclosingWhiteSpace(ctx->getText());
-  if (current_directive->getKind() != ACCD_cache) {
-    current_clause->addLangExpr(expression);
-  } else {
+  if (current_directive->getKind() == ACCD_cache) {
     ((OpenACCCacheDirective *)current_directive)->addVar(expression);
+  } else {
+    current_clause->addLangExpr(expression);
   }
 };
 

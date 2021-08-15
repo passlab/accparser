@@ -12,6 +12,7 @@ set(TEST_FILES
     init.txt
     loop.txt
     kernels.txt
+    kernels_loop.txt
     parallel.txt
     parallel_loop.txt
     routine.txt
@@ -19,6 +20,7 @@ set(TEST_FILES
     set.txt
     shutdown.txt
     update.txt
+    wait.txt
     )
 
 add_dependencies(acc_test acc_tester.out)

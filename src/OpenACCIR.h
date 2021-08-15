@@ -211,6 +211,25 @@ public:
   std::string getName() { return name; };
 };
 
+// Wait directive
+class OpenACCWaitDirective : public OpenACCDirective {
+protected:
+  std::vector<std::string> expressions;
+  std::string devnum = "";
+  bool queues = false;
+
+public:
+  OpenACCWaitDirective() : OpenACCDirective(ACCD_wait){};
+  void setDevnum(std::string _devnum) { devnum = _devnum; };
+  std::string getDevnum() { return devnum; };
+  void setQueues(bool _queues) { queues = _queues; };
+  bool getQueues() { return queues; };
+  std::vector<std::string> *getExpressions() { return &expressions; };
+  void addVar(std::string _string) { expressions.push_back(_string); };
+  std::string toString();
+  std::string expressionToString();
+};
+
 // Async Clause
 class OpenACCAsyncClause : public OpenACCClause {
 

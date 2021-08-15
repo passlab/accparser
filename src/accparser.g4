@@ -108,6 +108,7 @@ openacc_directive
    | host_data_directive
    | init_directive
    | kernels_directive
+   | kernels_loop_directive
    | loop_directive
    | parallel_directive
    | parallel_loop_directive
@@ -116,6 +117,7 @@ openacc_directive
    | set_directive
    | shutdown_directive
    | update_directive
+   | wait_directive
    ;
 
 atomic_directive
@@ -270,6 +272,44 @@ kernels_clauses
    | wait_clause
    ;
 
+kernels_loop_directive
+   : KERNELS LOOP kernels_loop_clause_list
+   ;
+
+kernels_loop_clause_list
+   : kernels_loop_clauses*
+   ;
+
+kernels_loop_clauses
+   : async_clause
+   | attach_clause
+   | auto_clause
+   | collapse_clause
+   | copy_clause
+   | copyin_clause
+   | copyout_clause
+   | create_clause
+   | default_clause
+   | device_type_clause
+   | deviceptr_clause
+   | gang_clause
+   | if_clause
+   | independent_clause
+   | no_create_clause
+   | num_gangs_clause
+   | num_workers_clause
+   | present_clause
+   | private_clause
+   | reduction_clause
+   | self_clause
+   | seq_clause
+   | tile_clause
+   | vector_clause
+   | vector_length_clause
+   | wait_clause
+   | worker_clause
+   ;
+
 loop_directive
    : LOOP loop_clause_list
    ;
@@ -333,15 +373,31 @@ parallel_loop_clause_list
 
 parallel_loop_clauses
    : async_clause
+   | attach_clause
+   | auto_clause
    | collapse_clause
    | copy_clause
    | copyin_clause
    | copyout_clause
+   | create_clause
+   | default_clause
+   | device_type_clause
+   | deviceptr_clause
    | firstprivate_clause
    | gang_clause
+   | if_clause
+   | independent_clause
+   | no_create_clause
    | num_gangs_clause
    | num_workers_clause
+   | present_clause
    | private_clause
+   | reduction_clause
+   | self_clause
+   | seq_clause
+   | tile_clause
+   | vector_clause
+   | vector_length_clause
    | wait_clause
    | worker_clause
    ;
@@ -443,6 +499,20 @@ update_clauses
    | if_present_clause
    | self_list_clause
    | wait_argument_clause
+   ;
+
+wait_directive
+   : WAIT wait_clause_list
+   | WAIT LEFT_PAREN wait_argument RIGHT_PAREN wait_clause_list
+   ;
+
+wait_clause_list
+   : wait_clauses*
+   ;
+
+wait_clauses
+   : async_clause
+   | if_clause
    ;
 
 async_clause
@@ -713,10 +783,18 @@ wait_argument_clause
    ;
 
 wait_argument
-   : DEVNUM COLON wait_argument_int_expr COLON wait_argument_queues COLON int_expr_list
-   | DEVNUM COLON wait_argument_int_expr COLON int_expr_list
-   | wait_argument_queues COLON int_expr_list
-   | int_expr_list
+   : DEVNUM COLON wait_argument_int_expr COLON wait_argument_queues COLON wait_int_expr_list
+   | DEVNUM COLON wait_argument_int_expr COLON wait_int_expr_list
+   | wait_argument_queues COLON wait_int_expr_list
+   | wait_int_expr_list
+   ;
+
+wait_int_expr_list
+   : (wait_int_expr COMMA | wait_int_expr)+
+   ;
+
+wait_int_expr
+   : EXPR
    ;
 
 wait_argument_queues

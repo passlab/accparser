@@ -1,0 +1,40 @@
+
+!$acc exit data async(5)
+
+!$acc exit data copyout( x, y )
+
+!$acc exit data copyout( x, y, z) copyout( a, b, c)
+
+!$acc exit data wait(12, 23, 34)
+
+!$acc exit data if(5)
+
+!$acc exit data if(x==3)
+
+!$acc exit data async( expression1) async( expression2) async( expression3)
+
+!$acc exit data async( expression1) async( expression2) async( expression1)
+
+!$acc exit data async(expression1) async
+
+!$acc exit data async async(expression1) async
+
+!$acc exit data delete( x, y )
+
+!$acc exit data delete( x, y, z) delete( a, b, c)
+
+!$acc exit data detach( x, y )
+
+!$acc exit data detach( x, y, z) detach( a, b, c)
+
+!$acc exit data finalize
+
+!$acc exit data wait(queues::a, devnum::b, devnum::queues::c)
+
+!$acc exit data wait(queues :12, 23, 34)
+
+!$acc exit data wait(devnum:12: queues : 23, 34)
+
+!$acc exit data wait(devnum : devnum::devnum::z : 23, 34)
+
+!$acc exit data wait(queues: devnum::b, devnum::queues::c)

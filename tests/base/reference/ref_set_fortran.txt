@@ -1,0 +1,6 @@
+!$acc set default_async (3)
+!$acc set default_async (3) default_async (4)
+!$acc set device_type (a, b, c)
+!$acc set if (5)
+!$acc set if (x==3)
+!$acc set device_num (3) device_num (4)

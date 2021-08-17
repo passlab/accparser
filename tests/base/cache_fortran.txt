@@ -1,0 +1,4 @@
+
+!$acc cache ( a, b, c)
+
+!$acc cache ( readonly : a, b, c)

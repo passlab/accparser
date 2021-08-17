@@ -1,0 +1,4 @@
+!$acc init device_type (a, b, c)
+!$acc init if (5)
+!$acc init if (x==3)
+!$acc init device_num (3)

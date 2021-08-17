@@ -1,0 +1,6 @@
+!$acc wait 
+!$acc wait if (i == 3)
+!$acc wait if (i == 3) async (23)
+!$acc wait async
+!$acc wait ( devnum: 23: 1, 2, 3) async
+!$acc wait ( devnum: 23: queues: 1, 2, 3) async

@@ -1,0 +1,14 @@
+!$acc routine gang
+!$acc routine worker
+!$acc routine vector
+!$acc routine seq
+!$acc routine device_type (a, b, c)
+!$acc routine (expression) gang
+!$acc routine (expression) worker
+!$acc routine (expression) vector
+!$acc routine (expression) seq
+!$acc routine (expression) device_type (a, b, c)
+!$acc routine nohost
+!$acc routine bind (expression1)
+!$acc routine bind (expression1) bind (expression2)
+!$acc routine bind (expression1)

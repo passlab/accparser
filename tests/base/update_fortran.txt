@@ -1,0 +1,47 @@
+
+!$acc update async(5)
+
+!$acc update async( expression1) async( expression2) async( expression3)
+
+!$acc update async( expression1) async( expression2) async( expression1)
+
+!$acc update async(expression1) async
+
+!$acc update async async(expression1) async
+
+!$acc update device_type(x, y, z)
+
+!$acc update wait(queues::a, devnum::b, devnum::queues::c)
+
+!$acc update wait(queues::a, devnum::b, devnum::queues::c) wait(queues::b, devnum::b, devnum::queues::c)
+
+!$acc update wait(queues::a, devnum::b, devnum::queues::c) wait(queues::a, devnum::b, devnum::queues::c)
+
+!$acc update wait(queues :12, 23, 34)
+
+!$acc update wait(queues :12, 23, 34) wait(queues :12, 23, 34) wait(queues :12, 23, 35)
+
+!$acc update wait(devnum:12: queues : 23, 34)
+
+!$acc update wait(devnum:12: queues : 23, 34) wait(devnum:13: queues : 23, 34)
+
+!$acc update wait(devnum:12: queues : 23, 34) wait(devnum:12: queues : 23, 38) 
+
+!$acc update wait(devnum : devnum::devnum::z : 23, 34)
+
+!$acc update wait(23, 34) wait(23, 34, 35)
+
+!$acc update wait wait
+
+!$acc update if(5)
+
+!$acc update if(x==3)
+
+!$acc update host( x, y )
+
+!$acc update device( x, y ) device( x, y )
+
+!$acc update device( x, y )  device( x, y )  device( x, y )
+
+!$acc update self(x,y) self(x,y) self(x,y,z)
+

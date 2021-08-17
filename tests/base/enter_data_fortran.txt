@@ -1,0 +1,47 @@
+
+!$acc enter data async(5)
+
+!$acc enter data attach(a, b, c)
+
+!$acc enter data copyin( x, y )
+
+!$acc enter data copyin( x, y, z) copyin( a, b, c)
+
+!$acc enter data create(12, 23, 34)
+
+!$acc enter data create(zero: 12, 23, 34)
+
+!$acc enter data create(zero: 12, 23, 34, zero)
+
+!$acc enter data create(zero: zero::12, 23, 34)
+
+!$acc enter data if(5)
+
+!$acc enter data if(x==3)
+
+!$acc enter data create( zero : x, y, z) create( zero : x, y, a) create( zero : a, b, c)
+
+!$acc enter data create( zero : x, y, z) create( zero : a, b, c) create( zero : 1, 2, 3)
+
+!$acc enter data create( x, y, z) create( zero : a, b, c)
+
+!$acc enter data create( zero : x, y, z) create( a, b, c)
+
+!$acc enter data create( x, y, z) create( a, b, c)
+
+!$acc enter data async( expression1) async( expression2) async( expression3)
+
+!$acc enter data async( expression1) async( expression2) async( expression1)
+
+!$acc enter data async(expression1) async
+
+!$acc enter data async async(expression1) async
+
+!$acc enter data wait(queues::a, devnum::b, devnum::queues::c)
+
+!$acc enter data wait(queues :12, 23, 34)
+
+!$acc enter data wait(devnum:12: queues : 23, 34)
+
+!$acc enter data wait(devnum : devnum::devnum::z : 23, 34)
+

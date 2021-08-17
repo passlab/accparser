@@ -200,6 +200,19 @@ public:
   std::string expressionToString();
 };
 
+// End directive
+class OpenACCEndDirective : public OpenACCDirective {
+protected:
+  OpenACCDirective *paired_directive;
+
+public:
+  OpenACCEndDirective() : OpenACCDirective(ACCD_end){};
+  void setPairedDirective(OpenACCDirective *_paired_directive) {
+    paired_directive = _paired_directive;
+  };
+  OpenACCDirective *getPairedDirective() { return paired_directive; };
+};
+
 // Routine directive
 class OpenACCRoutineDirective : public OpenACCDirective {
 protected:

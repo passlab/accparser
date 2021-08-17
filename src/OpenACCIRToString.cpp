@@ -15,12 +15,12 @@ std::string OpenACCDirective::generatePragmaString(std::string prefix,
   result += beginning_symbol;
 
   switch (this->getKind()) {
-
-  // case ACCD_end: {
-  //     result +=
-  //     ((OpenACCEndDirective*)this)->getPairedDirective()->generatePragmaString("",
-  //     "", ""); break;
-  // }
+  case ACCD_end: {
+    result += ((OpenACCEndDirective *)this)
+                  ->getPairedDirective()
+                  ->generatePragmaString("", "", "");
+    break;
+  }
   default: {
     ;
   }
@@ -52,6 +52,9 @@ std::string OpenACCDirective::toString() {
     break;
   case ACCD_declare:
     result += "declare ";
+    break;
+  case ACCD_end:
+    result += "end ";
     break;
   case ACCD_enter_data:
     result += "enter data ";

@@ -14,6 +14,7 @@ enum OpenACCDirectiveKind {
     OPENACC_DIRECTIVE(cache)
     OPENACC_DIRECTIVE(data)
     OPENACC_DIRECTIVE(declare)
+    OPENACC_DIRECTIVE(end)
     OPENACC_DIRECTIVE(enter_data)
     OPENACC_DIRECTIVE(exit_data)
     OPENACC_DIRECTIVE(host_data)

@@ -116,6 +116,7 @@ openacc_directive
    | cache_directive
    | data_directive
    | declare_directive
+   | end_directive
    | enter_data_directive
    | exit_data_directive
    | host_data_directive
@@ -193,6 +194,18 @@ declare_clauses
    | deviceptr_clause
    | link_clause
    | present_clause
+   ;
+
+end_directive
+   : END end_clause_seq
+   ;
+
+end_clause_seq
+   : fortran_paired_directive
+   ;
+
+fortran_paired_directive
+   : parallel_directive
    ;
 
 enter_data_directive

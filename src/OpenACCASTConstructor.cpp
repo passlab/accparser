@@ -5,6 +5,8 @@
 
 OpenACCDirective *current_directive = NULL;
 OpenACCClause *current_clause = NULL;
+OpenACCDirective *current_parent_directive = NULL;
+OpenACCClause *current_parent_clause = NULL;
 
 static void setOpenACCLang(OpenACCDirective *directive, bool useFortran) {
   if (useFortran == true) {
@@ -52,6 +54,25 @@ void OpenACCIRConstructor::enterData_directive(
 void OpenACCIRConstructor::enterDeclare_directive(
     accparser::Declare_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_declare);
+  setOpenACCLang(current_directive, isFortran);
+}
+
+void OpenACCIRConstructor::enterEnd_directive(
+    accparser::End_directiveContext *ctx) {
+  current_directive = new OpenACCEndDirective();
+  current_parent_directive = current_directive;
+  current_parent_clause = current_clause;
+  setOpenACCLang(current_directive, isFortran);
+}
+
+void OpenACCIRConstructor::exitFortran_paired_directive(
+    accparser::Fortran_paired_directiveContext *ctx) {
+  ((OpenACCEndDirective *)current_parent_directive)
+      ->setPairedDirective(current_directive);
+  current_directive = current_parent_directive;
+  current_clause = current_parent_clause;
+  current_parent_directive = NULL;
+  current_parent_clause = NULL;
   setOpenACCLang(current_directive, isFortran);
 }
 

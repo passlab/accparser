@@ -16,6 +16,10 @@ public:
   enterData_directive(accparser::Data_directiveContext * /*ctx*/) override;
   virtual void enterDeclare_directive(
       accparser::Declare_directiveContext * /*ctx*/) override;
+  virtual void
+  enterEnd_directive(accparser::End_directiveContext * /*ctx*/) override;
+  virtual void exitFortran_paired_directive(
+      accparser::Fortran_paired_directiveContext * /*ctx*/) override;
   virtual void enterEnter_data_directive(
       accparser::Enter_data_directiveContext * /*ctx*/) override;
   virtual void enterExit_data_directive(

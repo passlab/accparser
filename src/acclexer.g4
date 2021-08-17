@@ -76,6 +76,10 @@ CACHE
 DATA
    : 'data'
    ;
+   
+END
+   : 'end'
+   ;
 
 DECLARE
    : 'declare'

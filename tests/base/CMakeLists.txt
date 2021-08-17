@@ -6,6 +6,7 @@ set(TEST_FILES
     cache.txt
     data.txt
     declare.txt
+    parallel_fortran.txt
     enter_data.txt
     exit_data.txt
     host_data.txt

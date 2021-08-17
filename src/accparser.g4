@@ -205,7 +205,19 @@ end_clause_seq
    ;
 
 fortran_paired_directive
-   : parallel_directive
+   : atomic_directive
+   | data_directive
+   | end_host_data_directive
+   | kernels_directive
+   | kernels_loop_directive
+   | parallel_directive
+   | parallel_loop_directive
+   | serial_directive
+   | serial_loop_directive
+   ;
+
+end_host_data_directive
+   : HOST_DATA
    ;
 
 enter_data_directive

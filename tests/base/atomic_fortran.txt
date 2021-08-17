@@ -1,0 +1,12 @@
+
+!$acc atomic
+
+!$acc atomic read
+
+!$acc atomic update
+
+!$acc atomic write
+
+!$acc atomic capture
+
+!$acc end atomic

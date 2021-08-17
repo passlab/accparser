@@ -26,6 +26,8 @@ public:
       accparser::Exit_data_directiveContext * /*ctx*/) override;
   virtual void enterHost_data_directive(
       accparser::Host_data_directiveContext * /*ctx*/) override;
+  virtual void enterEnd_host_data_directive(
+      accparser::End_host_data_directiveContext * /*ctx*/) override;
   virtual void
   enterInit_directive(accparser::Init_directiveContext * /*ctx*/) override;
   virtual void enterKernels_directive(

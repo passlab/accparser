@@ -83,5 +83,5 @@
 !$acc parallel num_gangs (expression1) num_gangs (expression2) num_gangs (expression3)
 !$acc parallel num_gangs (expression1) num_gangs (expression2)
 !$acc parallel wait wait (a, b, c, d)
-!$acc end parallel 
 !$acc parallel deviceptr (a, b, c)
+!$acc end parallel 

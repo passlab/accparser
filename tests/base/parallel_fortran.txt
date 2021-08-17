@@ -169,6 +169,6 @@
 
 !$acc parallel wait wait(a, b, c) wait wait(d) wait wait(d) wait(a, c, d)
 
-!$acc end parallel
-
 !$acc parallel deviceptr(a, b, c)
+
+!$acc end parallel

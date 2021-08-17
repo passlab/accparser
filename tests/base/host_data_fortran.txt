@@ -1,0 +1,16 @@
+
+!$acc host_data if(5)
+
+!$acc end host_data
+
+!$acc host_data if(x==3)
+
+!$acc host_data if(5) if_present
+
+!$acc host_data use_device(a, b, c)
+
+!$acc host_data use_device(a, b, c) if(5) if_present
+
+!$acc host_data use_device(a, b, c) use_device(a, b, c, d) if(5) if_present if_present
+
+!$acc end host_data

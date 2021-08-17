@@ -1,0 +1,245 @@
+
+!$acc parallel loop gang worker private(a, b, c)
+
+!$acc parallel loop gang worker(num : 6)
+
+!$acc parallel loop gang worker( 16 )
+
+!$acc parallel loop private(a, b, c) num_gangs(6)
+
+!$acc parallel loop async(5)
+
+!$acc parallel loop attach(a, b, c)
+
+!$acc parallel loop copy(a, b, c)
+
+!$acc parallel loop copyin( x[0 : N], y[0:M] )
+
+!$acc parallel loop copyin( readonly :m , n)
+
+!$acc parallel loop copyin( readonly :m , n , readonly)
+
+!$acc parallel loop copyin( readonly : readonly::m , n , readonly)
+
+!$acc parallel loop default(present)
+
+!$acc parallel loop deviceptr(a, b, c)
+
+!$acc parallel loop firstprivate(a, b, c)
+
+!$acc parallel loop no_create(a, b, c)
+
+!$acc parallel loop num_workers(6)
+
+!$acc parallel loop present(a, b, c)
+
+!$acc parallel loop vector_length(512)
+
+!$acc parallel loop wait(12, 23, 34)
+
+!$acc parallel loop copyout(12, 23, 34)
+
+!$acc parallel loop copyout(zero: 12, 23, 34)
+
+!$acc parallel loop copyout(zero: 12, 23, 34, zero)
+
+!$acc parallel loop copyout(zero: zero::12, 23, 34)
+
+!$acc parallel loop create(12, 23, 34)
+
+!$acc parallel loop create(zero: 12, 23, 34)
+
+!$acc parallel loop create(zero: 12, 23, 34, zero)
+
+!$acc parallel loop create(zero: zero::12, 23, 34)
+
+!$acc parallel loop if(5)
+
+!$acc parallel loop if(x==3)
+
+!$acc parallel loop self(5)
+
+!$acc parallel loop self(x==3)
+
+!$acc parallel loop device_type(x, y, z)
+
+!$acc parallel loop reduction( +: x, y, z)
+
+!$acc parallel loop reduction( * : x, y, z)
+
+!$acc parallel loop reduction( max : x, y, z)
+
+!$acc parallel loop reduction( max : x, y, max)
+
+!$acc parallel loop reduction( max : max, y, z)
+
+!$acc parallel loop reduction( max : max::x, y, max)
+
+!$acc parallel loop reduction( max : max::x, max, max::y)
+
+!$acc parallel loop reduction( min : x, y, z)
+
+!$acc parallel loop reduction( min : x, y, min)
+
+!$acc parallel loop reduction( min : min, y, z)
+
+!$acc parallel loop reduction( min : min::x, y, min)
+
+!$acc parallel loop reduction( min : min::x, min, min::y)
+
+!$acc parallel loop reduction( & : x[5], y, z)
+
+!$acc parallel loop reduction( | : x, y, z)
+
+!$acc parallel loop reduction( ^ : x, y, z)
+
+!$acc parallel loop reduction( && : x, y, z)
+
+!$acc parallel loop reduction( || : x, y, z)
+
+!$acc parallel loop copyin( readonly : x, y, z) copyin( readonly : x, y, a) copyin( readonly : a, b, c)
+
+!$acc parallel loop copyin( readonly : x, y, z) copyin( readonly : a, b, c) copyin( readonly : 1, 2, 3)
+
+!$acc parallel loop copyin( x, y, z) copyin( readonly : a, b, c)
+
+!$acc parallel loop copyin( readonly : x, y, z) copyin( a, b, c)
+
+!$acc parallel loop copyin( x, y, z) copyin( a, b, c)
+
+!$acc parallel loop copyout( zero : x, y, z) copyout( zero : x, y, a) copyout( zero : a, b, c)
+
+!$acc parallel loop copyout( zero : x, y, z) copyout( zero : a, b, c) copyout( zero : 1, 2, 3)
+
+!$acc parallel loop copyout( x, y, z) copyout( zero : a, b, c)
+
+!$acc parallel loop copyout( zero : x, y, z) copyout( a, b, c)
+
+!$acc parallel loop copyout( x, y, z) copyout( a, b, c)
+
+!$acc parallel loop create( zero : x, y, z) create( zero : x, y, a) create( zero : a, b, c)
+
+!$acc parallel loop create( zero : x, y, z) create( zero : a, b, c) create( zero : 1, 2, 3)
+
+!$acc parallel loop create( x, y, z) create( zero : a, b, c)
+
+!$acc parallel loop create( zero : x, y, z) create( a, b, c)
+
+!$acc parallel loop create( x, y, z) create( a, b, c)
+
+!$acc parallel loop reduction( + : x, y, z) reduction( + : x, y, a) reduction( + : a, b, c)
+
+!$acc parallel loop reduction( + : x, y, z) reduction( * : a, b, c)
+
+!$acc parallel loop reduction( max : x, y, z) reduction( min : a, b, c)
+
+!$acc parallel loop reduction( min : x, y, z) reduction( min : a, b, c)
+
+!$acc parallel loop reduction( min : x, y, z) reduction( && : a, b, c)
+
+!$acc parallel loop reduction( || : x, y, z) reduction( && : a, b, c)
+
+!$acc parallel loop reduction( && : x, y, z) reduction( && : a, b, c)
+
+!$acc parallel loop reduction( max : x, y, max) reduction( max : x, y, min)
+
+!$acc parallel loop copyin( readonly : x, y, z) copyout( zero : x, y, z) create( zero : x, y, z) reduction( + : x, y, z)
+
+!$acc parallel loop async( expression1) async( expression2) async( expression3)
+
+!$acc parallel loop async( expression1) async( expression2) async( expression1)
+
+!$acc parallel loop async(expression1) async
+
+!$acc parallel loop async async(expression1) async
+
+!$acc parallel loop num_workers( expression1) num_workers( expression2) num_workers( expression3)
+
+!$acc parallel loop num_workers( expression1) num_workers( expression2) num_workers( expression1)
+
+
+!$acc parallel loop vector_length( expression1) vector_length( expression2) vector_length( expression3)
+
+!$acc parallel loop vector_length( expression1) vector_length( expression2) vector_length( expression1)
+
+
+!$acc parallel loop self( expression1) self( expression2) self( expression3)
+
+!$acc parallel loop self( expression1) self( expression2) self( expression1)
+
+!$acc parallel loop self(expression1) self
+
+!$acc parallel loop self self(expression1) self
+
+!$acc parallel loop num_gangs( expression1) num_gangs( expression2) num_gangs( expression3)
+
+!$acc parallel loop num_gangs( expression1) num_gangs( expression2) num_gangs( expression1)
+
+!$acc parallel loop wait wait(a, b, c) wait wait(d) wait wait(d) wait(a, c, d)
+
+!$acc parallel loop
+
+!$acc parallel loop private(a, b, c)
+
+!$acc parallel loop auto
+
+!$acc parallel loop auto auto
+
+!$acc parallel loop collapse(1)
+
+!$acc parallel loop collapse(1) collapse(2)
+
+!$acc parallel loop collapse(1) collapse(1) collapse(2)
+
+!$acc parallel loop device_type(a, b, c)
+
+!$acc parallel loop gang
+
+!$acc parallel loop gang(a, b, c)
+
+!$acc parallel loop gang(a, b, c) gang(c) gang(d)
+
+!$acc parallel loop gang(a, b, c) gang
+
+!$acc parallel loop gang gang(a, b, c) gang gang(d) gang gang(d) gang(a, c, d)
+
+!$acc parallel loop independent
+
+!$acc parallel loop independent independent
+
+!$acc parallel loop seq
+
+!$acc parallel loop vector(length : a)
+
+!$acc parallel loop vector(length : a) vector(length : b)
+
+!$acc parallel loop vector(length : a) vector(length : a)
+
+!$acc parallel loop vector(c) vector(length : c)
+
+!$acc parallel loop vector(c) vector(b)
+
+!$acc parallel loop vector(c) vector(c)
+
+!$acc parallel loop worker(num : a)
+
+!$acc parallel loop worker(num : a) worker(num : b)
+
+!$acc parallel loop worker(num : a) worker(num : a)
+
+!$acc parallel loop worker(c) worker(num: c)
+
+!$acc parallel loop worker(c) worker(b)
+
+!$acc parallel loop worker(c) worker(c)
+
+!$acc parallel loop tile(1)
+
+!$acc parallel loop tile(1) tile(2)
+
+!$acc parallel loop tile(1) tile(1) tile(2)
+
+!$acc parallel loop tile(1) tile(1) tile(2) worker(num: a) worker(num : 5) independent collapse(1)
+
+!$acc end parallel loop
+

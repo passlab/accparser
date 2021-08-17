@@ -3,22 +3,30 @@ add_custom_target(acc_base_test)
 
 set(TEST_FILES
     atomic.txt
+    atomic_fortran.txt
     cache.txt
     data.txt
+    data_fortran.txt
     declare.txt
     parallel_fortran.txt
     enter_data.txt
     exit_data.txt
     host_data.txt
+    host_data_fortran.txt
     init.txt
     loop.txt
     kernels.txt
+    kernels_fortran.txt
     kernels_loop.txt
+    kernels_loop_fortran.txt
     parallel.txt
     parallel_loop.txt
+    parallel_loop_fortran.txt
     routine.txt
     serial.txt
+    serial_fortran.txt
     serial_loop.txt
+    serial_loop_fortran.txt
     set.txt
     shutdown.txt
     update.txt

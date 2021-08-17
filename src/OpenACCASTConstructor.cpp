@@ -94,6 +94,12 @@ void OpenACCIRConstructor::enterHost_data_directive(
   setOpenACCLang(current_directive, isFortran);
 }
 
+void OpenACCIRConstructor::enterEnd_host_data_directive(
+    accparser::End_host_data_directiveContext *ctx) {
+  current_directive = new OpenACCDirective(ACCD_host_data);
+  setOpenACCLang(current_directive, isFortran);
+}
+
 void OpenACCIRConstructor::enterInit_directive(
     accparser::Init_directiveContext *ctx) {
   current_directive = new OpenACCDirective(ACCD_init);

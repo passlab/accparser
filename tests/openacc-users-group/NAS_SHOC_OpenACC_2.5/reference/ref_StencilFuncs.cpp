@@ -1,0 +1,6 @@
+#pragma acc data copyin (other[0:nRows*nPaddedCols]) copy (data[0:nRows*nPaddedCols])
+#pragma acc parallel loop collapse (2) independent present (data, other)
+#pragma acc parallel loop collapse (2) independent present (data, other)
+#pragma acc data copyin (other[0:nRows*nPaddedCols]) copy (data[0:nRows*nPaddedCols])
+#pragma acc parallel loop collapse (2) independent present (other, data)
+#pragma acc parallel loop collapse (2) independent present (other, data)

@@ -1,0 +1,7 @@
+#pragma acc enter data create (u, us, vs, ws, qs, rho_i, speed, square, forcing, rhs)
+#pragma acc data create (u, us, vs, ws, qs, rho_i, speed, square, forcing, rhs)
+#pragma acc update device (forcing)
+#pragma acc update device (u)
+#pragma acc update device (u)
+#pragma acc update host (u)
+#pragma acc exit data delete (u, us, vs, ws, qs, rho_i, speed, square, forcing, rhs)

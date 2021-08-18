@@ -29,7 +29,7 @@ set(TEST_FILES
     lab3_miniWeather_openacc.cpp
     lab3_miniWeather_openacc.f90
     lab3_solutions_collapse_jacobi.c
-    # lab3_solutions_collapse_laplace2d.c
+    lab3_solutions_collapse_laplace2d.c
     lab3_solutions_collapse_laplace2d.f90
     lab3_solutions_tile_jacobi.c
     lab3_solutions_tile_laplace2d.c

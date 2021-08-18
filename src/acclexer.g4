@@ -231,6 +231,14 @@ PRESENT_OR_COPYOUT
 CREATE
    : 'create' -> pushMode (create_clause)
    ;
+   
+PCREATE
+   : 'pcreate' -> type (CREATE) , pushMode (create_clause)
+   ;
+   
+PRESENT_OR_CREATE
+   : 'present_or_create' -> type (CREATE) , pushMode (create_clause)
+   ;
 
 DEFAULT
    : 'default' -> pushMode (default_clause)

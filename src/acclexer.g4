@@ -44,7 +44,7 @@ lexer grammar acclexer;
 @ lexer :: declarations
 { /* private lexer declarations/members section */
   int parenthesis_local_count, parenthesis_global_count, bracket_count;
-  int brace_count, colon_count;
+  int colon_count;
 }
 // Appears in line with the other class member definitions in the cpp file.
 
@@ -76,7 +76,7 @@ CACHE
 DATA
    : 'data'
    ;
-   
+
 END
    : 'end'
    ;
@@ -386,6 +386,10 @@ WORKER
 
 WRITE
    : 'write'
+   ;
+
+COMMENT
+   : '//' ~ [\r\n]* -> skip
    ;
 
 mode cache_directive;

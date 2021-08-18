@@ -40,7 +40,7 @@ void savePragmaList(std::vector<OpenACCDirective *> *acc_ast_list,
 int main(int argc, char **argv) {
 
   const char *filename = NULL;
-  int result;
+  int result = 0;
   if (argc > 1) {
     filename = argv[1];
   };

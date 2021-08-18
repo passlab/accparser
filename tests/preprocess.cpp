@@ -15,7 +15,8 @@ std::vector<std::string> *preProcess(std::ifstream &input_file) {
   std::string current_line;
   std::regex c_regex(
       "^([[:blank:]]*#pragma)([[:blank:]]+)(acc)[[:blank:]]+(.*)");
-  std::regex fortran_regex("^([[:blank:]]*[!c*][$][Aa][Cc][Cc])[[:blank:]]+(.*)");
+  std::regex fortran_regex(
+      "^([[:blank:]]*[!c*][$][Aa][Cc][Cc])[[:blank:]]+(.*)");
   std::regex comment_regex("[/][*]([^*]|[*][^/])*[*][/]");
   std::regex continue_regex("([\\\\]+[[:blank:]]*$)");
 
@@ -45,6 +46,12 @@ std::vector<std::string> *preProcess(std::ifstream &input_file) {
         };
         input_pragma += current_line;
         total_amount += 1;
+        if (std::regex_match(current_line, fortran_regex) == true) {
+          std::locale loc;
+          for (unsigned int i = 0; i < input_pragma.size(); i++) {
+            std::tolower(input_pragma[i], loc);
+          }
+        }
         acc_pragmas->push_back(input_pragma);
       }
     };

@@ -215,7 +215,7 @@ fortran_paired_directive
    | end_serial_directive
    | end_serial_loop_directive
    ;
-   
+
 end_atomic_directive
    : atomic_directive
    ;
@@ -223,7 +223,7 @@ end_atomic_directive
 end_data_directive
    : data_directive
    ;
-   
+
 end_host_data_directive
    : HOST_DATA
    ;
@@ -231,15 +231,15 @@ end_host_data_directive
 end_kernels_directive
    : kernels_directive
    ;
-   
+
 end_kernels_loop_directive
    : kernels_loop_directive
    ;
-   
+
 end_parallel_directive
    : parallel_directive
    ;
-   
+
 end_parallel_loop_directive
    : parallel_loop_directive
    ;
@@ -247,7 +247,7 @@ end_parallel_loop_directive
 end_serial_directive
    : serial_directive
    ;
-   
+
 end_serial_loop_directive
    : serial_loop_directive
    ;

@@ -45,9 +45,10 @@ jobs:
     - name: Build
       run: |
         cd $GITHUB_WORKSPACE/
+        git submodule update --init
         mkdir build
         cd build
-        cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTS=ON ..
+        cmake ${CMAKE_OPTIONS} -DUSE_OMPPARSER=true -DCMAKE_CXX_FLAGS=${CXX_FLAGS} ..
         make
 
     - name: Test
@@ -83,9 +84,10 @@ jobs:
     - name: Build
       run: |
         cd $GITHUB_WORKSPACE/
+        git submodule update --init
         mkdir build
         cd build
-        cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DCMAKE_BUILD_TYPE=Coverage -DBUILD_TESTS=ON ..
+        cmake ${CMAKE_OPTIONS} -DUSE_OMPPARSER=true -DCMAKE_CXX_FLAGS=${CXX_FLAGS} ..
         make
 
     - name: Test

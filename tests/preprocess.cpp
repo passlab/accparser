@@ -2,14 +2,16 @@
 #include <iostream>
 #include <regex>
 
-std::vector<std::string> *preProcess(std::ifstream &);
+std::vector<std::pair<std::string, int>> *preProcess(std::ifstream &);
 
-std::vector<std::string> *preProcess(std::ifstream &input_file) {
+std::vector<std::pair<std::string, int>> *
+preProcess(std::ifstream &input_file) {
 
   std::string input_pragma;
   int total_amount = 0;
   int line_no = 0;
-  std::vector<std::string> *acc_pragmas = new std::vector<std::string>();
+  std::vector<std::pair<std::string, int>> *acc_pragmas =
+      new std::vector<std::pair<std::string, int>>();
 
   char current_char = input_file.peek();
   std::string current_line;
@@ -22,6 +24,7 @@ std::vector<std::string> *preProcess(std::ifstream &input_file) {
 
   while (!input_file.eof()) {
     line_no += 1;
+    int step = 0;
     switch (current_char) {
     case '\n':
       input_file.seekg(1, std::ios_base::cur);
@@ -43,6 +46,7 @@ std::vector<std::string> *preProcess(std::ifstream &input_file) {
           std::getline(input_file, current_line);
           // remove the inline comments of next line
           current_line = std::regex_replace(current_line, comment_regex, "");
+          step += 1;
         };
         input_pragma += current_line;
         total_amount += 1;
@@ -52,7 +56,9 @@ std::vector<std::string> *preProcess(std::ifstream &input_file) {
             std::tolower(input_pragma[i], loc);
           }
         }
-        acc_pragmas->push_back(input_pragma);
+        acc_pragmas->push_back(std::make_pair(input_pragma, line_no));
+        line_no += step;
+        step = 0;
       }
     };
     current_char = input_file.peek();

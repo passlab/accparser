@@ -4,7 +4,8 @@
 
 extern OpenACCDirective *current_directive;
 extern OpenACCDirective *parseOpenACC(std::string);
-extern std::vector<std::string> *preProcess(std::ifstream &input_file);
+extern std::vector<std::pair<std::string, int>> *
+preProcess(std::ifstream &input_file);
 
 int openFile(std::ifstream &file, const char *filename) {
   file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -66,11 +67,12 @@ int main(int argc, char **argv) {
     return -1;
   };
 
-  std::vector<std::string> *acc_pragmas = preProcess(input_file);
+  std::vector<std::pair<std::string, int>> *acc_pragmas =
+      preProcess(input_file);
 
   // parse the preprocessed inputs
   for (unsigned int i = 0; i < acc_pragmas->size(); i++) {
-    acc_ast = parseOpenACC(acc_pragmas->at(i));
+    acc_ast = parseOpenACC(acc_pragmas->at(i).first);
     acc_ast_list->push_back(acc_ast);
   };
 

@@ -85,7 +85,8 @@ if (USE_OMPPARSER)
     target_link_libraries(accparser
         ompparser
         )
-    add_executable(omp_demo.out omp_demo.cpp)
+    add_executable(omp_demo.out
+        omp_demo.cpp)
     add_dependencies(omp_demo.out accparser)
     target_link_libraries(omp_demo.out
         accparser
@@ -93,7 +94,9 @@ if (USE_OMPPARSER)
         )
 endif()
 
-add_executable(acc_demo.out acc_demo.cpp)
+add_executable(acc_demo.out
+    acc_demo.cpp
+    tests/preprocess.cpp)
 add_dependencies(acc_demo.out accparser)
 target_link_libraries(acc_demo.out
     accparser

@@ -1,18 +1,20 @@
 #include "OpenMPTranslator.h"
 #include <iostream>
 
-OpenMPDirective *convertParallelLoop(OpenACCDirective *acc_directive) {
+std::vector<OpenMPDirective *> *convertParallelLoop(OpenACCDirective *acc_directive) {
 
+  std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>(); 
   OpenMPDirective *result = new OpenMPDirective(OMPD_target_parallel_for);
+  
+  current_directives->push_back(result);
+  
+  convertOpenACCClauses(acc_directive, current_directives);
 
-  convertOpenACCClauses(acc_directive, result);
-
-  return result;
+  return current_directives;
 }
 
 void convertOpenACCClauses(OpenACCDirective *acc_directive,
-                           OpenMPDirective *omp_directive) {
-
+                           std::vector<OpenMPDirective *> *current_directives) {
   OpenMPClause *omp_clause = NULL;
   OpenACCClauseKind clause_kind;
   std::vector<OpenACCClause *> *all_clauses =
@@ -23,7 +25,7 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
     clause_kind = (*clause_iter)->getKind();
     switch (clause_kind) {
     case ACCC_collapse: {
-      omp_clause = omp_directive->addOpenMPClause(OMPC_collapse);
+      omp_clause = current_directives->at(0)->addOpenMPClause(OMPC_collapse);
       std::string collapse = (*clause_iter)->expressionToString();
       char *omp_collapse = (char *)malloc(collapse.size() * sizeof(char) + 1);
       strcpy(omp_collapse, collapse.c_str());
@@ -32,7 +34,7 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
       break;
     }
     case ACCC_copyin: {
-      omp_clause = omp_directive->addOpenMPClause(
+      omp_clause = current_directives->at(0)->addOpenMPClause(
           OMPC_map, OMPC_MAP_MODIFIER_unspecified,
           OMPC_MAP_MODIFIER_unspecified, OMPC_MAP_MODIFIER_unspecified,
           OMPC_MAP_TYPE_to, "");
@@ -48,7 +50,7 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
       break;
     }
     case ACCC_copyout: {
-      omp_clause = omp_directive->addOpenMPClause(
+      omp_clause = current_directives->at(0)->addOpenMPClause(
           OMPC_map, OMPC_MAP_MODIFIER_unspecified,
           OMPC_MAP_MODIFIER_unspecified, OMPC_MAP_MODIFIER_unspecified,
           OMPC_MAP_TYPE_from, "");
@@ -64,7 +66,7 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
       break;
     }
     case ACCC_num_workers: {
-      omp_clause = omp_directive->addOpenMPClause(OMPC_num_threads);
+      omp_clause = current_directives->at(0)->addOpenMPClause(OMPC_num_threads);
       std::string num_workers = (*clause_iter)->expressionToString();
       char *num_threads = (char *)malloc(num_workers.size() * sizeof(char) + 1);
       strcpy(num_threads, num_workers.c_str());
@@ -77,10 +79,10 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
   }
 }
 
-OpenMPDirective *generateOpenMP(OpenACCDirective *acc_directive) {
+std::vector<OpenMPDirective *> *generateOpenMP(OpenACCDirective *acc_directive) {
 
   OpenACCDirectiveKind kind = acc_directive->getKind();
-  OpenMPDirective *result = NULL;
+  std::vector<OpenMPDirective *> * result = new std::vector<OpenMPDirective *>();
   switch (kind) {
   case ACCD_parallel_loop:
     result = convertParallelLoop(acc_directive);

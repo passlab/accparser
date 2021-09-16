@@ -22,11 +22,11 @@ OpenMPDirective *parseOpenACCtoOpenMP(std::string source) {
   antlr4::tree::ParseTreeWalker *walker = new antlr4::tree::ParseTreeWalker();
   walker->walk(new OpenACCIRConstructor(), tree);
 
-  std::cout << current_directive->generatePragmaString() << "\n";
+  std::vector<OpenMPDirective *> *current_directives = generateOpenMP(current_directive);
 
-  OpenMPDirective *omp_directive = generateOpenMP(current_directive);
-  assert(omp_directive != NULL);
-  std::cout << omp_directive->generatePragmaString() << "\n";
+  assert(current_directives != NULL);
+  for(int i = 0; i < current_directives->size(); i++)
+  std::cout << current_directives->at(i)->generatePragmaString() << "\n";
 
-  return omp_directive;
+  return current_directives->at(0);
 }

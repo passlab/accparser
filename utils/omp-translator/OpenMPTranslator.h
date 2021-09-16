@@ -1,8 +1,8 @@
 #include "OpenACCASTConstructor.h"
 #include "OpenMPIR.h"
 
-OpenMPDirective *convertParallelLoop(OpenACCDirective *);
+std::vector<OpenMPDirective *> *convertParallelLoop(OpenACCDirective *);
 
-void convertOpenACCClauses(OpenACCDirective *, OpenMPDirective *);
+void convertOpenACCClauses(OpenACCDirective *, std::vector<OpenMPDirective *> *);
 
-OpenMPDirective *generateOpenMP(OpenACCDirective *);
+std::vector<OpenMPDirective *> *generateOpenMP(OpenACCDirective *);

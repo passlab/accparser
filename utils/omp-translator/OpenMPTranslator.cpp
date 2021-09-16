@@ -5,11 +5,69 @@ std::vector<OpenMPDirective *> *convertParallelLoop(OpenACCDirective *acc_direct
 
   std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>(); 
   OpenMPDirective *result = new OpenMPDirective(OMPD_target_parallel_for);
-  
   current_directives->push_back(result);
-  
   convertOpenACCClauses(acc_directive, current_directives);
+  return current_directives;
+}
 
+std::vector<OpenMPDirective *> *convertParallel(OpenACCDirective *acc_directive) {
+  std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>(); 
+  OpenMPDirective *result = new OpenMPDirective(OMPD_target_parallel);
+  current_directives->push_back(result);
+  convertOpenACCClauses(acc_directive, current_directives);
+  return current_directives;
+}
+
+std::vector<OpenMPDirective *> *convertLoop(OpenACCDirective *acc_directive) {
+
+  std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>(); 
+  OpenMPDirective *result = new OpenMPDirective(OMPD_target_parallel_loop);
+  current_directives->push_back(result);
+  convertOpenACCClauses(acc_directive, current_directives);
+  return current_directives;
+}
+
+std::vector<OpenMPDirective *> *convertSerial(OpenACCDirective *acc_directive) {
+
+  std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>(); 
+  OpenMPDirective *result = new OpenMPDirective(OMPD_target);
+  current_directives->push_back(result);
+  convertOpenACCClauses(acc_directive, current_directives);
+  return current_directives;
+}
+
+std::vector<OpenMPDirective *> *convertData(OpenACCDirective *acc_directive) {
+  std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>();
+  OpenMPDirective *result = new OpenMPDirective(OMPD_target_data);
+  current_directives->push_back(result);
+  convertOpenACCClauses(acc_directive, current_directives);
+  return current_directives;
+}
+
+std::vector<OpenMPDirective *> *convertEnterData(OpenACCDirective *acc_directive) {
+  std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>();
+  OpenMPDirective *result = new OpenMPDirective(OMPD_target_enter_data);
+  current_directives->push_back(result);
+  convertOpenACCClauses(acc_directive, current_directives);
+  return current_directives;
+}
+
+std::vector<OpenMPDirective *> *convertExitData(OpenACCDirective *acc_directive) {
+  std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>();
+  OpenMPDirective *result = new OpenMPDirective(OMPD_target_exit_data);
+  current_directives->push_back(result);
+  convertOpenACCClauses(acc_directive, current_directives);
+  return current_directives;
+}
+
+std::vector<OpenMPDirective *> *convertKernels(OpenACCDirective *acc_directive) {
+
+  std::vector<OpenMPDirective *> *current_directives = new std::vector<OpenMPDirective *>(); 
+  OpenMPDirective *result = new OpenMPDirective(OMPD_target_teams);
+  current_directives->push_back(result);
+  OpenMPDirective *result1 = new OpenMPDirective(OMPD_parallel);
+  current_directives->push_back(result1);
+  convertOpenACCClauses(acc_directive, current_directives);
   return current_directives;
 }
 
@@ -84,8 +142,29 @@ std::vector<OpenMPDirective *> *generateOpenMP(OpenACCDirective *acc_directive) 
   OpenACCDirectiveKind kind = acc_directive->getKind();
   std::vector<OpenMPDirective *> * result = new std::vector<OpenMPDirective *>();
   switch (kind) {
-  case ACCD_parallel_loop:
+    case ACCD_parallel_loop:
     result = convertParallelLoop(acc_directive);
+    break;
+  case ACCD_loop:
+    result = convertLoop(acc_directive);
+    break;
+  case ACCD_parallel:
+    result = convertParallel(acc_directive);
+    break;
+  case ACCD_serial:
+    result = convertSerial(acc_directive);
+    break;
+  case ACCD_kernels:
+    result = convertKernels(acc_directive);
+    break;
+  case ACCD_data:
+    result = convertData(acc_directive);
+    break;
+  case ACCD_enter_data:
+    result = convertEnterData(acc_directive);
+    break;
+  case ACCD_exit_data:
+    result = convertExitData(acc_directive);
     break;
   default:
     std::cout << "Unsupported OpenACC directive!\n";

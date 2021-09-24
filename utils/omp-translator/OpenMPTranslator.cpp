@@ -146,6 +146,89 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
       };
       break;
     }
+    case ACCC_create: {
+      omp_clause = current_directives->at(0)->addOpenMPClause(
+          OMPC_map, OMPC_MAP_MODIFIER_unspecified,
+          OMPC_MAP_MODIFIER_unspecified, OMPC_MAP_MODIFIER_unspecified,
+          OMPC_MAP_TYPE_alloc, "");
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
+    case ACCC_gang: {
+      omp_clause = current_directives->at(0)->addOpenMPClause(
+          OMPC_bind, OMPC_BIND_teams);
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
+    case ACCC_worker: {
+      omp_clause = current_directives->at(0)->addOpenMPClause(
+          OMPC_bind, OMPC_BIND_thread);
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
+    case ACCC_deviceptr: {
+      omp_clause = current_directives->at(0)->addOpenMPClause(OMPC_use_device_ptr);
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
+    case ACCC_private: {
+      omp_clause = current_directives->at(0)->addOpenMPClause(OMPC_private);
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
+    case ACCC_firstprivate: {
+      omp_clause = current_directives->at(0)->addOpenMPClause(OMPC_firstprivate);
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
     case ACCC_reduction: {
       OpenACCReductionClauseOperator reduction_operator = ((OpenACCReductionClause *)(*clause_iter))->getOperator();
       OpenMPReductionClauseIdentifier omp_identifier = OMPC_REDUCTION_IDENTIFIER_unknown;
@@ -197,6 +280,22 @@ void convertOpenACCClauses(OpenACCDirective *acc_directive,
           OMPC_map, OMPC_MAP_MODIFIER_unspecified,
           OMPC_MAP_MODIFIER_unspecified, OMPC_MAP_MODIFIER_unspecified,
           OMPC_MAP_TYPE_from, "");
+      std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
+      for (unsigned int i = 0; i < expressions->size(); i++) {
+        std::string expression = expressions->at(i);
+        char *omp_expression =
+            (char *)malloc(expression.size() * sizeof(char) + 1);
+        strcpy(omp_expression, expression.c_str());
+        omp_expression[expression.size()] = '\0';
+        omp_clause->addLangExpr(omp_expression);
+      };
+      break;
+    }
+    case ACCC_copy: {
+      omp_clause = current_directives->at(0)->addOpenMPClause(
+          OMPC_map, OMPC_MAP_MODIFIER_unspecified,
+          OMPC_MAP_MODIFIER_unspecified, OMPC_MAP_MODIFIER_unspecified,
+          OMPC_MAP_TYPE_tofrom, "");
       std::vector<std::string> *expressions = (*clause_iter)->getExpressions();
       for (unsigned int i = 0; i < expressions->size(); i++) {
         std::string expression = expressions->at(i);

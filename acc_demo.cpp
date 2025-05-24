@@ -26,9 +26,8 @@ static OpenACCDirective *generateOpenACCIR(std::string source) {
   std::cout << "======================================\n";
   printf("TOKEN : TOKEN_STRING\n");
   for (antlr4::Token *t : ts) {
-    printf("%s : \"%s\"\n",
-           lexer.getVocabulary().getSymbolicName(t->getType()).c_str(),
-           t->getText().c_str());
+    std::cout << lexer.getVocabulary().getSymbolicName(t->getType()) << " : \""
+              << t->getText() << "\"\n";
   }
 
   std::cout << "======================================\n";
@@ -58,7 +57,7 @@ int openFile(std::ifstream &file, const char *filename) {
 int main(int argc, char **argv) {
 
   const char *filename = NULL;
-  int result = 0;
+  int result = -1;
   if (argc > 1) {
     filename = argv[1];
   };

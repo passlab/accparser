@@ -12,8 +12,8 @@ jobs:
   build-llvm:
     strategy:
       matrix:
-        os: [ubuntu-20.04]
-        llvm: [9, 10, 11, 12, 13, 14]
+        os: [ubuntu-24.04]
+        llvm: [17, 18, 19, 20]
 
     runs-on: ${{ matrix.os }}
     env:
@@ -21,22 +21,23 @@ jobs:
       CXX: /usr/bin/clang++-${{ matrix.llvm }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    # NOTE: Ubuntu 24.04 ships antlr4 v4.9 but antlr4-cpp-runtime v4.10, which are API-incompatible; manually install the matching antlr4 v4.10.
+    - uses: StoneMoe/setup-antlr4@v4.10.1
 
     - name: Add LLVM repository key
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 
-    - name: Add LLVM repository on Ubuntu 20.04
-      if: ${{ matrix.os == 'ubuntu-20.04' }}
+    - name: Add LLVM repository on Ubuntu 24.04
+      if: ${{ matrix.os == 'ubuntu-24.04' }}
       run: |
-        sudo add-apt-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-${{ matrix.llvm }} main'
+        sudo add-apt-repository -y 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-${{ matrix.llvm }} main'
 
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y \
-          antlr4 \
           libantlr4-runtime-dev \
           build-essential \
           clang-${{ matrix.llvm }} \
@@ -59,8 +60,8 @@ jobs:
   build-gnu:
     strategy:
       matrix:
-        os: [ubuntu-20.04]
-        gnu: [7, 8, 9, 10, 11]
+        os: [ubuntu-24.04]
+        gnu: [9, 10, 11, 12, 13, 14]
 
     runs-on: ${{ matrix.os }}
     env:
@@ -68,14 +69,14 @@ jobs:
       CXX: /usr/bin/g++-${{ matrix.gnu }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - uses: StoneMoe/setup-antlr4@v4.10.1
 
     - name: Install dependencies
       run: |
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         sudo apt-get update
         sudo apt-get install -y \
-          antlr4 \
           libantlr4-runtime-dev \
           build-essential \
           cmake \
